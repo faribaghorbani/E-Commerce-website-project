@@ -1,6 +1,6 @@
 import React from 'react'
 
-const _PanelProducts = () => {
+const PanelProductsPage = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const _PanelProducts = () => {
   )
 }
 
-export default _PanelProducts;
+export default PanelProductsPage;

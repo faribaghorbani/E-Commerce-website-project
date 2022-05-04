@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PanelOrder = () => {
+const PanelOrdersPage = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const PanelOrder = () => {
   )
 }
 
-export default PanelOrder;
+export default PanelOrdersPage;

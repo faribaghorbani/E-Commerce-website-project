@@ -1,6 +1,6 @@
 import React from 'react'
 
-const _PanelQuantity = () => {
+const PanelQuantityPage = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const _PanelQuantity = () => {
   )
 }
 
-export default _PanelQuantity;
+export default PanelQuantityPage;
