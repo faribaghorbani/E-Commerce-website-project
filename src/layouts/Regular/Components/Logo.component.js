@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SidebarLayout = () => {
+const Logo = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const SidebarLayout = () => {
   )
 }
 
-export default SidebarLayout;
+export default Logo;

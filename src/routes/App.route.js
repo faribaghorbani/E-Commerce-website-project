@@ -15,6 +15,7 @@ import RegularLayout from "../layouts/Regular/Regular.layout";
 import AdminLayout from '../layouts/Admin/Admin.layouts'
 import LoginLayout from '../layouts/Login/Login.layout'
 import SidebarLayout from '../layouts/Sidebar/Sidebar.layout'
+import PanelTabs from "../layouts/Admin/Components/PanelTabs.component";
 
 function App() {
 	return (
@@ -25,10 +26,10 @@ function App() {
 				</RegularLayout>
 			}/>
 
-			<Route path="/products" element={		
-				<SidebarLayout>
+			<Route path="/products" element={	
+				<RegularLayout sidebar>
 					<ProductsPage />
-				</SidebarLayout>
+				</RegularLayout>	
 			}/>
 
 			<Route path="/products/:product" element={		
@@ -42,10 +43,12 @@ function App() {
 					<BasketPage />
 				</RegularLayout>
 			}/>
-			<Route path="/checkout" element={		
-				<RegularLayout>
-					<CheckoutPage />
-				</RegularLayout>
+			<Route path="/basket/checkout" element={	
+				<ProtectedRoute>
+					<RegularLayout>
+						<CheckoutPage />
+					</RegularLayout>
+				</ProtectedRoute>	
 			}/>
 			<Route path="/login" element={	
 				<PrivateRoute>
@@ -82,6 +85,7 @@ function App() {
 					</ProtectedRoute>
 				}/>
 			</Route>
+
 			<Route path="*" element={
 				<RegularLayout>
 					<NotfoundPage />
