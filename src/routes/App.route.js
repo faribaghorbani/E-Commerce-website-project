@@ -13,6 +13,8 @@ import PrivateRoute from './components/Private.route'
 import ProtectedRoute from './components/Protected.route'
 import RegularLayout from "../layouts/Regular/Regular.layout";
 import AdminLayout from '../layouts/Admin/Admin.layouts'
+import LoginLayout from '../layouts/Login/Login.layout'
+import SidebarLayout from '../layouts/Sidebar/Sidebar.layout'
 
 function App() {
 	return (
@@ -24,9 +26,9 @@ function App() {
 			}/>
 
 			<Route path="/products" element={		
-				<RegularLayout>
+				<SidebarLayout>
 					<ProductsPage />
-				</RegularLayout>
+				</SidebarLayout>
 			}/>
 
 			<Route path="/products/:product" element={		
