@@ -1,11 +1,11 @@
 import React from 'react'
 
-const LoginLayout = () => {
-  return (
-    <div>
-      
-    </div>
-  )
+const LoginLayout = (props) => {
+    return (
+        <div>
+            {props.children}
+        </div>
+    )
 }
 
 export default LoginLayout;
