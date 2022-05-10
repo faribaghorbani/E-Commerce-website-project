@@ -1,10 +1,10 @@
 import React from 'react'
 
-const ProtectedRoute = () => {
+const ProtectedRoute = (props) => {
   return (
-    <div>
-      
-    </div>
+    <>
+      {props.children}
+    </>
   )
 }
 

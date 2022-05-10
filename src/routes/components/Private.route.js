@@ -1,10 +1,10 @@
 import React from 'react'
 
-const PrivateRoute = () => {
+const PrivateRoute = (props) => {
   return (
-    <div>
-      
-    </div>
+    <>
+      {props.children}
+    </>
   )
 }
 
