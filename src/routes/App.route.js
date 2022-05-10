@@ -5,6 +5,7 @@ import ProductsPage from "../pages/Products/Products.page";
 import ProductPage from "../pages/Product/Product.page";
 import BasketPage from "../pages/Basket/Basket.page"
 import CheckoutPage from '../pages/Checkout/Checkout.page'
+import AdminLogin from "../pages/AdminLogin/AdminLogin.page";
 import PanelOrdersPage from "../pages/PanelOrder/PanelOrders.page";
 import PanelProductsPage from "../pages/PanelProducts/PanelProducts.page";
 import PanelQuantityPage from "../pages/PanelQuantity/PanelQuantity.page";
@@ -12,10 +13,10 @@ import NotfoundPage from "../pages/Notfound/Notfound.page";
 import PrivateRoute from './components/Private.route'
 import ProtectedRoute from './components/Protected.route'
 import RegularLayout from "../layouts/Regular/Regular.layout";
-import AdminLayout from '../layouts/Admin/Admin.layouts'
+import AdminLayout from '../layouts/Admin/Admin.layout'
 import LoginLayout from '../layouts/Login/Login.layout'
-import SidebarLayout from '../layouts/Sidebar/Sidebar.layout'
-import PanelTabs from "../layouts/Admin/Components/PanelTabs.component";
+import PanelHomePage from "../pages/PanelHome/PanelHome.page";
+// import SidebarLayout from '../layouts/Sidebar/Sidebarlayout'
 
 function App() {
 	return (
@@ -57,7 +58,7 @@ function App() {
 					</LoginLayout>
 				</PrivateRoute>	
 			}/>
-			<Route path="/panel">
+			<Route path="/panel" element={<AdminLayout><PanelHomePage /></AdminLayout>}>
 				<Route index element={
 					<ProtectedRoute>
 						<NotfoundPage />

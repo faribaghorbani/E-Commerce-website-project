@@ -1,11 +1,14 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 const PrivateRoute = (props) => {
-  return (
-    <>
-      {props.children}
-    </>
-  )
+    const userToken = useSelector(state => state.user)
+
+    return (
+      <>
+        {props.children}
+      </>
+    )
 }
 
 export default PrivateRoute;
