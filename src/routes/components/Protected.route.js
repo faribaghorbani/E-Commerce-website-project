@@ -1,12 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Navigate, useLocation } from 'react-router-dom';
+import jwt_decode from "jwt-decode";
+
 
 const ProtectedRoute = (props) => {
-  const token = localStorage.getItem('token')
   const location = useLocation()
-  console.log(token)
+  const [validToken, setValidToken] = useState('loading')
 
-  return token? <>{props.children}</>:<Navigate to='/login' state={{from: location}} replace/>
+  useEffect(() => {
+    let exp
+    let iat
+    let token = localStorage.getItem('token')
+    if (token) {
+      let decoded = jwt_decode(token);
+      exp = new Date(decoded.exp)
+      iat = new Date(decoded.iat)
+    }
+    if (exp - iat< 60*60*1000*3) {
+      console.log(exp - iat< 60*60*1000*3)
+      // console.log("set true")
+      setValidToken(true)
+    } else {
+      // console.log("set false")
+      setValidToken(false)
+    }
+  }, [])
+
+  if (validToken === 'loading') return 'loading'
+  if (validToken === true ) return <>{props.children}</>
+  if (validToken === false ) return <Navigate to='/login' state={{from: location}} replace/>
 }
 
 export default ProtectedRoute;

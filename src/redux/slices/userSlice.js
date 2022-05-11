@@ -5,7 +5,7 @@ export const userSlice = createSlice({
   initialState: '',
   reducers: {
     setUserToken: (state, action) => {
-      console.log(state)
+      // console.log(state)
       return action.payload
     },
   }

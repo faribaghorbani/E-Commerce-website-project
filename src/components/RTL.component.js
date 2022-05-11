@@ -6,6 +6,7 @@ import { prefixer } from 'stylis';
 // Create rtl cache
 const cacheRtl = createCache({
   key: 'muirtl',
+  prepend: true,
   stylisPlugins: [prefixer, rtlPlugin],
 });
 
