@@ -58,11 +58,15 @@ function App() {
 					</LoginLayout>
 				</PrivateRoute>	
 			}/>
-			<Route path="/panel" element={<AdminLayout><PanelHomePage /></AdminLayout>}>
+			<Route path="/panel" element={
+			<ProtectedRoute>
+				<AdminLayout>
+				</AdminLayout>
+			</ProtectedRoute>
+			}>
+
 				<Route index element={
-					<ProtectedRoute>
-						<NotfoundPage />
-					</ProtectedRoute>
+					<PanelHomePage />
 				}/>
 				<Route path="order" element={
 					<ProtectedRoute>
