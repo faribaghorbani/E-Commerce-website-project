@@ -1,5 +1,6 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
+import RTL from '../../components/RTL.component'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,48 +18,70 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import zIndex from '@mui/material/styles/zIndex';
-
-import { Outlet } from 'react-router-dom';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import{ GrStorage, GrLogout } from 'react-icons/gr'
+import{ AiOutlineTable } from 'react-icons/ai'
+import{ BsFillPeopleFill } from 'react-icons/bs'
+import { Outlet, useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
 
 function AdminLayout(props) {
+  const navigate = useNavigate()
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [selectedPanel, setSelectedPanel] = useState('');
+
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const changePanel = (link) => {
+    navigate(link)
+  }
+
+
   const drawer = (
     <div>
-      <Toolbar />
+      <Toolbar sx={{height : { md: '100px'}}} />
       <Divider />
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+      <RTL>
+        <List>
+          {Object.entries({
+          "کالاها": {icon: <AiOutlineTable /> , link: '/panel/products'},
+          "موجودی وقیمت": {icon: <GrStorage /> , link: '/panel/quantity'},
+          "سفارش ها": {icon: <BsFillPeopleFill/> , link: '/panel/order'}
+          }).map(([text, {icon, link}]) => (
+            <ListItem key={text} disablePadding onClick={() => changePanel(link)}>
+              <ListItemButton>
+                <ListItemText primary={text} />
+                <ListItemIcon sx={{display: 'flex', justifyContent: 'center'}}>
+                  {icon}
+                </ListItemIcon>
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </RTL>
       <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+      <RTL>
+        <List>
+          {Object.entries({
+            'خروج از پنل ادمین': {icon: <GrLogout />, link: '/login'}
+            }).map(([text, {icon, link}]) => (
+            <ListItem key={text} disablePadding onClick={() => changePanel(link)}>
+              <ListItemButton>
+                <ListItemText primary={text} />
+                <ListItemIcon sx={{display: 'flex', justifyContent: 'center'}}>
+                  {icon}
+                </ListItemIcon>
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </RTL>
     </div>
   );
 
@@ -66,16 +89,26 @@ function AdminLayout(props) {
 
   return (
 	<>
+	<div style={{
+		backgroundColor: 'black',
+		color: 'white' , 
+		minHeight: '100px',
+		position: 'relative',
+		zIndex: 100}}
+		>
+			home
+	</div>
 	<Box position='relative'
 		sx={{
 		display: 'flex',
 		alignItems: 'center',
-		justifyContent: 'start',
+		justifyContent: 'space-between',
+		backgroundColor: 'red',
 		minHeight: "70px",
 		width: { md: `calc(100% - ${drawerWidth}px)` },
         ml: { md: `${drawerWidth}px` },
 		}}>
-			hello
+			{selectedPanel}
 		<IconButton
 			color="inherit"
 			aria-label="open drawer"
@@ -87,50 +120,26 @@ function AdminLayout(props) {
 			<MenuIcon />
 		</IconButton>
 	</Box>
-    {/* <AppBar
-        // position="fixed"
-        sx={{
-          width: { md: `calc(100% - ${drawerWidth}px)` },
-          ml: { md: `${drawerWidth}px` },
-        }}
-      >
-        <Toolbar> 
-		<IconButton
-			color="inherit"
-			aria-label="open drawer"
-			// edge="start" that was the problem 
-			onClick={handleDrawerToggle}
-			
-			sx={{mr: 0, display:  { md: 'none'}}}
-			>
-			<MenuIcon />
-		</IconButton>
 
-          <Typography variant="h6" noWrap component="div">
-            Responsive drawer
-          </Typography>
-        </Toolbar>
-    </AppBar> */}
 
     <Box sx={{ display: 'flex' }}>
       {/* <CssBaseline /> */}
       <Box
         component="nav"
-        sx={{width: { sm: drawerWidth }, flexShrink: { md: 0 } }}
+        sx={{width: { md: drawerWidth }, flexShrink: { md: 0 } }}
         aria-label="mailbox folders"
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-			position='relative'
 			container={container}
 			variant="temporary"
 			open={mobileOpen}
 			onClose={handleDrawerToggle}
+			// anchor='right'
 			ModalProps={{
 				keepMounted: true, // Better open performance on mobile.
 			}}
 			sx={{
-				zIndex: 90,
 				display: { xs: 'block', md: 'none' },
 				'& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
 			}}
@@ -140,7 +149,8 @@ function AdminLayout(props) {
         <Drawer
 			position='relative'
 			variant="permanent"
-			sx={{
+			// anchor='right'
+			sx={{position: 'absolute',
 				zIndex: 90,
 				display: { xs: 'none', md: 'block' },
 				'& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
@@ -154,7 +164,7 @@ function AdminLayout(props) {
 	  
       <Box
         component="main"
-        sx={{ p:0, flexGrow: 1, mx: 3, width: { md: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{ backgroundColor: 'blue',flexGrow: 1, mx: 3, width: { md: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Outlet />
       </Box>

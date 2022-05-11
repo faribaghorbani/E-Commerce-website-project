@@ -69,25 +69,13 @@ function App() {
 					<PanelHomePage />
 				}/>
 				<Route path="order" element={
-					<ProtectedRoute>
-						<AdminLayout>
-							<PanelOrdersPage />
-						</AdminLayout>
-					</ProtectedRoute>
+					<PanelOrdersPage />
 				}/>
 				<Route path="products" element={
-					<ProtectedRoute>
-						<AdminLayout>
-							<PanelProductsPage />
-						</AdminLayout>
-					</ProtectedRoute>
+					<PanelProductsPage />
 				}/>
 				<Route path="quantity" element={
-					<ProtectedRoute>
-						<AdminLayout>
-							<PanelQuantityPage />
-						</AdminLayout>
-					</ProtectedRoute>
+					<PanelQuantityPage />
 				}/>
 			</Route>
 
