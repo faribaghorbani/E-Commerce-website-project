@@ -5,8 +5,8 @@ export const userSlice = createSlice({
   initialState: '',
   reducers: {
     setUserToken: (state, action) => {
-      state = action.payload
       console.log(state)
+      return action.payload
     },
   }
 })

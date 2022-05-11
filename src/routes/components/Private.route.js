@@ -1,14 +1,15 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { Navigate, useLocation } from 'react-router-dom';
+
 
 const PrivateRoute = (props) => {
-    const userToken = useSelector(state => state.user)
+    const token = localStorage.getItem('token')
+    const location = useLocation()
 
-    return (
-      <>
-        {props.children}
-      </>
-    )
+    let from = location.state?.from?.pathname || '/'
+
+    return token? <Navigate to={from} replace/>:<>{props.children}</>
 }
 
 export default PrivateRoute;

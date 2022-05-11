@@ -7,5 +7,5 @@ export const authentication = (info, callback) => {
             localStorage.setItem("token", res.data.token)
             callback(res.data.token)
         })
-        .catch(err => {console.log(err.data)})
+        .catch(err => {console.log(err.status)})
 }

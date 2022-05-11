@@ -1,4 +1,5 @@
 import React from 'react'
+import './AdminLogin.scss'
 import * as yup from 'yup'
 import { useFormik } from 'formik';
 import { TextField, Button } from '@mui/material';
@@ -6,6 +7,7 @@ import RTL from '../../components/RTL.component';
 import {authentication} from '../../services/http.service'
 import { useDispatch } from 'react-redux'
 import { setUserToken } from '../../redux/slices/userSlice';
+import Box from '@mui/material/Box';
 
 
 
@@ -34,11 +36,16 @@ const AdminLogin = () => {
 
 
 	return (
-		<>
-			<form onSubmit={formik.handleSubmit}>
+		<Box sx={{backgroundColor: 'white',
+		maxWidth: '500px',
+		width: '95%',
+		borderRadius: '5px'
+		}}>
+			<form onSubmit={formik.handleSubmit} className='form-container' style={{backgroundColor: 'white'}}>
 				<RTL>
 					<TextField
 					// fullWidth
+						sx={{mb: 3}}
 						label="نام کاربری"
 						id="username"
 						name="username"
@@ -50,6 +57,7 @@ const AdminLogin = () => {
 					/>
 					<TextField
 					// fullWidth
+						sx={{mb: 3}}
 						label="رمز عبور"
 						id="password"
 						name="password"
@@ -64,7 +72,7 @@ const AdminLogin = () => {
 					</Button>
 				</RTL>
 			</form>
-		</>
+		</Box>
 	)
 }
 

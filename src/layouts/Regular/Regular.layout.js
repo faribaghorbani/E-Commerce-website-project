@@ -1,10 +1,10 @@
 import React from 'react'
 
-const RegularLayout = () => {
+const RegularLayout = (props) => {
   return (
-    <div>
-      
-    </div>
+    <>
+    {props.children}
+    </>
   )
 }
 

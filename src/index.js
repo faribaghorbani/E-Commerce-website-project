@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from './routes/App.route'
 import { Provider } from 'react-redux';
-import store  from './redux/store'
+import { store }  from './redux/store'
 import CssBaseline from '@mui/material/CssBaseline';
 
 // document.dir='rtl'
