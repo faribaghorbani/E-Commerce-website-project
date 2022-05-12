@@ -8,6 +8,7 @@ const ProtectedRoute = (props) => {
   const [validToken, setValidToken] = useState('loading')
 
   useEffect(() => {
+    console.log("it is here")
     let exp
     let iat
     let token = localStorage.getItem('token')

@@ -34,8 +34,8 @@ const AdminLogin = () => {
 
 	const formik = useFormik({
 		initialValues: {
-		  username: 'foobar@example.com',
-		  password: 'foobar',
+		  username: '',
+		  password: '',
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
@@ -45,7 +45,7 @@ const AdminLogin = () => {
 					localStorage.setItem("token", res.data.token)
 					navigate('/panel')
 				},
-				() => {handleOpen(false)}
+				() => {handleOpen()}
 			)
 		},
 	});
@@ -77,7 +77,7 @@ const AdminLogin = () => {
 						label="رمز عبور"
 						id="password"
 						name="password"
-						type="password"
+						type="text"
 						value={formik.values.password}
 						onChange={formik.handleChange}
 						error={formik.touched.password && Boolean(formik.errors.password)}
