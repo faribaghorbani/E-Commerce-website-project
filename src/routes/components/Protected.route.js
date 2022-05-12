@@ -13,15 +13,14 @@ const ProtectedRoute = (props) => {
     let token = localStorage.getItem('token')
     if (token) {
       let decoded = jwt_decode(token);
+      console.log(decoded)
       exp = new Date(decoded.exp)
       iat = new Date(decoded.iat)
     }
     if (exp - iat< 60*60*1000*3) {
       console.log(exp - iat< 60*60*1000*3)
-      // console.log("set true")
       setValidToken(true)
     } else {
-      // console.log("set false")
       setValidToken(false)
     }
   }, [])
