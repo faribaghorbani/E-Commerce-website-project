@@ -1,11 +1,10 @@
 import axios from "axios";
 
-export const authentication = (info, callback) => {
+export const authentication = (info, defaultCallback, errorCallback) => {
     axios.post('http://localhost:3002/auth/login', info)
         .then(res => {
-            console.log(res.status)
-            localStorage.setItem("token", res.data.token)
-            callback(res.data.token)
+            console.log("ok")
+            defaultCallback(res)
         })
-        .catch(err => {console.log(err.status)})
+        .catch(err => {errorCallback()})
 }

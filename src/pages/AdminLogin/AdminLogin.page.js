@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './AdminLogin.scss'
 import * as yup from 'yup'
 import { useFormik } from 'formik';
 import { TextField, Button } from '@mui/material';
 import RTL from '../../components/RTL.component';
 import {authentication} from '../../services/http.service'
-import { useDispatch } from 'react-redux'
-import { setUserToken } from '../../redux/slices/userSlice';
 import Box from '@mui/material/Box';
+import { useNavigate } from 'react-router-dom';
+import ModalComponent from '../../components/Modal.component';
 
 
 
@@ -21,7 +21,16 @@ const validationSchema = yup.object().shape({
 
 
 const AdminLogin = () => {
-	const dispatch = useDispatch()
+	const navigate = useNavigate()
+	const [open, setOpen] = useState(false);
+
+	const handleOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
 
 	const formik = useFormik({
 		initialValues: {
@@ -30,7 +39,14 @@ const AdminLogin = () => {
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
-			authentication(values, (token) => dispatch(setUserToken(token)))
+			authentication(
+				values, 
+				(res) => {
+					localStorage.setItem("token", res.data.token)
+					navigate('/panel')
+				},
+				() => {handleOpen(false)}
+			)
 		},
 	});
 
@@ -72,6 +88,11 @@ const AdminLogin = () => {
 					</Button>
 				</RTL>
 			</form>
+			<ModalComponent title={"خطا"} description={"نام کاربری یا رمز عبور صحیح نیست"} 
+				open={open} 
+				handleClose={handleClose}
+				handleOpen={handleOpen}
+			 />
 		</Box>
 	)
 }

@@ -12,16 +12,13 @@ const PrivateRoute = (props) => {
     let iat
     let token = localStorage.getItem('token')
     if (token) {
-        console.log(token)
       let decoded = jwt_decode(token);
       exp = new Date(decoded.exp)
       iat = new Date(decoded.iat)
     }
     if (exp - iat< 60*60*1000*3) {
-      console.log("set true")
       setValidToken(true)
     } else {
-      console.log("set false")
       setValidToken(false)
     }
   }, [])
