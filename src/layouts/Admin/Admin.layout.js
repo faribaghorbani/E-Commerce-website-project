@@ -71,7 +71,10 @@ function AdminLayout(props) {
           {Object.entries({
             'خروج از پنل ادمین': {icon: <GrLogout />, link: '/login'}
             }).map(([text, {icon, link}]) => (
-            <ListItem key={text} disablePadding onClick={() => changePanel(link)}>
+            <ListItem key={text} disablePadding onClick={() => {
+              localStorage.removeItem("token")
+              changePanel(link)
+            }}>
               <ListItemButton>
                 <ListItemText primary={text} />
                 <ListItemIcon sx={{display: 'flex', justifyContent: 'center'}}>
@@ -164,7 +167,7 @@ function AdminLayout(props) {
 	  
       <Box
         component="main"
-        sx={{ backgroundColor: 'blue',flexGrow: 1, mx: 3, width: { md: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{flexGrow: 1, mx: 3, width: { md: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Outlet />
       </Box>
@@ -173,12 +176,5 @@ function AdminLayout(props) {
   );
 }
 
-// ResponsiveDrawer.propTypes = {
-//   /**
-//    * Injected by the documentation to work in an iframe.
-//    * You won't need it on your project.
-//    */
-//   window: PropTypes.func,
-// };
 
 export default AdminLayout;

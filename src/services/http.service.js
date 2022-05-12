@@ -18,11 +18,16 @@ export const authentication = (info, defaultCallback, errorCallback) => {
         .catch(err => {errorCallback()})
 }
 
-export const getData = () => {
+export const getData = (defaultCallback, errorCallback) => {
     const token = localStorage.getItem('token')
     axios.get('/products')
         .then(res => {
-            console.log(res.data)
+            defaultCallback(res.data)
         })
-        .catch(err => {console.log(err.response.status)})
+        .catch(err => {
+            if (err.response.status == 401) {
+                localStorage.removeItem('token')
+                errorCallback()
+            }
+        })
 }
