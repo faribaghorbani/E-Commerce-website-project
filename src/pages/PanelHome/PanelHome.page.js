@@ -4,12 +4,11 @@ import RTL from '../../components/RTL.component'
 
 const PanelHomePage = () => {
   return (
-    <div>
-      <RTL>
-      <Typography variant="h3" component="h2">
-        از داشبورد پنل مورد نظر خود را انتخاب کنید.
+    <div style={{display: 'flex', justifyContent: 'center'}}>
+      
+      <Typography variant="h4" component="h2">
+        از داشبورد پنل مورد نظر خود را انتخاب کنید
       </Typography>
-      </RTL>
     </div>
   )
 }
