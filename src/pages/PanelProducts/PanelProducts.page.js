@@ -11,7 +11,7 @@ const PanelProductsPage = () => {
     const [data, setData] = useState([])
 
     useEffect(() => {
-      getData(
+      getData('/products',
         (data) => {
           setLoading(false)
           setData(data)
