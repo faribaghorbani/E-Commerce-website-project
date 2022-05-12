@@ -24,6 +24,7 @@ import{ GrStorage, GrLogout } from 'react-icons/gr'
 import{ AiOutlineTable } from 'react-icons/ai'
 import{ BsFillPeopleFill } from 'react-icons/bs'
 import { Outlet, useNavigate } from 'react-router-dom';
+import Header from './Components/Header.component';
 
 const drawerWidth = 240;
 
@@ -92,15 +93,7 @@ function AdminLayout(props) {
 
   return (
 	<>
-	<div style={{
-		backgroundColor: 'black',
-		color: 'white' , 
-		minHeight: '100px',
-		position: 'relative',
-		zIndex: 100}}
-		>
-			home
-	</div>
+	<Header />
 	<Box position='relative'
 		sx={{
 		display: 'flex',
