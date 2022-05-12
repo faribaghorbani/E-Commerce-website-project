@@ -86,6 +86,9 @@ const AdminLogin = () => {
 					<Button color="primary" type="submit">
 						ورود
 					</Button>
+					<Button color="primary" sx={{mt: 3}} onClick={() => navigate('/')}>
+						برگشت به سایت
+					</Button>
 				</RTL>
 			</form>
 			<ModalComponent title={"خطا"} description={"نام کاربری یا رمز عبور صحیح نیست"} 
