@@ -18,9 +18,9 @@ export const authentication = (info, defaultCallback, errorCallback) => {
         .catch(err => {errorCallback()})
 }
 
-export const getData = (defaultCallback, errorCallback) => {
+export const getData = (url, defaultCallback, errorCallback) => {
     const token = localStorage.getItem('token')
-    axios.get('/products')
+    axios.get(url)
         .then(res => {
             defaultCallback(res.data)
         })
