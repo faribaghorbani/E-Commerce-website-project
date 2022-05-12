@@ -24,6 +24,7 @@ const PanelQuantityPage = () => {
     return (
       <div>
         <Box>
+        <Button variant="contained" sx={{m:3}}>ذخیره</Button>
         </Box>
         <TableComponent data={data} />
       </div>
