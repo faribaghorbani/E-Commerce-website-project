@@ -10,9 +10,9 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 
 // document.dir='rtl'
 const theme = createTheme({
-  typography: {
-    fontFamily: 'shabnam, Arial',
-  },
+	typography: {
+		fontFamily: 'shabnam, Arial',
+	},
 });
 
 
@@ -21,10 +21,10 @@ root.render(
   // <React.StrictMode>
     <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <Router>
-            <CssBaseline />
-            <App />
-          </Router>
+			<Router>
+				<CssBaseline />
+				<App />
+			</Router>
         </ThemeProvider>
     </Provider>
   // </React.StrictMode>
