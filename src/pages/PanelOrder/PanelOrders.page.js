@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import LoadingPage from '../Loading/Loading.page'
 import { getData } from '../../services/http.service'
 import TableComponent from './Components/OrdersTable.component'
 import { useNavigate } from 'react-router-dom'
@@ -52,7 +53,7 @@ const PanelOrdersPage = () => {
 		optimisedSearching(e.target.value)
 	}
 
-    if (loading) return "loading"
+    if (loading) return <LoadingPage />
     return (
       	<>
 			<div>

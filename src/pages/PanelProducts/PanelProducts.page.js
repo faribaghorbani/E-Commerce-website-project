@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback} from 'react'
+import LoadingPage from '../Loading/Loading.page'
 import { getData } from '../../services/http.service'
 import TableComponent from './Components/Table.component'
 import { useNavigate } from 'react-router-dom'
@@ -11,6 +12,7 @@ import RTL from '../../components/RTL.component';
 import SearchIcon from '@mui/icons-material/Search';
 import _ from 'lodash';
 import { filterProducts } from '../../utils/filterAdminPanel'
+
 
 
 const PanelProductsPage = () => {
@@ -46,7 +48,7 @@ const PanelProductsPage = () => {
     }
 
 
-    if (loading) return "loading"
+    if (loading) return <LoadingPage />
     return (
       <div>
         <div>

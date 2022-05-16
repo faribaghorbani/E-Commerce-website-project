@@ -1,11 +1,10 @@
 import React from 'react'
+import CircularProgress from '@mui/material/CircularProgress';
 
-const Loading = () => {
+const LoadingComponent = () => {
   return (
-    <div>
-      
-    </div>
+    <CircularProgress />
   )
 }
 
-export default Loading;
+export default LoadingComponent;

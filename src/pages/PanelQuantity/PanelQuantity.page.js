@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
+import LoadingPage from '../Loading/Loading.page'
 import { getData } from '../../services/http.service'
 import TableComponent from './Components/Table.component'
 import { useNavigate } from 'react-router-dom'
@@ -45,7 +46,7 @@ const PanelQuantityPage = () => {
     }
 
 
-    if (loading) return "loading"
+    if (loading) return <LoadingPage />
     return (
       <div>
         <div>
