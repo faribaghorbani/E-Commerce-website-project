@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userReducer from './slices/userSlice'
-import ordersStatusReducer from './slices/ordersStatusSlices';
+import ordersStatusReducer from './slices/ordersStatusSlice';
 
 
 const loadPreloadState = ()=>{
