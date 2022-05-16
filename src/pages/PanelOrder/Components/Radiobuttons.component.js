@@ -5,7 +5,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { useDispatch } from 'react-redux';
-import { setOrdersStatus } from '../../../redux/slices/ordersStatusSlices'
+import { setOrdersStatus } from '../../../redux/slices/ordersStatusSlice'
 import RTL from '../../../components/RTL.component';
 
 export default function RadioButtonsGroup() {

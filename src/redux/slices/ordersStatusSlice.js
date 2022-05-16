@@ -5,7 +5,7 @@ export const ordersStatusSlice = createSlice({
     initialState: 0,
     reducers: {
         setOrdersStatus: (state, action) => {
-            console.log(action.payload)
+            // console.log(action.payload)
             return action.payload
         },
     }
