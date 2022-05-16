@@ -11,13 +11,15 @@ import RTL from '../../components/RTL.component';
 import SearchIcon from '@mui/icons-material/Search';
 import _ from 'lodash';
 import { filterOrders } from '../../utils/filterAdminPanel'
-// import { createTheme } from '@mui/material/styles';
 import RadioButtonsGroup from './Components/Radiobuttons.component'
+import { useSelector } from 'react-redux'
 
 const PanelOrdersPage = () => {
-  	const navigate = useNavigate()
+	const navigate = useNavigate()
+	const orderStatus = useSelector(state => state.orderStatus)
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState([])
+    const [filteredData, setFilteredData] = useState([])
 	const [searchValue, setSearchValue] = useState("")
 
     useEffect(() => {
@@ -42,6 +44,30 @@ const PanelOrdersPage = () => {
 		() => navigate("/login", {replace: true})
 	)
 	}, 1000), [navigate])
+	
+	// apply filter after using search-bar
+	useEffect(() => {
+		if (orderStatus == 0) {
+			setFilteredData(data)
+		}
+		else {
+			setFilteredData(data.filter((item) => {
+				if (item.orderStatus == orderStatus) return item
+			}))
+		}
+	}, [data])
+
+
+	useEffect(() => {
+		if (orderStatus == 0) {
+			setFilteredData(data)
+		}
+		else {
+			setFilteredData(data.filter((item) => {
+				if (item.orderStatus == orderStatus) return item
+			}))
+		}
+	}, [orderStatus])
 
 
 	const handleChange = (e) => {
@@ -71,7 +97,7 @@ const PanelOrdersPage = () => {
 				<RadioButtonsGroup />
 			</div>
 			<div>
-				<TableComponent data={data} />
+				<TableComponent data={filteredData} />
 			</div>
       	</>
     )
