@@ -4,7 +4,6 @@ export const filterOrders = (data, search) => {
         item.customerDetail.lastName.startsWith(search) ||
         item.purchaseTotal.startsWith(search)
         ) {
-            console.log(item)
             return item
         }
     })
@@ -17,7 +16,6 @@ export const filterProducts = (data, search) => {
         if (item.name.startsWith(search) ||
         item.brand.toLowerCase().startsWith(search) 
         ) {
-            console.log(item)
             return item
         }
     })
@@ -28,9 +26,8 @@ export const filterQuantity = (data, search) => {
     data = data.filter((item) => {
         if (item.name.startsWith(search) ||
         item.price.startsWith(search) ||
-        item.quantity.startsWith(search)
+        String(item.quantity).startsWith(search)
         ) {
-            console.log(item)
             return item
         }
     })
