@@ -28,7 +28,6 @@ function createData(thumbnail, name, brand, operation) {
 
 
 export default function TableComponent(props) {
-  console.log(props)
   const rows = new Array(props.data.length).fill(null).map((item, index) => {
     return createData(
       props.data[index].thumbnail,

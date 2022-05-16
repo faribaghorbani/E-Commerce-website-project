@@ -23,7 +23,6 @@ function createData(name, purchaseTotal, orderDate) {
 
 
 export default function TableComponent(props) {
-  console.log(props)
   const rows = new Array(props.data.length).fill(null).map((item, index) => {
     return createData(
       props.data[index].customerDetail.firstName + " " + props.data[index].customerDetail.lastName,

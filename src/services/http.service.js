@@ -12,14 +12,13 @@ axios.interceptors.request.use(function (config) {
 export const authentication = (info, defaultCallback, errorCallback) => {
     axios.post('/auth/login', info)
         .then(res => {
-            console.log("ok")
             defaultCallback(res)
         })
         .catch(err => {errorCallback()})
 }
 
 export const getData = (url, defaultCallback, errorCallback) => {
-    const token = localStorage.getItem('token')
+    // const token = localStorage.getItem('token')
     axios.get(url)
         .then(res => {
             defaultCallback(res.data)
