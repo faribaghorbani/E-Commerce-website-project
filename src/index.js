@@ -10,6 +10,7 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 
 // document.dir='rtl'
 const theme = createTheme({
+	direction: 'rtl',
 	typography: {
 		fontFamily: 'shabnam, Arial',
 	},
