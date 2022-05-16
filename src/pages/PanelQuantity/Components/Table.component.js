@@ -21,7 +21,6 @@ function createData(name, price, quantity) {
 
 
 export default function TableComponent(props) {
-  console.log(props)
   const rows = new Array(props.data.length).fill(null).map((item, index) => {
     return createData(
       props.data[index].name,
