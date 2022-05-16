@@ -11,13 +11,8 @@ import RTL from '../../components/RTL.component';
 import SearchIcon from '@mui/icons-material/Search';
 import _ from 'lodash';
 import { filterOrders } from '../../utils/filterAdminPanel'
-
-
-import { createTheme } from '@mui/material/styles';
-
-const theme = createTheme({
-  direction: 'rtl',
-});
+// import { createTheme } from '@mui/material/styles';
+import RadioButtonsGroup from './Components/Radiobuttons.component'
 
 const PanelOrdersPage = () => {
   	const navigate = useNavigate()
@@ -26,6 +21,7 @@ const PanelOrdersPage = () => {
 	const [searchValue, setSearchValue] = useState("")
 
     useEffect(() => {
+		console.log("check navigate depen")
 		getData('/orders',
 			(data) => {
 			setLoading(false)
@@ -33,7 +29,7 @@ const PanelOrdersPage = () => {
 			},
 			() => navigate("/login", {replace: true})
 		)
-    }, [])
+    }, [navigate])
 	
 
 	const optimisedSearching = useCallback(_.throttle((value) => {
@@ -45,7 +41,7 @@ const PanelOrdersPage = () => {
 		},
 		() => navigate("/login", {replace: true})
 	)
-	}, 1000), [])
+	}, 1000), [navigate])
 
 
 	const handleChange = (e) => {
@@ -70,6 +66,9 @@ const PanelOrdersPage = () => {
 						<InputLabel htmlFor="outlined-adornment-amount">جست و جو</InputLabel>
 					</FormControl>
 				</RTL>
+			</div>
+			<div>
+				<RadioButtonsGroup />
 			</div>
 			<div>
 				<TableComponent data={data} />

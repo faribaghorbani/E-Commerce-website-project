@@ -27,7 +27,7 @@ const PanelQuantityPage = () => {
         },
         () => navigate("/login", {replace: true})
       )
-    }, [])
+    }, [navigate])
 
     const optimisedSearching = useCallback(_.throttle((value) => {
       getData('/products',
@@ -37,7 +37,7 @@ const PanelQuantityPage = () => {
       },
       () => navigate("/login", {replace: true})
     )
-    }, 1000), [])
+    }, 1000), [navigate])
 
 
     const handleChange = (e) => {
