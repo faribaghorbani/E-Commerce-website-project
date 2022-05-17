@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userReducer from './slices/userSlice'
 import ordersStatusReducer from './slices/ordersStatusSlice';
+import categoryDataReducer from './slices/categoryDataSlice';
 
 
 const loadPreloadState = ()=>{
@@ -28,6 +29,7 @@ export const store = configureStore({
     reducer: {
         user: userReducer,
         orderStatus: ordersStatusReducer,
+        categoryData: categoryDataReducer,
     }
 })
 
