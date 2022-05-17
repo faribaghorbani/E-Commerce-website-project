@@ -15,6 +15,7 @@ import ProtectedRoute from './components/Protected.route'
 import RegularLayout from "../layouts/Regular/Regular.layout";
 import AdminLayout from '../layouts/Admin/Admin.layout'
 import LoginLayout from '../layouts/Login/Login.layout'
+import SidebarLayout from "../layouts/Sidebar/Sidebar.layout";
 import PanelHomePage from "../pages/PanelHome/PanelHome.page";
 // import SidebarLayout from '../layouts/Sidebar/Sidebarlayout'
 
@@ -27,16 +28,16 @@ function App() {
 				</RegularLayout>
 			}/>
 
-			<Route path="/products" element={	
-				<RegularLayout sidebar>
+			<Route path="/products" element={
+				<SidebarLayout>
 					<ProductsPage />
-				</RegularLayout>	
+				</SidebarLayout>
 			}/>
 
 			<Route path="/products/:product" element={		
-				<RegularLayout>
+				<SidebarLayout>
 					<ProductPage />
-				</RegularLayout>
+				</SidebarLayout>
 			}/>
 
 			<Route path="/basket" element={		
