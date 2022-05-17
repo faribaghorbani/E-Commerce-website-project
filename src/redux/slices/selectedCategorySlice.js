@@ -7,11 +7,11 @@ export const selectedCategorySlice = createSlice({
         subCategory: ""
     },
     reducers: {
-        setCategoryData: (state, action) => {
+        setSelectedCategory: (state, action) => {
             return action.payload
         },
     }
 })
 
-export const { setCategoryData } = selectedCategorySlice.actions
+export const { setSelectedCategory } = selectedCategorySlice.actions
 export default selectedCategorySlice.reducer
