@@ -30,3 +30,14 @@ export const getData = (url, defaultCallback, errorCallback) => {
             }
         })
 }
+
+export const getDataUser = (url, defaultCallback, errorCallback) => {
+    // const token = localStorage.getItem('token')
+    axios.get(url)
+        .then(res => {
+            defaultCallback(res.data)
+        })
+        .catch(err => {
+             errorCallback()
+        })
+}
