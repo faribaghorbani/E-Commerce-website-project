@@ -70,13 +70,10 @@ const ProductsPage = () => {
 									alt="green iguana"
 								/>
 								<CardContent>
-									<Typography gutterBottom variant="h5" component="div">
+									<Typography dir="rtl" gutterBottom variant="h6" component="div">
 										{product.name}
 									</Typography>
-									<Typography variant="body2" color="text.secondary">
-										
-									</Typography>
-									<Typography variant="body2" color="text.secondary">
+									<Typography dir="rtl" variant="body2" color="text.secondary">
 										{product.price} تومان
 									</Typography>
 								</CardContent>

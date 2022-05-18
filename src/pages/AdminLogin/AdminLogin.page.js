@@ -61,6 +61,7 @@ const AdminLogin = () => {
 				<RTL>
 					<TextField
 					// fullWidth
+						dir='rtl'
 						sx={{mb: 3}}
 						label="نام کاربری"
 						id="username"
@@ -73,6 +74,7 @@ const AdminLogin = () => {
 					/>
 					<TextField
 					// fullWidth
+						dir='rtl'
 						sx={{mb: 3}}
 						label="رمز عبور"
 						id="password"

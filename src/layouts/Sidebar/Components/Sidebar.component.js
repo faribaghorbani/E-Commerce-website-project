@@ -7,6 +7,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedCategory } from '../../../redux/slices/selectedCategorySlice';
+import RTL from '../../../components/RTL.component'
 
 const SidebarComponent = () => {
     const categoryData = useSelector(state => state.categoryData)
@@ -31,23 +32,27 @@ const SidebarComponent = () => {
             {categoryData.map((item) => {
                 return (
                     <React.Fragment key={item.id}>
-                        <ListItemButton onClick={() => {
-                            const temp = openStatus[item.name]
-                            setOpenStatus(prevState => ({...prevState, [item.name]: !temp}))
-                            updateReduxState({category: item.name, subCategory: ""})
-                        }}>
-                            <ListItemText primary={item.title} />
-                            {openStatus[item.name] ? <ExpandLess /> : <ExpandMore />}
-                        </ListItemButton>
+                        <RTL>
+                            <ListItemButton onClick={() => {
+                                const temp = openStatus[item.name]
+                                setOpenStatus(prevState => ({...prevState, [item.name]: !temp}))
+                                updateReduxState({category: item.name, subCategory: ""})
+                            }}>
+                                {openStatus[item.name] ? <ExpandLess /> : <ExpandMore />}
+                                <ListItemText primary={item.title} />
+                            </ListItemButton>
+                        </RTL>
                         <Collapse in={openStatus[item.name]} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
                                 {item.subCategory.map((sub) => {
                                     return (
-                                    <ListItemButton key={sub.id} sx={{ pl: 4 }} onClick={() => {
-                                        updateReduxState({category: item.name, subCategory: sub.name})
-                                    }}>
-                                        <ListItemText primary={sub.title} />
-                                    </ListItemButton>
+                                    <RTL>
+                                        <ListItemButton key={sub.id} sx={{ pl: 4 }} onClick={() => {
+                                            updateReduxState({category: item.name, subCategory: sub.name})
+                                        }}>
+                                            <ListItemText dir="rtl" primary={sub.title} />
+                                        </ListItemButton>
+                                    </RTL>
                                     )
                                 })}
                             </List>
