@@ -38,7 +38,7 @@ const SidebarLayout = (props) => {
 		return (
 			<>
 				<Header />
-				<div>error</div>
+				<div>اتصال به سرور با خطا رو به رو شد</div>
 			</>
 		)
 	} else {
