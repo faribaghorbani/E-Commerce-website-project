@@ -29,8 +29,6 @@ const ProductsPage = () => {
 		} else {
 			url = `/products?category.main=${selectedCategory.category}&category.second=${selectedCategory.subCategory}&_page=${page}&_limit=${limit}`
 		}
-		// console.log(url);
-		console.log(selectedCategory);
 
 		getDataUser(url, 
 			(data) => {
@@ -44,9 +42,6 @@ const ProductsPage = () => {
 		)
 	}, [selectedCategory])
 
-	useEffect(() => {
-		console.log(data)
-	}, [data])
 
 	if (loading) {
 		return (
