@@ -34,7 +34,7 @@ function App() {
 				</SidebarLayout>
 			}/>
 
-			<Route path="/products/:product" element={		
+			<Route path="/products/:category/:subcategory/:id" element={		
 				<SidebarLayout>
 					<ProductPage />
 				</SidebarLayout>
