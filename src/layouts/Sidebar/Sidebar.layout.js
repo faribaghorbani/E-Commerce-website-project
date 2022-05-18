@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, Paper } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import LoadingPage from '../../pages/Loading/Loading.page';
@@ -46,12 +46,16 @@ const SidebarLayout = (props) => {
 			<>
 				<Header />
 				<h1>salam</h1>
-				<Grid container>
-					<Grid item xs={9}>
+				<Grid container spacing={2} sx={{ flexGrow: 1 }}>
+					<Grid item container xs={9} sx={{ flexGrow: 1 }} spacing={2} 
+					justifyContent="space-evenly"
+  					alignItems="stretch">
 						{props.children}
 					</Grid>
 					<Grid item xs={3}>
-						<SidebarComponent />
+						<Paper elevation={3}>
+							<SidebarComponent />
+						</Paper>
 					</Grid>
 				</Grid>
 			</>
