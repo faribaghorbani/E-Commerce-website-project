@@ -77,7 +77,7 @@ export default function TableComponent(props) {
                       if (column.id == "thumbnail") {
                         return (
                         <TableCell key={column.id} align={column.align}>
-                          <img src={`http://localhost:3002${value}`} style={{width: '100px', height: '100px', objectFit: 'cover',}} />
+                          <img src={`http://localhost:3002/files/${value}`} style={{width: '100px', height: '100px', objectFit: 'cover',}} />
                         </TableCell>
                       )}
                       else if(column.id == "editTools") {
@@ -91,7 +91,7 @@ export default function TableComponent(props) {
                         );
                       } else {
                         return (
-                          <TableCell key={column.id} align={column.align}>
+                          <TableCell dir="rtl" key={column.id} align={column.align}>
                             {column.format && typeof value === 'number'
                               ? column.format(value)
                               : value}
