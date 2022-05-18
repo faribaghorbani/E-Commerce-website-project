@@ -35,9 +35,9 @@ function App() {
 			}/>
 
 			<Route path="/products/:category/:subcategory/:id" element={		
-				<SidebarLayout>
+				<RegularLayout>
 					<ProductPage />
-				</SidebarLayout>
+				</RegularLayout>
 			}/>
 
 			<Route path="/basket" element={		
