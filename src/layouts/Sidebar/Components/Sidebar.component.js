@@ -26,7 +26,6 @@ const SidebarComponent = () => {
 		})
 	}, [categoryData])
 
-
     return (
         <List>
             {categoryData.map((item) => {
