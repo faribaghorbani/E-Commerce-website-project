@@ -14,9 +14,13 @@ import Button from '@mui/material/Button';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Box } from '@mui/system'
+import { setAdminPanelSavedProducts } from '../../../redux/slices/adminPanelSavedProductsSlice'
+import { getData } from '../../../services/http.service'
+import { useNavigate } from 'react-router-dom'
 
 
 const AddproductForm = ({handleClose}) => {
+	const navigate = useNavigate()
 	const categoryData = useSelector(state => state.categoryData)
 	const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
@@ -93,7 +97,12 @@ const AddproductForm = ({handleClose}) => {
 				.then(res => {
 					setFlag(false)
 					handleClose()
-					console.log('ok')
+					getData('/products',
+					(data) => {
+					dispatch(setAdminPanelSavedProducts(data))
+					},
+					() => navigate("/login", {replace: true})
+					)
 				})
 				.catch(err => {
 					setError(true)

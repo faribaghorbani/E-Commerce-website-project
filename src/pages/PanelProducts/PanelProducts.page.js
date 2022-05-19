@@ -14,14 +14,18 @@ import _ from 'lodash';
 import { filterProducts } from '../../utils/filterAdminPanel'
 import AddproductForm from './Components/AddproductForm.component'
 import ModalComponent from './Components/Modal.component'
+import { useDispatch, useSelector } from 'react-redux'
+import { setAdminPanelSavedProducts } from '../../redux/slices/adminPanelSavedProductsSlice'
 
 
 
 const PanelProductsPage = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [loading, setLoading] = useState(true)
     const [searchValue, setSearchValue] = useState("")
-    const [data, setData] = useState([])
+    const data = useSelector(state => state.adminPanelSavedProducts)
+    // const [data, setData] = useState([])
 
     const [open, setOpen] = useState(false);
 
@@ -37,7 +41,7 @@ const PanelProductsPage = () => {
       getData('/products',
         (data) => {
           setLoading(false)
-          setData(data)
+          dispatch(setAdminPanelSavedProducts(data))
         },
         () => navigate("/login", {replace: true})
       )
@@ -47,7 +51,7 @@ const PanelProductsPage = () => {
       getData('/products',
       (data) => {
         data = filterProducts(data, value)
-        setData(data)
+        dispatch(setAdminPanelSavedProducts(data))
       },
       () => navigate("/login", {replace: true})
     )

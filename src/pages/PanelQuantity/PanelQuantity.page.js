@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from 'react'
 import LoadingPage from '../Loading/Loading.page'
 import { getData } from '../../services/http.service'
 import TableComponent from './Components/Table.component'
-import { useNavigate } from 'react-router-dom'
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -11,18 +10,22 @@ import RTL from '../../components/RTL.component';
 import SearchIcon from '@mui/icons-material/Search';
 import _ from 'lodash';
 import { filterQuantity } from '../../utils/filterAdminPanel'
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setAdminPanelSavedProducts } from '../../redux/slices/adminPanelSavedProductsSlice';
 
 const PanelQuantityPage = () => {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [loading, setLoading] = useState(true)
     const [searchValue, setSearchValue] = useState("")
-    const [data, setData] = useState([])
+    const data = useSelector(state => state.adminPanelSavedProducts)
 
     useEffect(() => {
       getData('/products',
         (data) => {
           setLoading(false)
-          setData(data)
+          dispatch(setAdminPanelSavedProducts(data))
         },
         () => navigate("/login", {replace: true})
       )
@@ -33,7 +36,7 @@ const PanelQuantityPage = () => {
       getData('/products',
       (data) => {
         data = filterQuantity(data, value)
-        setData(data)
+        dispatch(setAdminPanelSavedProducts(data))
       },
       () => navigate("/login", {replace: true})
     )

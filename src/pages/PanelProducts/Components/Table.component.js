@@ -9,7 +9,10 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSelector } from 'react-router-dom';
+import { setAdminPanelSavedProducts } from '../../../redux/slices/adminPanelSavedProductsSlice';
+import { useDispatch } from 'react-redux';
+import { getData } from '../../../services/http.service';
 
 const columns = [
   {
@@ -39,7 +42,7 @@ export default function TableComponent(props) {
       'editTools'
       )
   })
-
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -47,7 +50,14 @@ export default function TableComponent(props) {
   const handleDeleteData = (id) => {
     console.log(id)
     axios.delete(`/products/${id}`)
-      .then(res => console.log("ok"))
+      .then(res => {
+        getData('/products',
+        (data) => {
+          dispatch(setAdminPanelSavedProducts(data))
+        },
+        () => navigate("/login", {replace: true})
+        )
+      })
       .catch(err => {
         if (err.response.status == 401) {
           navigate('/login')
