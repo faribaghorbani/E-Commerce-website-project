@@ -45,7 +45,6 @@ const SidebarLayout = (props) => {
 		return (
 			<>
 				<Header />
-				<h1>salam</h1>
 				<Grid container spacing={2} sx={{ flexGrow: 1 }}>
 					<Grid item container xs={9} sx={{ flexGrow: 1 }} spacing={2} 
 					justifyContent="space-evenly"
