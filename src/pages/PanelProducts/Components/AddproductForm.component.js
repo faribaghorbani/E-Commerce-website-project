@@ -11,6 +11,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Button from '@mui/material/Button';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Box } from '@mui/system'
@@ -20,11 +21,11 @@ const AddproductForm = () => {
 	const categoryData = useSelector(state => state.categoryData)
 	const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
-	const [group, setGroup] = useState('');
 	const [files, setFiles] = useState([])
 	const [thumbnail, setThumbnail] = useState()
 	const [uploads, setUploads] = useState([])
 	const [flag, setFlag] = useState(false)
+	const [tempColor, setTempColor] = useState("")
 	const [values, setValues] = useState({
 		name: '',
 		brand: '',
@@ -75,22 +76,24 @@ const AddproductForm = () => {
 
 		Promise.all(temp.map((formdata) => axios.post('upload', formdata)))
 			.then((responses)=> {
-				setUploads(responses.map(res => res.data.filename))
+				const tempArray = responses.map(res => res.data.filename)
+				setValues(prev => {
+					return {...prev, 'thumbnail': tempArray.slice(0,1)[0], 'gallery': tempArray.slice(1)}
+				})
+				setFlag(true)
 			})
 			.catch((err) => console.log(err))
-
 	}
 
+
 	useEffect(() => {
-		console.log(values)
-		// const formData = new FormData()
-		// formData.append('image', files[files.length-1])
-		// if (files.length === 0) {
-		// 	axios.post('/upload', formData)
-		// 		.then(res => res.data)
-		// 		.then(data => setUploads(prev => [...prev, data.filename]))
-		// }
-	}, [values])
+		if (flag === true) {
+			console.log("yes")
+			console.log(values)
+			axios.post('/products', values)
+				.then(res => console.log('ok'))
+		}
+	}, [flag])
 
 
 	if (loading) {
@@ -130,7 +133,7 @@ const AddproductForm = () => {
 						type="number"
 						name="price"
 						variant="standard"
-						onChange={e => setValues(prev => ({...prev, 'price': e.target.value}))}
+						onChange={e => setValues(prev => ({...prev, 'price': +e.target.value}))}
 					/>
 					<TextField
 						fullWidth
@@ -199,16 +202,16 @@ const AddproductForm = () => {
 						type="number"
 						name="quantity"
 						variant="standard"
-						onChange={e => setValues(prev => ({...prev, 'quantity': e.target.value}))}
+						onChange={e => setValues(prev => ({...prev, 'quantity': +e.target.value}))}
 					/>
 
 					<CKEditor
 						editor={ ClassicEditor }
 						data=""
-						onReady={ editor => {
-							// You can store the "editor" and use when it is needed.
-							console.log( 'Editor is ready to use!', editor );
-						} }
+						// onReady={ editor => {
+						// 	// You can store the "editor" and use when it is needed.
+						// 	console.log( 'Editor is ready to use!', editor );
+						// } }
 						onChange={ ( event, editor ) => {
 							const data = editor.getData();
 							setValues(prev => ({...prev, 'description': data}))
@@ -220,19 +223,28 @@ const AddproductForm = () => {
 						// 	console.log( 'Focus.', editor );
 						// } }
 					/>
-					<Box>
+					<Box sx={{mt: 2}}>
 						<label>آپلود تامبنیل</label>
 						<input type="file" multiple onChange={e => setThumbnail(e.target.files[0])}/>
 					</Box>
-					<Box>
+					<Box sx={{mt: 2}}>
 						<label>آپلود گالری</label>
 						<input type="file" multiple onChange={e => {
 							console.log(e.target.files)
 							setFiles(Object.values(e.target.files))
 						}}/>
 					</Box>
-					<button onClick={submitTheForm}>Hello</button>
+					<Box sx={{mt: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+						<div>
+							<label>اضافه کردن رنگ</label>
+							<input type="color" onChange={e => setTempColor(e.target.value)}/>
+						</div>
+						<Button variant="contained" onClick={() => setValues(prev => ({...prev, 'color': [...values.color, tempColor]}))}>+</Button>
+					</Box>
 				</RTL>
+				<Box sx={{display: 'flex', justifyContent: 'center', my: 2}}>
+					<Button  variant="outlined" onClick={submitTheForm}>افزودن</Button>
+				</Box>
 			</div>
 		)
 	}
