@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getDataUser } from '../../../services/http.service'
 import { setCategoryData } from '../../../redux/slices/categoryDataSlice'
 import LoadingComponent from '../../Loading/Components/Loading.component'
-import { Form, useFormik } from 'formik';
 import axios from 'axios'
 import TextField from '@mui/material/TextField';
 import RTL from '../../../components/RTL.component'
@@ -17,7 +16,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Box } from '@mui/system'
 
 
-const AddproductForm = () => {
+const AddproductForm = ({handleClose}) => {
 	const categoryData = useSelector(state => state.categoryData)
 	const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
@@ -82,7 +81,7 @@ const AddproductForm = () => {
 				})
 				setFlag(true)
 			})
-			.catch((err) => console.log(err))
+			.catch((err) => setError(true))
 	}
 
 
@@ -91,7 +90,14 @@ const AddproductForm = () => {
 			console.log("yes")
 			console.log(values)
 			axios.post('/products', values)
-				.then(res => console.log('ok'))
+				.then(res => {
+					setFlag(false)
+					handleClose()
+					console.log('ok')
+				})
+				.catch(err => {
+					setError(true)
+				})
 		}
 	}, [flag])
 
@@ -208,20 +214,10 @@ const AddproductForm = () => {
 					<CKEditor
 						editor={ ClassicEditor }
 						data=""
-						// onReady={ editor => {
-						// 	// You can store the "editor" and use when it is needed.
-						// 	console.log( 'Editor is ready to use!', editor );
-						// } }
 						onChange={ ( event, editor ) => {
 							const data = editor.getData();
 							setValues(prev => ({...prev, 'description': data}))
 						} }
-						// onBlur={ ( event, editor ) => {
-						// 	console.log( 'Blur.', editor );
-						// } }
-						// onFocus={ ( event, editor ) => {
-						// 	console.log( 'Focus.', editor );
-						// } }
 					/>
 					<Box sx={{mt: 2}}>
 						<label>آپلود تامبنیل</label>

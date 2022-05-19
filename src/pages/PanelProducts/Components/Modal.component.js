@@ -30,7 +30,7 @@ export default function ModalComponent(props) {
         </DialogContent>
         <DialogActions>
           <Button autoFocus>
-            {props.button}
+            {"بستن"}
           </Button>
         </DialogActions>
       </Dialog>

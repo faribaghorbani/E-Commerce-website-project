@@ -89,11 +89,9 @@ const PanelProductsPage = () => {
 			open={open} 
 			handleClose={handleClose}
 			handleOpen={handleOpen}
-			button={"افزودن"}
 		>
-			hello
+		  <AddproductForm handleClose={handleClose}/>
 		</ModalComponent>
-		<AddproductForm />
       </div>
     )
 }
