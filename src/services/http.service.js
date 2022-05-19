@@ -1,6 +1,7 @@
 import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:3002"
+axios.defaults.timeout = 4000
 
 axios.interceptors.request.use(function (config) {
     const token = localStorage.getItem('token');
