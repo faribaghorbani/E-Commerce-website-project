@@ -8,6 +8,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const columns = [
   {
@@ -22,14 +24,15 @@ const columns = [
   { id: 'thumbnail', label: 'تصویر', minWidth: 90, align:'right'},
 ];
 
-function createData(thumbnail, name, brand, operation) {
-  return { thumbnail, name, brand, operation};
+function createData(id, thumbnail, name, brand, operation) {
+  return {id, thumbnail, name, brand, operation};
 }
 
 
 export default function TableComponent(props) {
   const rows = new Array(props.data.length).fill(null).map((item, index) => {
     return createData(
+      props.data[index].id,
       props.data[index].thumbnail,
       props.data[index].name,
       props.data[index].brand,
@@ -37,8 +40,20 @@ export default function TableComponent(props) {
       )
   })
 
+  const navigate = useNavigate()
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const handleDeleteData = (id) => {
+    console.log(id)
+    axios.delete(`/products/${id}`)
+      .then(res => console.log("ok"))
+      .catch(err => {
+        if (err.response.status == 401) {
+          navigate('/login')
+        } 
+      })
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -71,7 +86,7 @@ export default function TableComponent(props) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       if (column.id == "thumbnail") {
@@ -84,7 +99,7 @@ export default function TableComponent(props) {
                         return (
                           <TableCell key={column.id} align={column.align}>
                           {/* <div style={{height: '100%',display: 'flex', flexDirection: 'column', justifyContent:'center', alignItems: 'center'}}> */}
-                            <Button variant="outlined">حذف</Button>
+                            <Button variant="outlined" onClick={() => handleDeleteData(row.id)}>حذف</Button>
                             <Button variant="outlined" sx={{m: 1}}>ویرایش</Button>
                           {/* </div> */}
                           </TableCell>
