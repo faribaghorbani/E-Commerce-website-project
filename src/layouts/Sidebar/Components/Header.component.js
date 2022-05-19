@@ -20,7 +20,13 @@ const Header = () => {
       zIndex: 100}}
       >
         <Button variant="contained" onClick={() => {navigate('/panel')}}>ورود ادمین</Button>
-        <img src={logo} style={{width: '200px'}} />
+        <div style={{display: 'flex', justifyContent: 'center', gap: '10px'}}>
+        <ul dir="rtl" style={{display: 'flex', justifyContent: 'center', gap: '10px', listStyleType: 'none'}}>
+          <li style={{cursor: 'pointer'}}>صفحه محصولات</li>
+          <li style={{cursor: 'pointer'}}>درباره ما</li>
+        </ul>
+        <img onClick={() => navigate('/')} style={{cursor: 'pointer', width: '200px'}} src={logo} />
+        </div>
     </div>
   )
 }
