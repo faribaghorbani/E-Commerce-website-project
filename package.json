@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^34.0.0",
     "@ckeditor/ckeditor5-core": "^34.0.0",
     "@ckeditor/ckeditor5-engine": "^34.0.0",
+    "@ckeditor/ckeditor5-react": "^5.0.1",
     "@ckeditor/ckeditor5-ui": "^34.0.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
