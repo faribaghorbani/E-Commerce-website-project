@@ -18,11 +18,11 @@ const images = [
 
 
 class GallerySlider extends Component {
-	constructor(props) {
-		super(props)
-	}
+    constructor(props) {
+      super(props)
+    }
   	render() {
-    	return <ImageGallery items={images} />;
+    	return <ImageGallery items={this.props.images} />;
   	}
 }
 
