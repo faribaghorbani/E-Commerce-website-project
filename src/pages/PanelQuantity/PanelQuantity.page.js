@@ -3,7 +3,6 @@ import LoadingPage from '../Loading/Loading.page'
 import { getData } from '../../services/http.service'
 import TableComponent from './Components/Table.component'
 import { useNavigate } from 'react-router-dom'
-import { Button, Box } from '@mui/material'
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -29,6 +28,7 @@ const PanelQuantityPage = () => {
       )
     }, [navigate])
 
+
     const optimisedSearching = useCallback(_.throttle((value) => {
       getData('/products',
       (data) => {
@@ -51,7 +51,7 @@ const PanelQuantityPage = () => {
       <div>
         <div>
           <RTL>
-            <FormControl fullWidth sx={{ m: 1 }}>
+            <FormControl dir="rtl" fullWidth sx={{ m: 1 }}>
               <OutlinedInput
                 sx={{textAlign: 'left'}}
                 id="outlined-adornment-amount"
@@ -64,9 +64,6 @@ const PanelQuantityPage = () => {
             </FormControl>
           </RTL>
 			  </div>
-        <Box>
-          <Button variant="contained" sx={{m:3}}>ذخیره</Button>
-        </Box>
         <TableComponent data={data} />
       </div>
     )
