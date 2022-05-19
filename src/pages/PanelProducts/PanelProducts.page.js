@@ -12,6 +12,8 @@ import RTL from '../../components/RTL.component';
 import SearchIcon from '@mui/icons-material/Search';
 import _ from 'lodash';
 import { filterProducts } from '../../utils/filterAdminPanel'
+import AddproductForm from './Components/AddproductForm.component'
+import ModalComponent from './Components/Modal.component'
 
 
 
@@ -20,6 +22,16 @@ const PanelProductsPage = () => {
     const [loading, setLoading] = useState(true)
     const [searchValue, setSearchValue] = useState("")
     const [data, setData] = useState([])
+
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
 
     useEffect(() => {
       getData('/products',
@@ -52,24 +64,36 @@ const PanelProductsPage = () => {
     return (
       <div>
         <div>
-				<RTL>
-					<FormControl fullWidth sx={{ m: 1 }}>
-						<OutlinedInput
-							sx={{textAlign: 'left'}}
-							id="outlined-adornment-amount"
-							value={searchValue}
-							onChange={handleChange}
-							startAdornment={<InputAdornment position="start"><SearchIcon /></InputAdornment>}
-							label="search"
-						/>
-						<InputLabel htmlFor="outlined-adornment-amount">جست و جو</InputLabel>
-					</FormControl>
-				</RTL>
-			</div>
+			<RTL>
+				<FormControl fullWidth sx={{ m: 1 }}>
+					<OutlinedInput
+						sx={{textAlign: 'left'}}
+						id="outlined-adornment-amount"
+						value={searchValue}
+						onChange={handleChange}
+						startAdornment={<InputAdornment position="start"><SearchIcon /></InputAdornment>}
+						label="search"
+					/>
+					<InputLabel htmlFor="outlined-adornment-amount">جست و جو</InputLabel>
+				</FormControl>
+			</RTL>
+		</div>
+
         <Box>
-        <Button variant="contained" sx={{m:3}}>افزودن کالا</Button>
+        	<Button variant="contained" sx={{m:3}} onClick={handleOpen}>افزودن کالا</Button>
         </Box>
+
         <TableComponent data={data} />
+		
+		<ModalComponent title={"افزودن کالا"}
+			open={open} 
+			handleClose={handleClose}
+			handleOpen={handleOpen}
+			button={"افزودن"}
+		>
+			hello
+		</ModalComponent>
+		<AddproductForm />
       </div>
     )
 }
