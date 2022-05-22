@@ -8,12 +8,13 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 const ProductsPage = () => {
 	const selectedCategory = useSelector(state => state.selectedCategory)
-	const navigate = useNavigate()
+	const navigate = useNavigate();
+	const params = useParams()
 	const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [data, setData] = useState([])
@@ -21,13 +22,14 @@ const ProductsPage = () => {
 	const [page, setPage] = useState(1);
 
 	useEffect(() => {
+		console.log(params)
 		let url
-		if (!selectedCategory.category && !selectedCategory.subCategory) {
+		if (!params.category && !params.subcategory) {
 			url = `/products?_page=${page}&_limit=${limit}`
-		} else if (selectedCategory.category && !selectedCategory.subCategory) {
-			url = `/products?category.main=${selectedCategory.category}&_page=${page}&_limit=${limit}`
+		} else if (params.category && !params.subcategory) {
+			url = `/products?category.main=${params.category}&_page=${page}&_limit=${limit}`
 		} else {
-			url = `/products?category.main=${selectedCategory.category}&category.second=${selectedCategory.subCategory}&_page=${page}&_limit=${limit}`
+			url = `/products?category.main=${params.category}&category.second=${params.subcategory}&_page=${page}&_limit=${limit}`
 		}
 
 		getDataUser(url, 
@@ -40,7 +42,7 @@ const ProductsPage = () => {
 				setLoading(false)
 			}
 		)
-	}, [selectedCategory])
+	}, [params])
 
 
 	if (loading) {
@@ -62,7 +64,7 @@ const ProductsPage = () => {
 					return (
 						<Grid item xs={4} key={product.id}>
 						{/* <Card sx={{ maxWidth: 345 }}> */}
-							<Card onClick={() => {navigate(`${product.category.main}/${product.category.second}/${product.id}`)}}>
+							<Card onClick={() => {navigate(`/products/${product.category.main}/${product.category.second}/${product.id}`)}}>
 								<CardMedia
 									component="img"
 									// height="300"

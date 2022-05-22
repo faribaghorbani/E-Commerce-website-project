@@ -5,23 +5,18 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { useSelector, useDispatch } from 'react-redux';
-import { setSelectedCategory } from '../../../redux/slices/selectedCategorySlice';
+import { useSelector } from 'react-redux';
 import RTL from '../../../components/RTL.component'
+import { useNavigate, useParams } from 'react-router-dom';
 
 const SidebarComponent = () => {
+    const navigate = useNavigate()
+    const params = useParams()
     const categoryData = useSelector(state => state.categoryData)
-    const selectedCategory = useSelector(state => state.selectedCategory)
-    const dispatch = useDispatch()
 	const [openStatus, setOpenStatus] = useState({});
 
-    const updateReduxState = (obj) => {
-        if (JSON.stringify(selectedCategory) !== JSON.stringify(obj)) {
-            dispatch(setSelectedCategory(obj))
-        }
-    }
-
 	useEffect(() => {
+        console.log(params)
 		categoryData.map((category) => {
 			setOpenStatus(prevState => ({...prevState, [category.name]: false}))
 		})
@@ -36,7 +31,7 @@ const SidebarComponent = () => {
                             <ListItemButton onClick={() => {
                                 const temp = openStatus[item.name]
                                 setOpenStatus(prevState => ({...prevState, [item.name]: !temp}))
-                                updateReduxState({category: item.name, subCategory: ""})
+                                navigate(`/products/${item.name}`)
                             }}>
                                 {openStatus[item.name] ? <ExpandLess /> : <ExpandMore />}
                                 <ListItemText primary={item.title} />
@@ -48,7 +43,7 @@ const SidebarComponent = () => {
                                     return (
                                     <RTL>
                                         <ListItemButton key={sub.id} sx={{ pl: 4 }} onClick={() => {
-                                            updateReduxState({category: item.name, subCategory: sub.name})
+                                            navigate(`/products/${item.name}/${sub.name}`)
                                         }}>
                                             <ListItemText dir="rtl" primary={sub.title} />
                                         </ListItemButton>
