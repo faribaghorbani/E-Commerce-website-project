@@ -15,7 +15,7 @@ const SidebarLayout = (props) => {
 
 
     useEffect(() => {
-		getDataUser('/category?_embed=subCategory', 
+		getDataUser('/categories?_embed=subCategories', 
 		(data) => {
 			dispatch(setCategoryData(data))
 			setLoading(false)

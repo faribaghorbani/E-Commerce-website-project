@@ -44,7 +44,7 @@ const SidebarComponent = () => {
                         </RTL>
                         <Collapse in={openStatus[item.name]} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
-                                {item.subCategory.map((sub) => {
+                                {item.subCategories.map((sub) => {
                                     return (
                                     <RTL>
                                         <ListItemButton key={sub.id} sx={{ pl: 4 }} onClick={() => {
