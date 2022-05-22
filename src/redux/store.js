@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit'
 import userReducer from './slices/userSlice'
 import ordersStatusReducer from './slices/ordersStatusSlice';
 import categoryDataReducer from './slices/categoryDataSlice';
-import selectedCategoryReducer from './slices/selectedCategorySlice';
 import adminPanelSavedProductsReducer from './slices/adminPanelSavedProductsSlice';
 
 
@@ -32,7 +31,6 @@ export const store = configureStore({
         user: userReducer,
         orderStatus: ordersStatusReducer,
         categoryData: categoryDataReducer,
-        selectedCategory: selectedCategoryReducer,
         adminPanelSavedProducts: adminPanelSavedProductsReducer,
     }
 })

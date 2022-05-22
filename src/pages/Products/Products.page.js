@@ -12,7 +12,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 
 const ProductsPage = () => {
-	const selectedCategory = useSelector(state => state.selectedCategory)
 	const navigate = useNavigate();
 	const params = useParams()
 	const [loading, setLoading] = useState(true)
