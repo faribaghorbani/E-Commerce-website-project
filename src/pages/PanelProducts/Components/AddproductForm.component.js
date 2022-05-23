@@ -26,7 +26,6 @@ const AddproductForm = ({handleClose}) => {
     const [error, setError] = useState(false)
 	const [files, setFiles] = useState([])
 	const [thumbnail, setThumbnail] = useState()
-	const [uploads, setUploads] = useState([])
 	const [flag, setFlag] = useState(false)
 	const [tempColor, setTempColor] = useState("")
 	const [values, setValues] = useState({
@@ -52,10 +51,11 @@ const AddproductForm = ({handleClose}) => {
 		if (categoryData.length === 0) {
 			console.log("not stored category data");
 			console.log(categoryData);
-			getDataUser('/category?_embed=subCategory', 
+			getDataUser('/categories?_embed=subCategories', 
 				(data) => {
 					dispatch(setCategoryData(data))
 					setLoading(false)
+					console.log(data)
 				},
 				() => {
 					setLoading(false)
@@ -198,7 +198,7 @@ const AddproductForm = ({handleClose}) => {
 									<em>-</em>
 								</MenuItem>
 								{categoryData
-									?.filter(itemCat => itemCat.name == values.category.main)[0]?.subCategory
+									?.filter(itemCat => itemCat.name == values.category.main)[0]?.subCategories
 									?.map((sub) => {
 										return (
 											<MenuItem value={sub.name}>{sub.title}</MenuItem>
