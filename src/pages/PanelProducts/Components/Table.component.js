@@ -47,8 +47,9 @@ export default function TableComponent(props) {
 	})
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
-	const [page, setPage] = React.useState(0);
-	const [rowsPerPage, setRowsPerPage] = React.useState(10);
+	const [edittingData, setEdittingData] = useState([]);
+	const [page, setPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(10);
 
 
 	const handleOpen = () => {
@@ -79,6 +80,7 @@ export default function TableComponent(props) {
 
 	const handleEditData = (id) => {
 		const targetData = props.data.filter(item => item.id === id)
+		setEdittingData(targetData[0])
 		handleOpen()
 	}
 
@@ -162,7 +164,7 @@ export default function TableComponent(props) {
 				handleClose={handleClose}
 				handleOpen={handleOpen}
 			>
-				<EditproductForm closeModal={handleClose} />
+				<EditproductForm closeModal={handleClose} edittingData={edittingData} />
 			</ModalComponent>
 
 		</Paper>
