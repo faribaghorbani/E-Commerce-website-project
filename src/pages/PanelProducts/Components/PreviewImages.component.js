@@ -15,8 +15,12 @@ const PreviewImages = ({images, updateImages}) => {
     useEffect(() => {
         let temp = []
         images.forEach(item => {
-            const preview = URL.createObjectURL(item)
-            temp = [...temp, preview]
+            if (typeof item === 'object') {
+                const preview = URL.createObjectURL(item)
+                temp = [...temp, preview]
+            } else {
+                temp = [...temp, item]
+            }
         })
         setPreviews(temp)
     }, [images])
@@ -25,14 +29,14 @@ const PreviewImages = ({images, updateImages}) => {
         <div>
             {previews?.map((item, index) => {
                 return (
-                    <>
-                        <img key={uuidv4()} src={item} style={{width: '100px', objectFit: 'cover'}} />
-                        <div 
+                    <React.Fragment key={uuidv4()}>
+                        <img src={item} style={{width: '100px', objectFit: 'cover'}} />
+                        <div
                         style={{width: '100px', height: '100px', borderRadius: '50%', backgroundColor: 'black'}}
                         onClick={() => removePicture(index)}
                         >
                         </div>
-                    </>
+                    </React.Fragment>
                 )
             })}
         </div>
