@@ -4,20 +4,10 @@ import { getDataUser } from '../../../services/http.service'
 import { setCategoryData } from '../../../redux/slices/categoryDataSlice'
 import LoadingComponent from '../../Loading/Components/Loading.component'
 import axios from 'axios'
-import TextField from '@mui/material/TextField';
-import RTL from '../../../components/RTL.component'
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Button from '@mui/material/Button';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { Box } from '@mui/system'
 import { setAdminPanelSavedProducts } from '../../../redux/slices/adminPanelSavedProductsSlice'
 import { getData } from '../../../services/http.service'
 import { useNavigate } from 'react-router-dom'
-
+import FormComponent from './Form.component'
 
 const AddproductForm = ({handleClose}) => {
 	const navigate = useNavigate()
@@ -25,9 +15,9 @@ const AddproductForm = ({handleClose}) => {
 	const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 	const [files, setFiles] = useState([])
-	const [thumbnail, setThumbnail] = useState()
+	const [thumbnail, setThumbnail] = useState([])
 	const [flag, setFlag] = useState(false)
-	const [tempColor, setTempColor] = useState("")
+	const [tempColor, setTempColor] = useState("#000000")
 	const [values, setValues] = useState({
 		name: '',
 		brand: '',
@@ -43,6 +33,40 @@ const AddproductForm = ({handleClose}) => {
 		color: []
 	})
 	const dispatch = useDispatch()
+
+
+	const handleChange = (e, editor) => {
+		if (e.name === 'change:data') {
+			setValues(prev => ({...prev, 'description': editor.getData()}))
+		} else if(e.target.name === 'category') {
+			setValues(prev => ({...prev, 'category':{...values.category, 'main': e.target.value}}))
+		} else if(e.target.name === 'subCategory') {
+			setValues(prev => ({...prev, 'category':{...values.category, 'second': e.target.value}}))
+		} else if(e.target.name === 'color') {
+			setTempColor(e.target.value)
+		} else if(e.target.name === 'thumbnail') {
+			setThumbnail([e.target.files[0]])
+		} else if(e.target.name === 'gallery') {
+			setFiles(prev => [...prev, ...Object.values(e.target.files)])
+		} else {
+			setValues(prev => ({...prev, [e.target.name]: e.target.value}))
+		}
+	}
+
+	const addColor = () => {
+		setValues(prev => ({...prev, 'color': [...new Set([...values.color, tempColor])]}))
+	}
+
+	useEffect(() => {
+		console.log(values);
+	}, [values])
+	useEffect(() => {
+		console.log('files',files);
+	}, [files])
+	useEffect(() => {
+		// console.log(thumbnail);
+		// console.log([thumbnail]);
+	}, [thumbnail])
 
 
 
@@ -126,131 +150,15 @@ const AddproductForm = ({handleClose}) => {
 		)
 	} else {
 		return (
-			<div>
-				<RTL>
-					<TextField
-						fullWidth
-						dir='rtl'
-						sx={{mb: 3}}
-						id="standard-password-input1"
-						label="نام کالا"
-						type="text"
-						name="name"
-						variant="standard"
-						onChange={e => setValues(prev => ({...prev, 'name': e.target.value}))}
-					/>
-					<TextField
-						fullWidth
-						dir='rtl'
-						sx={{mb: 2}}
-						id="standard-password-input2"
-						label="قیمت"
-						type="number"
-						name="price"
-						variant="standard"
-						onChange={e => setValues(prev => ({...prev, 'price': +e.target.value}))}
-					/>
-					<TextField
-						fullWidth
-						dir='rtl'
-						sx={{mb: 2}}
-						id="standard-password-input3"
-						label="برند"
-						type="text"
-						name="brand"
-						variant="standard"
-						onChange={e => setValues(prev => ({...prev, 'brand': e.target.value}))}
-					/>
-					<div>
-						<FormControl dir='rtl' fullWidth sx={{ m: 1, minWidth: 80 }}>
-							<InputLabel id="demo-simple-select-autowidth-label1">دسته بندی سرگروه</InputLabel>
-								<Select
-								labelId="demo-simple-select-autowidth-label1"
-								id="demo-simple-select-autowidth1"
-								value={values.category.main}
-								onChange={e => setValues(prev => ({...prev, 'category':{...values.category, 'main': e.target.value}}))}
-								autoWidth
-								label="دسته بندی سرگروه"
-								>
-								<MenuItem value="">
-									<em>-</em>
-								</MenuItem>
-								{categoryData.map(itemCat => {
-									return (
-										<MenuItem value={itemCat.name}>{itemCat.title}</MenuItem>
-									)
-								})}
-							</Select>
-						</FormControl>
-					</div>
-					<div>
-						<FormControl dir='rtl' fullWidth sx={{ m: 1, minWidth: 80 }} disabled={values.category.main == ""}>
-							<InputLabel id="demo-simple-select-autowidth-label2">دسته بندی زیرگروه</InputLabel>
-								<Select
-								labelId="demo-simple-select-autowidth-label2"
-								id="demo-simple-select-autowidth2"
-								value={values.category.second}
-								onChange={e => setValues(prev => ({...prev, 'category':{...values.category, 'second': e.target.value}}))}
-								autoWidth
-								label="دسته بندی زیرگروه"
-								>
-								<MenuItem value="">
-									<em>-</em>
-								</MenuItem>
-								{categoryData
-									?.filter(itemCat => itemCat.name == values.category.main)[0]?.subCategories
-									?.map((sub) => {
-										return (
-											<MenuItem value={sub.name}>{sub.title}</MenuItem>
-										)
-									})
-								}
-							</Select>
-						</FormControl>
-					</div>
-					<TextField
-						fullWidth
-						dir='rtl'
-						sx={{mb: 2}}
-						id="standard-password-input4"
-						label="موجودی"
-						type="number"
-						name="quantity"
-						variant="standard"
-						onChange={e => setValues(prev => ({...prev, 'quantity': +e.target.value}))}
-					/>
-
-					<CKEditor
-						editor={ ClassicEditor }
-						data=""
-						onChange={ ( event, editor ) => {
-							const data = editor.getData();
-							setValues(prev => ({...prev, 'description': data}))
-						} }
-					/>
-					<Box sx={{mt: 2}}>
-						<label>آپلود تامبنیل</label>
-						<input type="file" multiple onChange={e => setThumbnail(e.target.files[0])}/>
-					</Box>
-					<Box sx={{mt: 2}}>
-						<label>آپلود گالری</label>
-						<input type="file" multiple onChange={e => {
-							console.log(e.target.files)
-							setFiles(Object.values(e.target.files))
-						}}/>
-					</Box>
-					<Box sx={{mt: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-						<div>
-							<label>اضافه کردن رنگ</label>
-							<input type="color" onChange={e => setTempColor(e.target.value)}/>
-						</div>
-						<Button variant="contained" onClick={() => setValues(prev => ({...prev, 'color': [...values.color, tempColor]}))}>+</Button>
-					</Box>
-				</RTL>
-				<Box sx={{display: 'flex', justifyContent: 'center', my: 2}}>
-					<Button  variant="outlined" onClick={submitTheForm}>افزودن</Button>
-				</Box>
-			</div>
+			<FormComponent 
+				handleChange={handleChange}
+				addColor={addColor}
+				values={values}
+				files={files}
+				thumbnail={thumbnail}
+				editGallery={setFiles}
+				editThumbnail={setThumbnail}
+			/> 
 		)
 	}
 }
