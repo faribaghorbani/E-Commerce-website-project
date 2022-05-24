@@ -29,7 +29,7 @@ export default function ModalComponent(props) {
               {props.children}
         </DialogContent>
         <DialogActions>
-          <Button autoFocus>
+          <Button autoFocus onClick={props.handleClose}>
             {"بستن"}
           </Button>
         </DialogActions>
