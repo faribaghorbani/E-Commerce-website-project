@@ -142,9 +142,6 @@ const FormComponent = ({handleChange, addColor, values, files, thumbnail, editGa
                 </Box>
 
             </RTL>
-            <Box sx={{display: 'flex', justifyContent: 'center', my: 2}}>
-                {/* <Button  variant="outlined" onClick={submitTheForm}>افزودن</Button> */}
-            </Box>
         </div>
     )
 }

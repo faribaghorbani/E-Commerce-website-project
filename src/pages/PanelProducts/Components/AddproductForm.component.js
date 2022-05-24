@@ -8,6 +8,9 @@ import { setAdminPanelSavedProducts } from '../../../redux/slices/adminPanelSave
 import { getData } from '../../../services/http.service'
 import { useNavigate } from 'react-router-dom'
 import FormComponent from './Form.component'
+import { Box } from '@mui/system'
+import Button from '@mui/material/Button';
+
 
 const AddproductForm = ({handleClose}) => {
 	const navigate = useNavigate()
@@ -28,7 +31,7 @@ const AddproductForm = ({handleClose}) => {
 			second: ''
 		},
 		description: '',
-		thumbnail: '',
+		thumbnail: [],
 		gallery: [],
 		color: []
 	})
@@ -58,23 +61,7 @@ const AddproductForm = ({handleClose}) => {
 	}
 
 	useEffect(() => {
-		console.log(values);
-	}, [values])
-	useEffect(() => {
-		console.log('files',files);
-	}, [files])
-	useEffect(() => {
-		// console.log(thumbnail);
-		// console.log([thumbnail]);
-	}, [thumbnail])
-
-
-
-
-	useEffect(() => {
 		if (categoryData.length === 0) {
-			console.log("not stored category data");
-			console.log(categoryData);
 			getDataUser('/categories?_embed=subCategories', 
 				(data) => {
 					dispatch(setCategoryData(data))
@@ -92,20 +79,22 @@ const AddproductForm = ({handleClose}) => {
 
 	const submitTheForm = () => {
 		const thumbnailFormData = new FormData()
-		thumbnailFormData.append('image', thumbnail)
-		let temp = []
-		temp = [...temp, thumbnailFormData]
-		files.map(item => {
+		thumbnailFormData.append('image', thumbnail[0])
+		const thumbnailReq = axios.post('upload', thumbnailFormData)
+		let requests = []
+		
+		files.forEach(item => {
 			const tempFormData = new FormData()
 			tempFormData.append('image', item)
-			temp = [...temp, tempFormData]
+			const tempReq = axios.post('upload', tempFormData)
+			requests = [...requests, tempReq]
 		})
 
-		Promise.all(temp.map((formdata) => axios.post('upload', formdata)))
+		Promise.all([thumbnailReq, ...requests])
 			.then((responses)=> {
-				const tempArray = responses.map(res => res.data.filename)
+				const encodedImages = responses.map(res => res.data.filename)
 				setValues(prev => {
-					return {...prev, 'thumbnail': tempArray.slice(0,1)[0], 'gallery': tempArray.slice(1)}
+					return {...prev, 'thumbnail': encodedImages.slice(0,1)[0], 'gallery': encodedImages.slice(1)}
 				})
 				setFlag(true)
 			})
@@ -115,8 +104,6 @@ const AddproductForm = ({handleClose}) => {
 
 	useEffect(() => {
 		if (flag === true) {
-			console.log("yes")
-			console.log(values)
 			axios.post('/products', values)
 				.then(res => {
 					setFlag(false)
@@ -150,15 +137,20 @@ const AddproductForm = ({handleClose}) => {
 		)
 	} else {
 		return (
-			<FormComponent 
-				handleChange={handleChange}
-				addColor={addColor}
-				values={values}
-				files={files}
-				thumbnail={thumbnail}
-				editGallery={setFiles}
-				editThumbnail={setThumbnail}
-			/> 
+			<>
+				<FormComponent 
+					handleChange={handleChange}
+					addColor={addColor}
+					values={values}
+					files={files}
+					thumbnail={thumbnail}
+					editGallery={setFiles}
+					editThumbnail={setThumbnail}
+				/> 
+		        <Box sx={{display: 'flex', justifyContent: 'center', my: 2}}>
+                	<Button  variant="outlined" onClick={submitTheForm}>افزودن</Button>
+            	</Box>
+			</>
 		)
 	}
 }
