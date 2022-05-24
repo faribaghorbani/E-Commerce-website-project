@@ -19,7 +19,7 @@ const PreviewImages = ({images, updateImages}) => {
                 const preview = URL.createObjectURL(item)
                 temp = [...temp, preview]
             } else {
-                temp = [...temp, item]
+                temp = [...temp, 'http://localhost:3002/files/'+ item]
             }
         })
         setPreviews(temp)
@@ -30,7 +30,9 @@ const PreviewImages = ({images, updateImages}) => {
             {previews?.map((item, index) => {
                 return (
                     <React.Fragment key={uuidv4()}>
+                        {
                         <img src={item} style={{width: '100px', objectFit: 'cover'}} />
+                        }
                         <div
                         style={{width: '100px', height: '100px', borderRadius: '50%', backgroundColor: 'black'}}
                         onClick={() => removePicture(index)}
