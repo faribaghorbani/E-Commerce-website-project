@@ -12,7 +12,7 @@ import { Box } from '@mui/system'
 import Button from '@mui/material/Button';
 
 
-const EditproductForm = ({closeModal}) => {
+const EditproductForm = ({closeModal, edittingData}) => {
 	const navigate = useNavigate()
 	const categoryData = useSelector(state => state.categoryData)
 	const [loading, setLoading] = useState(true)
@@ -22,18 +22,15 @@ const EditproductForm = ({closeModal}) => {
 	const [flag, setFlag] = useState(false)
 	const [tempColor, setTempColor] = useState("#000000")
 	const [values, setValues] = useState({
-		name: '',
-		brand: '',
-		price: '',
-		quantity: '',
-		category: {
-			main: '',
-			second: ''
-		},
-		description: '',
-		thumbnail: [],
-		gallery: [],
-		color: []
+		name: edittingData.name,
+		brand: edittingData.brand,
+		price: edittingData.price,
+		quantity: edittingData.quantity,
+		category: edittingData.category,
+		description: edittingData.description,
+		thumbnail: [edittingData.thumbnail],
+		gallery: edittingData.gallery,
+		color: edittingData.color
 	})
 	const dispatch = useDispatch()
 
@@ -139,16 +136,16 @@ const EditproductForm = ({closeModal}) => {
 		return (
 			<>
 				<FormComponent 
+					values={values}
 					handleChange={handleChange}
 					addColor={addColor}
-					values={values}
 					files={files}
 					thumbnail={thumbnail}
 					editGallery={setFiles}
 					editThumbnail={setThumbnail}
 				/> 
 		        <Box sx={{display: 'flex', justifyContent: 'center', my: 2}}>
-                	<Button  variant="outlined" onClick={submitTheForm}>افزودن</Button>
+                	<Button  variant="outlined" onClick={submitTheForm}>ویرایش</Button>
             	</Box>
 			</>
 		)

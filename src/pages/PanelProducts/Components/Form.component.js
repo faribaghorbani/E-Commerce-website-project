@@ -29,6 +29,7 @@ const FormComponent = ({handleChange, addColor, values, files, thumbnail, editGa
                     label="نام کالا"
                     type="text"
                     variant="standard"
+                    value={values.name}
                     onChange={e => handleChange(e)}
                 />
                 <TextField
@@ -40,6 +41,7 @@ const FormComponent = ({handleChange, addColor, values, files, thumbnail, editGa
                     label="قیمت"
                     type="number"
                     variant="standard"
+                    value={values.price}
                     onChange={e => handleChange(e)}
                 />
                 <TextField
@@ -51,6 +53,7 @@ const FormComponent = ({handleChange, addColor, values, files, thumbnail, editGa
                     label="برند"
                     type="text"
                     variant="standard"
+                    value={values.brand}
                     onChange={e => handleChange(e)}
                 />
                 <div>
@@ -111,12 +114,13 @@ const FormComponent = ({handleChange, addColor, values, files, thumbnail, editGa
                     label="موجودی"
                     type="number"
                     variant="standard"
+                    value={values.quantity}
                     onChange={e => handleChange(e)}
                 />
 
                 <CKEditor
                     editor={ ClassicEditor }
-                    data=""
+                    data={values.description}
                     name="description"
                     onChange={ ( event, editor ) => handleChange(event,editor)}
                 />
