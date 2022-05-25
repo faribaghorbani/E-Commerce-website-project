@@ -17,8 +17,8 @@ const EditproductForm = ({closeModal, edittingData}) => {
 	const categoryData = useSelector(state => state.categoryData)
 	const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
-	const [files, setFiles] = useState([])
-	const [thumbnail, setThumbnail] = useState([])
+	const [files, setFiles] = useState(edittingData.gallery)
+	const [thumbnail, setThumbnail] = useState([edittingData.thumbnail])
 	const [flag, setFlag] = useState(false)
 	const [tempColor, setTempColor] = useState("#000000")
 	const [values, setValues] = useState({
@@ -28,8 +28,8 @@ const EditproductForm = ({closeModal, edittingData}) => {
 		quantity: edittingData.quantity,
 		category: edittingData.category,
 		description: edittingData.description,
-		thumbnail: [edittingData.thumbnail],
-		gallery: edittingData.gallery,
+		thumbnail: "",
+		gallery: [],
 		color: edittingData.color
 	})
 	const dispatch = useDispatch()
@@ -63,7 +63,6 @@ const EditproductForm = ({closeModal, edittingData}) => {
 				(data) => {
 					dispatch(setCategoryData(data))
 					setLoading(false)
-					console.log(data)
 				},
 				() => {
 					setLoading(false)
@@ -75,33 +74,44 @@ const EditproductForm = ({closeModal, edittingData}) => {
 	}, [])
 
 	const submitTheForm = () => {
-		const thumbnailFormData = new FormData()
-		thumbnailFormData.append('image', thumbnail[0])
-		const thumbnailReq = axios.post('upload', thumbnailFormData)
+		let mixedImagesTypes = [...thumbnail, ...files]
+		console.log(mixedImagesTypes)
 		let requests = []
-		
-		files.forEach(item => {
-			const tempFormData = new FormData()
-			tempFormData.append('image', item)
-			const tempReq = axios.post('upload', tempFormData)
-			requests = [...requests, tempReq]
+		mixedImagesTypes.forEach(item => {
+			if (typeof item === 'object') {
+				const tempFormData = new FormData()
+				tempFormData.append('image', item)
+				const tempReq = axios.post('upload', tempFormData)
+				requests = [...requests, tempReq]
+			}
 		})
 
-		Promise.all([thumbnailReq, ...requests])
+		Promise.all(requests)
 			.then((responses)=> {
 				const encodedImages = responses.map(res => res.data.filename)
+				console.log(encodedImages)
+				let counter = 0
+				mixedImagesTypes = mixedImagesTypes.map(item => {
+					if (typeof item === 'object') {
+						console.log(counter)
+						return encodedImages[counter] 
+						counter+=1
+					} else {
+						console.log("no")
+						return item
+					}
+				})
 				setValues(prev => {
-					return {...prev, 'thumbnail': encodedImages.slice(0,1)[0], 'gallery': encodedImages.slice(1)}
+					return {...prev, 'thumbnail': mixedImagesTypes.slice(0,1)[0], 'gallery': mixedImagesTypes.slice(1)}
 				})
 				setFlag(true)
 			})
 			.catch((err) => setError(true))
 	}
 
-
 	useEffect(() => {
 		if (flag === true) {
-			axios.post('/products', values)
+			axios.patch(`/products/${edittingData.id}`, values)
 				.then(res => {
 					setFlag(false)
 					closeModal()
