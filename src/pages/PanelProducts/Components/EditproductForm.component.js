@@ -20,7 +20,6 @@ const EditproductForm = ({closeModal, edittingData}) => {
 	const [files, setFiles] = useState(edittingData.gallery)
 	const [thumbnail, setThumbnail] = useState([edittingData.thumbnail])
 	const [flag, setFlag] = useState(false)
-	const [tempColor, setTempColor] = useState("#000000")
 	const [values, setValues] = useState({
 		name: edittingData.name,
 		brand: edittingData.brand,
@@ -34,28 +33,6 @@ const EditproductForm = ({closeModal, edittingData}) => {
 	})
 	const dispatch = useDispatch()
 
-
-	const handleChange = (e, editor) => {
-		if (e.name === 'change:data') {
-			setValues(prev => ({...prev, 'description': editor.getData()}))
-		} else if(e.target.name === 'category') {
-			setValues(prev => ({...prev, 'category':{...values.category, 'main': e.target.value}}))
-		} else if(e.target.name === 'subCategory') {
-			setValues(prev => ({...prev, 'category':{...values.category, 'second': e.target.value}}))
-		} else if(e.target.name === 'color') {
-			setTempColor(e.target.value)
-		} else if(e.target.name === 'thumbnail') {
-			setThumbnail([e.target.files[0]])
-		} else if(e.target.name === 'gallery') {
-			setFiles(prev => [...prev, ...Object.values(e.target.files)])
-		} else {
-			setValues(prev => ({...prev, [e.target.name]: e.target.value}))
-		}
-	}
-
-	const addColor = () => {
-		setValues(prev => ({...prev, 'color': [...new Set([...values.color, tempColor])]}))
-	}
 
 	useEffect(() => {
 		if (categoryData.length === 0) {
@@ -147,12 +124,11 @@ const EditproductForm = ({closeModal, edittingData}) => {
 			<>
 				<FormComponent 
 					values={values}
-					handleChange={handleChange}
-					addColor={addColor}
+					setValues={setValues}
 					files={files}
 					thumbnail={thumbnail}
-					editGallery={setFiles}
-					editThumbnail={setThumbnail}
+					setFiles={setFiles}
+					setThumbnail={setThumbnail}
 				/> 
 		        <Box sx={{display: 'flex', justifyContent: 'center', my: 2}}>
                 	<Button  variant="outlined" onClick={submitTheForm}>ویرایش</Button>

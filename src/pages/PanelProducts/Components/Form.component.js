@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import TextField from '@mui/material/TextField';
 import RTL from '../../../components/RTL.component'
@@ -12,10 +12,39 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Box } from '@mui/system'
 import PreviewImages from './PreviewImages.component'
 import { v4 as uuidv4 } from 'uuid';
+import PreviewColors from './PreviewColors.component';
 
 
-const FormComponent = ({handleChange, addColor, values, files, thumbnail, editGallery, editThumbnail}) => {
+const FormComponent = ({values, setValues, files, thumbnail, setFiles, setThumbnail}) => {
     const categoryData = useSelector(state => state.categoryData)
+    const [tempColor, setTempColor] = useState("#000000")
+
+
+    const handleChange = (e, editor) => {
+		if (e.name === 'change:data') {
+			setValues(prev => ({...prev, 'description': editor.getData()}))
+		} else if(e.target.name === 'category') {
+			setValues(prev => ({...prev, 'category':{...values.category, 'main': e.target.value}}))
+		} else if(e.target.name === 'subCategory') {
+			setValues(prev => ({...prev, 'category':{...values.category, 'second': e.target.value}}))
+		} else if(e.target.name === 'color') {
+			setTempColor(e.target.value)
+		} else if(e.target.name === 'thumbnail') {
+			setThumbnail([e.target.files[0]])
+		} else if(e.target.name === 'gallery') {
+			setFiles(prev => [...prev, ...Object.values(e.target.files)])
+		} else {
+			setValues(prev => ({...prev, [e.target.name]: e.target.value}))
+		}
+	}
+
+	const addColor = () => {
+		setValues(prev => ({...prev, 'color': [...new Set([...values.color, tempColor])]}))
+	}
+
+	const updateColors = (colors) => {
+		setValues(prev => ({...prev, 'color':colors}))
+	}
 
     return (
         <div>
@@ -127,14 +156,14 @@ const FormComponent = ({handleChange, addColor, values, files, thumbnail, editGa
                 <Box sx={{mt: 2}}>
                     <label>آپلود تامبنیل</label>
                     <input type="file" name="thumbnail" multiple onChange={e => handleChange(e)}/>
-                    <PreviewImages images={thumbnail} updateImages={editThumbnail}  />
+                    <PreviewImages images={thumbnail} updateImages={setThumbnail}  />
 
                 </Box>
 
                 <Box sx={{mt: 2}}>
                     <label>آپلود گالری</label>
                     <input type="file" name="gallery" multiple onChange={e => handleChange(e)} />
-                    <PreviewImages images={files} updateImages={editGallery} />
+                    <PreviewImages images={files} updateImages={setFiles} />
                 </Box>
 
                 <Box sx={{mt: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -143,6 +172,7 @@ const FormComponent = ({handleChange, addColor, values, files, thumbnail, editGa
                         <input type="color" name="color" onChange={e => handleChange(e)} />
                     </div>
                     <Button variant="contained" onClick={addColor}>+</Button>
+                    <PreviewColors colors={values.color} updateColors={updateColors} />
                 </Box>
 
             </RTL>
