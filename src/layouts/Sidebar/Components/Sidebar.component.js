@@ -26,7 +26,7 @@ const SidebarComponent = () => {
         <List>
             <RTL>
                 <ListItemButton onClick={() => {
-                    navigate(`/products`)
+                    navigate(`/products?page=1`)
                     }}>
                     <ListItemText primary={"همه"} />
                 </ListItemButton>
@@ -39,7 +39,7 @@ const SidebarComponent = () => {
                             <ListItemButton onClick={() => {
                                 const temp = openStatus[item.name]
                                 setOpenStatus(prevState => ({...prevState, [item.name]: !temp}))
-                                navigate(`/products/${item.name}`)
+                                navigate(`/products/${item.name}?page=1`)
                             }}>
                                 {openStatus[item.name] ? <ExpandLess /> : <ExpandMore />}
                                 <ListItemText primary={item.title} />
@@ -51,7 +51,7 @@ const SidebarComponent = () => {
                                     return (
                                     <RTL>
                                         <ListItemButton key={sub.id} sx={{ pl: 4 }} onClick={() => {
-                                            navigate(`/products/${item.name}/${sub.name}`)
+                                            navigate(`/products/${item.name}/${sub.name}?page=1`)
                                         }}>
                                             <ListItemText dir="rtl" primary={sub.title} />
                                         </ListItemButton>

@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { getDataUser } from '../../services/http.service';
 import LoadingPage from '../Loading/Loading.page';
-import { Grid } from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Box, Grid, Pagination } from '@mui/material';
+import { useNavigate, useParams, useSearchParams, } from 'react-router-dom';
 import ProductCard from '../../components/ProductCard.component';
+import axios from 'axios';
 
 
 const ProductsPage = () => {
@@ -12,11 +13,11 @@ const ProductsPage = () => {
 	const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [data, setData] = useState([])
-	const limit = useMemo(() => 25, []);
-	const [page, setPage] = useState(1);
+	const limit = useMemo(() => 6, []);
+	const [page, setPage] = useState(1)
+	let [searchParams, setSearchParams] = useSearchParams();
 
 	useEffect(() => {
-		console.log(params)
 		let url
 		if (!params.category && !params.subcategory) {
 			url = `/products?_page=${page}&_limit=${limit}`
@@ -26,17 +27,16 @@ const ProductsPage = () => {
 			url = `/products?category.main=${params.category}&category.second=${params.subcategory}&_page=${page}&_limit=${limit}`
 		}
 
-		getDataUser(url, 
-			(data) => {
-				setData(data)
-				setLoading(false)
-			},
-			() => {
-				setError(true)
-				setLoading(false)
-			}
-		)
-	}, [params])
+		axios.get(url)
+		.then(res => {
+			setData(res)
+			setLoading(false)
+		})
+		.catch(err => {
+			setError(true)
+			setLoading(false)
+		})
+	}, [params, page])
 
 
 	if (loading) {
@@ -54,13 +54,27 @@ const ProductsPage = () => {
 	} else {
 		return (
 			<>
-				{data.map((product) => {
+				{data.data.map((product) => {
 					return (
 						<Grid item xs={4} key={product.id}>
 							<ProductCard product={product} height={'100%'} />
 						</Grid>
 					)
 				})}
+				<Grid item xs={12} sx={{display: 'flex', justifyContent: 'center'}}>
+					<Pagination
+						dir='rtl'
+						variant="outlined"
+						defaultPage={1}
+						page={+searchParams.get('page')}
+						count={Math.ceil(data?.headers["x-total-count"] / limit)}
+						onChange={(_, page) => {
+							console.log(typeof page)
+							setSearchParams({ page: +page })
+							setPage(+page)
+						}}
+					/>
+				</Grid>
 			</>
 		)
 	}
