@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Home.module.scss'
-import GallerySlider from './Components/GallerySlider.component';
-
 import SliderComponent from './Components/Slider.component.js'
 import anime from 'animejs'
-import ProductCard from '../../components/ProductCard.component'
 import axios from 'axios';
 
 const HomePage = () => {
@@ -45,8 +42,8 @@ const HomePage = () => {
 
     return (
         <div>
-			  	<SliderComponent cards={laptops} delay={'0s'}/>
-			  	<SliderComponent cards={laptops} delay={'3s'}/>
+            <SliderComponent cards={laptops} dir={'right'}/>
+            <SliderComponent cards={laptops} dir={'left'}/>
         </div>
     )
 }

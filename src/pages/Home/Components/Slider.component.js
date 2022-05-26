@@ -1,15 +1,14 @@
 import React from 'react'
-import './style/Slider.scss'
+import './style/SliderLeft.scss'
 import ProductCard from '../../../components/ProductCard.component'
 import { v4 as uuidv4 } from 'uuid';
 
 
-const SliderComponent = ({cards, delay}) => {
-
+const SliderComponent = ({cards, dir}) => {
 
     return (
 		<div className='slider'>
-			<div className='slider-track' style={{animationDelay: delay}}>
+			<div className='slider-track'>
 			
 				{cards?.map(item => {
 					return (
