@@ -50,12 +50,6 @@ const HomePage = () => {
         <div>
 			  	<SliderComponent cards={laptops} delay={'0s'}/>
 			  	<SliderComponent cards={laptops} delay={'3s'}/>
-				  {/* <svg id="visual" viewBox="0 0 900 600" width="900" height="600" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1">
-					  <path d="M0 223L21.5 218.5C43 214 86 205 128.8 203.8C171.7 202.7 214.3 209.3 257.2 217.5C300 225.7 343 235.3 385.8 240.7C428.7 246 471.3 247 514.2 233.3C557 219.7 600 191.3 642.8 186.7C685.7 182 728.3 201 771.2 209.7C814 218.3 857 216.7 878.5 215.8L900 215L900 0L878.5 0C857 0 814 0 771.2 0C728.3 0 685.7 0 642.8 0C600 0 557 0 514.2 0C471.3 0 428.7 0 385.8 0C343 0 300 0 257.2 0C214.3 0 171.7 0 128.8 0C86 0 43 0 21.5 0L0 0Z" fill="#fa7268"></path>
-				  </svg> */}
-
-				{/* <img src={svg} /> */}
-				{/* <ProductCard product={phones[0]}/> */}
         </div>
     )
 }
