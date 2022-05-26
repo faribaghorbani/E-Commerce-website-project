@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
+import './style/PreviewImages.scss'
+import {AiFillCloseCircle} from 'react-icons/ai'
 
 
 const PreviewImages = ({images, updateImages}) => {
@@ -26,19 +28,15 @@ const PreviewImages = ({images, updateImages}) => {
     }, [images])
 
     return (
-        <div>
+        <div className='image-uploader-container'>
             {previews?.map((item, index) => {
                 return (
-                    <React.Fragment key={uuidv4()}>
-                        {
-                        <img src={item} style={{width: '100px', objectFit: 'cover'}} />
-                        }
-                        <div
-                        style={{width: '100px', height: '100px', borderRadius: '50%', backgroundColor: 'black'}}
-                        onClick={() => removePicture(index)}
-                        >
+                    <div className='uploaded-image' key={uuidv4()}>
+                        <div className='image'>
+                            <img src={item} style={{width: '100px', objectFit: 'cover'}} />
                         </div>
-                    </React.Fragment>
+                        <AiFillCloseCircle className='remover' onClick={() => removePicture(index)}/>
+                    </div>
                 )
             })}
         </div>
