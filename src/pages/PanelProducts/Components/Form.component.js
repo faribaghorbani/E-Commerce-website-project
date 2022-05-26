@@ -166,12 +166,12 @@ const FormComponent = ({values, setValues, files, thumbnail, setFiles, setThumbn
                     <PreviewImages images={files} updateImages={setFiles} />
                 </Box>
 
-                <Box sx={{mt: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <div>
+                <Box sx={{mt: 3}}>
+                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                         <label>اضافه کردن رنگ</label>
                         <input type="color" name="color" onChange={e => handleChange(e)} />
+                        <Button variant="contained" onClick={addColor}>+</Button>
                     </div>
-                    <Button variant="contained" onClick={addColor}>+</Button>
                     <PreviewColors colors={values.color} updateColors={updateColors} />
                 </Box>
 

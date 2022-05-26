@@ -1,4 +1,7 @@
 import React from 'react'
+import './style/PreviewColors.scss'
+import {AiFillCloseCircle} from 'react-icons/ai'
+
 
 const PreviewColors = ({colors, updateColors}) => {
 
@@ -7,19 +10,12 @@ const PreviewColors = ({colors, updateColors}) => {
     }
 
     return (
-        <div>
+        <div className='color-uploader-container'>
             {colors.map(item => {
                 return (
-                    <div>
-                        <div style={{backgroundColor: `${item}`, width: '50px', height:'50px', borderRadius: '50%'}}></div>
-                        <div 
-                        style={{backgroundColor: `black`,
-                        width: '20px',
-                        height:'20px',
-                        borderRadius: '50%'}}
-                        onClick={() => removeColor(item)}
-                        >
-                        </div>
+                    <div className='added-color'>
+                        <div className='color' style={{backgroundColor: `${item}`}}></div>
+                        <AiFillCloseCircle className='remover' onClick={() => removeColor(item)}/>
                     </div>
                 )
             })}
