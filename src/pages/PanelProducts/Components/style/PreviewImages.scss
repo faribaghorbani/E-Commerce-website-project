@@ -1,0 +1,33 @@
+.image-uploader-container {
+    margin-top: 20px;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    .uploaded-image {
+        position: relative;
+        .image {
+            padding: 0;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: black 2px solid;
+            overflow: hidden;
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+    .remover {
+        cursor: pointer;
+        color: red;
+        font-size: 1.5rem;
+        position: absolute;
+        left: 0px;
+        top: 0;
+        z-index: 100;
+    }
+}

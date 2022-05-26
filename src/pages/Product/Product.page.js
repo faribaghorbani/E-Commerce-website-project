@@ -1,15 +1,32 @@
-import { Paper } from '@mui/material';
+import { Box, Paper, Button } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { getDataUser } from '../../services/http.service';
 import LoadingPage from '../Loading/Loading.page';
 import RTL from '../../components/RTL.component';
+import GallerySlider from './Components/GallerySlider.component';
+import Typography from '@mui/material/Typography';
+import Fab from '@mui/material/Fab';
+import { Markup } from 'interweave';
+
 
 const ProductPage = () => {
 	const params = useParams()
 	const [data, setData] = useState([])
 	const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
+	const [images, setImages] = useState([])
+	const [basketNumber, setBasketBumber] = useState(0)
+
+	const addToBasket = () => {
+		setBasketBumber(1)
+	}
+
+	const handleChangeBasketNumber = (e, quantity) => {
+		if (e.target.value <= quantity) {
+			setBasketBumber(e.target.value)
+		}
+	}
 
 	useEffect(() => {
 		getDataUser(`/products?id=${params.id}`,
@@ -26,7 +43,17 @@ const ProductPage = () => {
 	}, [])
 
 	useEffect(() => {
-		console.log(data)
+		let tempArrofImages = []
+		tempArrofImages = [...tempArrofImages, data[0]?.thumbnail]
+		data[0]?.gallery?.map((img) => {
+			tempArrofImages = [...tempArrofImages, img]
+		})
+		setImages(tempArrofImages.map(item => {
+			return ({
+				original: `http://localhost:3002/files/${item}`,
+				thumbnail: `http://localhost:3002/files/${item}`,
+			})
+		}))
 	}, [data])
 
 	if (loading) {
@@ -38,21 +65,86 @@ const ProductPage = () => {
 	} else if (error) {
 		return (
 			<>
-				<div>اتصال به سرور با خطا رو به رو شد</div>
+				<div dir='rtl'>اتصال به سرور با خطا رو به رو شد</div>
 			</>
 		)
 	} else {
 		return (
 			<>
 			<Paper elevation={2}>
+				<Box sx={{display: 'flex',flexDirection: {md: 'row'} ,
+				 justifyContent: 'space-between', p: 3
+				//  alignItems: 'center'
+				 }}>
+					<GallerySlider images={images} style={{width:'50%'}}/>
+					<Box sx={{p:5}}>
+						{data?.map(item => {
+							return (
+								<div dir="rtl">
+									<Typography variant="h5" component="h2">
+										{item.name}
+									</Typography>
+									<br/>
+									<br/>
+									<Box sx={{mb: 2}}>
+										<Fab sx={{ml: 2}} variant="extended" size="medium" color="primary" aria-label="add">
+											{item.category.main}
+										</Fab>
+										<Fab variant="extended" size="medium" color="secondary" aria-label="add">
+											{item.category.second}
+										</Fab>
+									</Box>
+									<Box dir="rtl" sx={{display: 'flex'}}>
+										<Typography variant="h6" component="h2">
+											{"برند:  "}
+										</Typography>
+										<Typography variant="h6" component="h2" sx={{mx: 2}}>
+											{item.brand}
+										</Typography>
+									</Box>
+									<Box dir="rtl" sx={{display: 'flex'}}>
+										<Typography variant="h6" component="h2">
+											{"رنگ:  "}
+										</Typography>
+										<div style={{display: 'flex', alignItems: 'center'}}>
+											{item.color?.map((col) => {
+												console.log(col)
+												return (
+													<div style={{width: '30px',
+													height: '30px',
+													marginLeft: '5px',
+													borderRadius: "50%",
+													borderColor: 'black',
+													backgroundColor: `${col}`
+													}}></div>
+												)
+											})}
+										</div>
+									</Box>
+									<br />
+									<br />
+									<Box dir="rtl">
+										<Typography variant="h6" component="h2">
+											{"توضیحات:  "}
+										</Typography>
+										<div style={{display: 'flex', alignItems: 'center'}}>
+											<Markup content={item.description} />
+										</div>
+									</Box>
 
-				{data.map(item => {
-					return (
-						<div dir="rtl">
-							<React.Fragment key={item.id}>{item.name}</React.Fragment>
-						</div>
-					)
-				})}
+									<Box>
+										{basketNumber <= 0?
+										(<Button variant="contained" color="success" onClick={addToBasket}>
+											افزودن به سبد خرید
+										</Button>):
+										(<input value={basketNumber} type={'number'} onChange={(e) => handleChangeBasketNumber(e, item.quantity)} />)
+										}
+									</Box>
+								</div>
+							)
+						})}
+					</Box>
+				</Box>
 			</Paper>
 			</>
 		)

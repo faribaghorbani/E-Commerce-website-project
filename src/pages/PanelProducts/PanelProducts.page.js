@@ -12,20 +12,36 @@ import RTL from '../../components/RTL.component';
 import SearchIcon from '@mui/icons-material/Search';
 import _ from 'lodash';
 import { filterProducts } from '../../utils/filterAdminPanel'
+import AddproductForm from './Components/AddproductForm.component'
+import ModalComponent from './Components/Modal.component'
+import { useDispatch, useSelector } from 'react-redux'
+import { setAdminPanelSavedProducts } from '../../redux/slices/adminPanelSavedProductsSlice'
 
 
 
 const PanelProductsPage = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [loading, setLoading] = useState(true)
     const [searchValue, setSearchValue] = useState("")
-    const [data, setData] = useState([])
+    const data = useSelector(state => state.adminPanelSavedProducts)
+    // const [data, setData] = useState([])
+
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
 
     useEffect(() => {
       getData('/products',
         (data) => {
           setLoading(false)
-          setData(data)
+          dispatch(setAdminPanelSavedProducts(data))
         },
         () => navigate("/login", {replace: true})
       )
@@ -35,7 +51,7 @@ const PanelProductsPage = () => {
       getData('/products',
       (data) => {
         data = filterProducts(data, value)
-        setData(data)
+        dispatch(setAdminPanelSavedProducts(data))
       },
       () => navigate("/login", {replace: true})
     )
@@ -52,24 +68,34 @@ const PanelProductsPage = () => {
     return (
       <div>
         <div>
-				<RTL>
-					<FormControl fullWidth sx={{ m: 1 }}>
-						<OutlinedInput
-							sx={{textAlign: 'left'}}
-							id="outlined-adornment-amount"
-							value={searchValue}
-							onChange={handleChange}
-							startAdornment={<InputAdornment position="start"><SearchIcon /></InputAdornment>}
-							label="search"
-						/>
-						<InputLabel htmlFor="outlined-adornment-amount">جست و جو</InputLabel>
-					</FormControl>
-				</RTL>
-			</div>
+			<RTL>
+				<FormControl fullWidth sx={{ m: 1 }}>
+					<OutlinedInput
+						sx={{textAlign: 'left'}}
+						id="outlined-adornment-amount"
+						value={searchValue}
+						onChange={handleChange}
+						startAdornment={<InputAdornment position="start"><SearchIcon /></InputAdornment>}
+						label="search"
+					/>
+					<InputLabel htmlFor="outlined-adornment-amount">جست و جو</InputLabel>
+				</FormControl>
+			</RTL>
+		</div>
+
         <Box>
-        <Button variant="contained" sx={{m:3}}>افزودن کالا</Button>
+        	<Button variant="contained" sx={{m:3}} onClick={handleOpen}>افزودن کالا</Button>
         </Box>
+
         <TableComponent data={data} />
+		
+		<ModalComponent title={"افزودن کالا"}
+			open={open} 
+			handleClose={handleClose}
+			handleOpen={handleOpen}
+		>
+		  <AddproductForm handleClose={handleClose}/>
+		</ModalComponent>
       </div>
     )
 }

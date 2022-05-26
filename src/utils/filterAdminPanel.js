@@ -25,7 +25,7 @@ export const filterProducts = (data, search) => {
 export const filterQuantity = (data, search) => {
     data = data.filter((item) => {
         if (item.name.startsWith(search) ||
-        item.price.startsWith(search) ||
+        String(item.price).startsWith(search) ||
         String(item.quantity).startsWith(search)
         ) {
             return item
