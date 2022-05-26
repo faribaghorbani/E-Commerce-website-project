@@ -12,27 +12,24 @@ import { Box } from '@mui/system'
 import Button from '@mui/material/Button';
 
 
-const AddproductForm = ({handleClose}) => {
+const EditproductForm = ({closeModal, edittingData}) => {
 	const navigate = useNavigate()
 	const categoryData = useSelector(state => state.categoryData)
 	const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
-	const [files, setFiles] = useState([])
-	const [thumbnail, setThumbnail] = useState([])
+	const [files, setFiles] = useState(edittingData.gallery)
+	const [thumbnail, setThumbnail] = useState([edittingData.thumbnail])
 	const [flag, setFlag] = useState(false)
 	const [values, setValues] = useState({
-		name: '',
-		brand: '',
-		price: '',
-		quantity: '',
-		category: {
-			main: '',
-			second: ''
-		},
-		description: '',
-		thumbnail: [],
+		name: edittingData.name,
+		brand: edittingData.brand,
+		price: edittingData.price,
+		quantity: edittingData.quantity,
+		category: edittingData.category,
+		description: edittingData.description,
+		thumbnail: "",
 		gallery: [],
-		color: []
+		color: edittingData.color
 	})
 	const dispatch = useDispatch()
 
@@ -43,7 +40,6 @@ const AddproductForm = ({handleClose}) => {
 				(data) => {
 					dispatch(setCategoryData(data))
 					setLoading(false)
-					console.log(data)
 				},
 				() => {
 					setLoading(false)
@@ -55,36 +51,47 @@ const AddproductForm = ({handleClose}) => {
 	}, [])
 
 	const submitTheForm = () => {
-		const thumbnailFormData = new FormData()
-		thumbnailFormData.append('image', thumbnail[0])
-		const thumbnailReq = axios.post('upload', thumbnailFormData)
+		let mixedImagesTypes = [...thumbnail, ...files]
+		console.log(mixedImagesTypes)
 		let requests = []
-		
-		files.forEach(item => {
-			const tempFormData = new FormData()
-			tempFormData.append('image', item)
-			const tempReq = axios.post('upload', tempFormData)
-			requests = [...requests, tempReq]
+		mixedImagesTypes.forEach(item => {
+			if (typeof item === 'object') {
+				const tempFormData = new FormData()
+				tempFormData.append('image', item)
+				const tempReq = axios.post('upload', tempFormData)
+				requests = [...requests, tempReq]
+			}
 		})
 
-		Promise.all([thumbnailReq, ...requests])
+		Promise.all(requests)
 			.then((responses)=> {
 				const encodedImages = responses.map(res => res.data.filename)
+				console.log(encodedImages)
+				let counter = 0
+				mixedImagesTypes = mixedImagesTypes.map(item => {
+					if (typeof item === 'object') {
+						console.log(counter)
+						return encodedImages[counter] 
+						counter+=1
+					} else {
+						console.log("no")
+						return item
+					}
+				})
 				setValues(prev => {
-					return {...prev, 'thumbnail': encodedImages.slice(0,1)[0], 'gallery': encodedImages.slice(1)}
+					return {...prev, 'thumbnail': mixedImagesTypes.slice(0,1)[0], 'gallery': mixedImagesTypes.slice(1)}
 				})
 				setFlag(true)
 			})
 			.catch((err) => setError(true))
 	}
 
-
 	useEffect(() => {
 		if (flag === true) {
-			axios.post('/products', values)
+			axios.patch(`/products/${edittingData.id}`, values)
 				.then(res => {
 					setFlag(false)
-					handleClose()
+					closeModal()
 					getData('/products',
 					(data) => {
 					dispatch(setAdminPanelSavedProducts(data))
@@ -124,11 +131,11 @@ const AddproductForm = ({handleClose}) => {
 					setThumbnail={setThumbnail}
 				/> 
 		        <Box sx={{display: 'flex', justifyContent: 'center', my: 2}}>
-                	<Button  variant="outlined" onClick={submitTheForm}>افزودن</Button>
+                	<Button  variant="outlined" onClick={submitTheForm}>ویرایش</Button>
             	</Box>
 			</>
 		)
 	}
 }
 
-export default AddproductForm;
+export default EditproductForm;

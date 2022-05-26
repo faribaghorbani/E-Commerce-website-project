@@ -28,17 +28,33 @@ function App() {
 				</RegularLayout>
 			}/>
 
-			<Route path="/products" element={
-				<SidebarLayout>
-					<ProductsPage />
-				</SidebarLayout>
-			}/>
+			<Route path="/products">
 
-			<Route path="/products/:category/:subcategory/:id" element={		
-				<RegularLayout>
-					<ProductPage />
-				</RegularLayout>
-			}/>
+				<Route index element={		
+					<SidebarLayout>
+						<ProductsPage />
+					</SidebarLayout>
+				}/>
+
+				<Route path=":category" element={		
+					<SidebarLayout>
+						<ProductsPage />
+					</SidebarLayout>
+				}/>
+
+				<Route path=":category/:subcategory" element={		
+					<SidebarLayout>
+						<ProductsPage />
+					</SidebarLayout>
+				}/>
+
+				<Route path=":category/:subcategory/:id" element={		
+					<RegularLayout>
+						<ProductPage />
+					</RegularLayout>
+				}/>
+
+			</Route>
 
 			<Route path="/basket" element={		
 				<RegularLayout>
