@@ -1,4 +1,4 @@
-import { Box, Paper } from '@mui/material';
+import { Box, Paper, Button } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { getDataUser } from '../../services/http.service';
@@ -16,6 +16,17 @@ const ProductPage = () => {
 	const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 	const [images, setImages] = useState([])
+	const [basketNumber, setBasketBumber] = useState(0)
+
+	const addToBasket = () => {
+		setBasketBumber(1)
+	}
+
+	const handleChangeBasketNumber = (e, quantity) => {
+		if (e.target.value <= quantity) {
+			setBasketBumber(e.target.value)
+		}
+	}
 
 	useEffect(() => {
 		getDataUser(`/products?id=${params.id}`,
@@ -119,6 +130,15 @@ const ProductPage = () => {
 										<div style={{display: 'flex', alignItems: 'center'}}>
 											<Markup content={item.description} />
 										</div>
+									</Box>
+
+									<Box>
+										{basketNumber <= 0?
+										(<Button variant="contained" color="success" onClick={addToBasket}>
+											افزودن به سبد خرید
+										</Button>):
+										(<input value={basketNumber} type={'number'} onChange={(e) => handleChangeBasketNumber(e, item.quantity)} />)
+										}
 									</Box>
 								</div>
 							)
