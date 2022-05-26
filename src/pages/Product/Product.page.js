@@ -7,6 +7,7 @@ import RTL from '../../components/RTL.component';
 import GallerySlider from './Components/GallerySlider.component';
 import Typography from '@mui/material/Typography';
 import Fab from '@mui/material/Fab';
+import { Markup } from 'interweave';
 
 
 const ProductPage = () => {
@@ -116,7 +117,7 @@ const ProductPage = () => {
 											{"توضیحات:  "}
 										</Typography>
 										<div style={{display: 'flex', alignItems: 'center'}}>
-											{item.description}
+											<Markup content={item.description} />
 										</div>
 									</Box>
 								</div>
