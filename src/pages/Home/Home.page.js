@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import './Home.module.scss'
+import './Home.scss'
 import SliderComponent from './Components/Slider.component.js'
 import anime from 'animejs'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+	const navigate = useNavigate()
 	const [laptops, setLaptops] = useState([])
 	const [phones, setPhones] = useState([])
 
@@ -42,8 +44,14 @@ const HomePage = () => {
 
     return (
         <div>
-            <SliderComponent cards={laptops} dir={'right'}/>
-            <SliderComponent cards={laptops} dir={'left'}/>
+			<div className='main-category laptop'>
+				<h2 className='title' onClick={() => navigate('/products/laptop?page=1')}>لپ تاپ</h2>
+            	<SliderComponent cards={laptops} dir={'right'}/>
+			</div>
+			<div className='main-category phone'>
+				<h2 className='title' onClick={() => navigate('/products/phone?page=1')}>موبایل</h2>
+            	<SliderComponent cards={phones} dir={'left'}/> 
+			</div>
         </div>
     )
 }
