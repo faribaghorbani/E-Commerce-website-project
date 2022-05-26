@@ -22,7 +22,7 @@ const Header = () => {
         <Button variant="contained" onClick={() => {navigate('/panel')}}>ورود ادمین</Button>
         <div style={{display: 'flex', justifyContent: 'center', gap: '10px'}}>
         <ul dir="rtl" style={{display: 'flex', justifyContent: 'center', gap: '10px', listStyleType: 'none'}}>
-          <li style={{cursor: 'pointer'}} onClick={() => navigate('/products')}>صفحه محصولات</li>
+          <li style={{cursor: 'pointer'}} onClick={() => navigate('/products?page=1')}>صفحه محصولات</li>
           <li style={{cursor: 'pointer'}}>درباره ما</li>
         </ul>
         <img style={{cursor: 'pointer', width: '200px'}} src={logo} />
