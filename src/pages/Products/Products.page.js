@@ -14,17 +14,16 @@ const ProductsPage = () => {
     const [error, setError] = useState(false)
     const [data, setData] = useState([])
 	const limit = useMemo(() => 6, []);
-	const [page, setPage] = useState(1)
 	let [searchParams, setSearchParams] = useSearchParams();
 
 	useEffect(() => {
 		let url
 		if (!params.category && !params.subcategory) {
-			url = `/products?_page=${page}&_limit=${limit}`
+			url = `/products?_page=${searchParams.get('page')}&_limit=${limit}`
 		} else if (params.category && !params.subcategory) {
-			url = `/products?category.main=${params.category}&_page=${page}&_limit=${limit}`
+			url = `/products?category.main=${params.category}&_page=${searchParams.get('page')}&_limit=${limit}`
 		} else {
-			url = `/products?category.main=${params.category}&category.second=${params.subcategory}&_page=${page}&_limit=${limit}`
+			url = `/products?category.main=${params.category}&category.second=${params.subcategory}&_page=${searchParams.get('page')}&_limit=${limit}`
 		}
 
 		axios.get(url)
@@ -36,7 +35,7 @@ const ProductsPage = () => {
 			setError(true)
 			setLoading(false)
 		})
-	}, [params, page])
+	}, [params, searchParams])
 
 
 	if (loading) {
@@ -61,7 +60,7 @@ const ProductsPage = () => {
 						</Grid>
 					)
 				})}
-				<Grid item xs={12} sx={{display: 'flex', justifyContent: 'center'}}>
+				<Grid item xs={12} sx={{display: 'flex', justifyContent: 'center', my: 3}}>
 					<Pagination
 						dir='rtl'
 						variant="outlined"
@@ -71,7 +70,6 @@ const ProductsPage = () => {
 						onChange={(_, page) => {
 							console.log(typeof page)
 							setSearchParams({ page: +page })
-							setPage(+page)
 						}}
 					/>
 				</Grid>
