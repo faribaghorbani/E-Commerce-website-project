@@ -8,6 +8,7 @@ import GallerySlider from './Components/GallerySlider.component';
 import Typography from '@mui/material/Typography';
 import Fab from '@mui/material/Fab';
 import { Markup } from 'interweave';
+import ColorsCheckGroup from './Components/ColorsCheckGroup.component';
 
 
 const ProductPage = () => {
@@ -16,6 +17,7 @@ const ProductPage = () => {
 	const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 	const [images, setImages] = useState([])
+	const [checkColor, setCheckColor] = useState(0)
 	const [basketNumber, setBasketBumber] = useState(0)
 
 	const addToBasket = () => {
@@ -74,7 +76,6 @@ const ProductPage = () => {
 			<Paper elevation={2}>
 				<Box sx={{display: 'flex',flexDirection: {md: 'row'} ,
 				 justifyContent: 'space-between', p: 3
-				//  alignItems: 'center'
 				 }}>
 					<GallerySlider images={images} style={{width:'50%'}}/>
 					<Box sx={{p:5}}>
@@ -84,8 +85,7 @@ const ProductPage = () => {
 									<Typography variant="h5" component="h2">
 										{item.name}
 									</Typography>
-									<br/>
-									<br/>
+
 									<Box sx={{mb: 2}}>
 										<Fab sx={{ml: 2}} variant="extended" size="medium" color="primary" aria-label="add">
 											{item.category.main}
@@ -94,6 +94,7 @@ const ProductPage = () => {
 											{item.category.second}
 										</Fab>
 									</Box>
+									
 									<Box dir="rtl" sx={{display: 'flex'}}>
 										<Typography variant="h6" component="h2">
 											{"برند:  "}
@@ -102,27 +103,14 @@ const ProductPage = () => {
 											{item.brand}
 										</Typography>
 									</Box>
+
 									<Box dir="rtl" sx={{display: 'flex'}}>
 										<Typography variant="h6" component="h2">
 											{"رنگ:  "}
 										</Typography>
-										<div style={{display: 'flex', alignItems: 'center'}}>
-											{item.color?.map((col) => {
-												console.log(col)
-												return (
-													<div style={{width: '30px',
-													height: '30px',
-													marginLeft: '5px',
-													borderRadius: "50%",
-													borderColor: 'black',
-													backgroundColor: `${col}`
-													}}></div>
-												)
-											})}
-										</div>
+										<ColorsCheckGroup colors={item.color} selectColor={setCheckColor} selectedColor={checkColor} />
 									</Box>
-									<br />
-									<br />
+
 									<Box dir="rtl">
 										<Typography variant="h6" component="h2">
 											{"توضیحات:  "}

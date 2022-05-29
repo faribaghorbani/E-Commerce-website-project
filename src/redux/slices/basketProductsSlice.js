@@ -7,6 +7,9 @@ export const basketProductsSlice = createSlice({
         addBasketProducts: (state, action) => {
             return action.payload
         },
+        removeBasketProducts: (state, action) => {
+            
+        }
     }
 })
 

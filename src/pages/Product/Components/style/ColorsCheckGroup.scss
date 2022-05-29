@@ -1,0 +1,15 @@
+.product-page {
+    &.colors-check-group {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        .color {
+            width: 30px;
+            height: 30px;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    }
+}
+
