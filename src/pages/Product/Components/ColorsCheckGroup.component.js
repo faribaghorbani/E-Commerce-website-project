@@ -15,10 +15,9 @@ const ColorsCheckGroup = ({colors, selectColor, selectedColor}) => {
 
             {colors?.map((col, index) => {
                 return (
-                    <>
+                    <React.Fragment key={uuidv4()}>
                         <div 
                         className='color'
-                        key={uuidv4()}
                         style={{
                         background: `${col} content-box`,
                         border: `${index === selectedColor? `4px solid blue`: `2px solid black`}`
@@ -29,7 +28,7 @@ const ColorsCheckGroup = ({colors, selectColor, selectedColor}) => {
                             style={{display: `${index === selectedColor? `block`:'none'}`}}
                             />
                         </div>
-                    </>
+                    </React.Fragment>
                 )
             })}
         
