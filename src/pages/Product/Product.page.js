@@ -9,10 +9,15 @@ import Typography from '@mui/material/Typography';
 import Fab from '@mui/material/Fab';
 import { Markup } from 'interweave';
 import ColorsCheckGroup from './Components/ColorsCheckGroup.component';
+import { addBasketProducts, changeBasketProducts } from '../../redux/slices/basketProductsSlice'
+import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
 
 const ProductPage = () => {
 	const params = useParams()
+	const dispatch = useDispatch()
+	const basketProducts = useSelector(state => state.basketProducts)
 	const [data, setData] = useState([])
 	const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
@@ -20,15 +25,21 @@ const ProductPage = () => {
 	const [checkColor, setCheckColor] = useState(0)
 	const [basketNumber, setBasketBumber] = useState(0)
 
-	const addToBasket = () => {
+	const addToBasket = (product) => {
 		setBasketBumber(1)
+		dispatch(addBasketProducts(product))
 	}
 
-	const handleChangeBasketNumber = (e, quantity) => {
-		if (e.target.value <= quantity) {
+	const handleChangeBasketNumber = (e, product) => {
+		if (e.target.value <= product.quantity) {
 			setBasketBumber(e.target.value)
+			dispatch(changeBasketProducts({product: product, quantity: +e.target.value}))
 		}
 	}
+
+	useEffect(() => {
+		// console.log(basketProducts)
+	}, [basketProducts])
 
 	useEffect(() => {
 		getDataUser(`/products?id=${params.id}`,
@@ -41,8 +52,8 @@ const ProductPage = () => {
 				setError(true)
 			}
 		)
-		console.log(data);
 	}, [])
+
 
 	useEffect(() => {
 		let tempArrofImages = []
@@ -56,6 +67,7 @@ const ProductPage = () => {
 				thumbnail: `http://localhost:3002/files/${item}`,
 			})
 		}))
+		setBasketBumber(basketProducts[data[0]?.id]?.quantity || 0)
 	}, [data])
 
 	if (loading) {
@@ -81,7 +93,7 @@ const ProductPage = () => {
 					<Box sx={{p:5}}>
 						{data?.map(item => {
 							return (
-								<div dir="rtl">
+								<div key={uuidv4()} dir="rtl">
 									<Typography variant="h5" component="h2">
 										{item.name}
 									</Typography>
@@ -94,7 +106,7 @@ const ProductPage = () => {
 											{item.category.second}
 										</Fab>
 									</Box>
-									
+
 									<Box dir="rtl" sx={{display: 'flex'}}>
 										<Typography variant="h6" component="h2">
 											{"برند:  "}
@@ -122,10 +134,10 @@ const ProductPage = () => {
 
 									<Box>
 										{basketNumber <= 0?
-										(<Button variant="contained" color="success" onClick={addToBasket}>
+										(<Button variant="contained" color="success" onClick={() => addToBasket(item)} disabled={item.quantity === 0}>
 											افزودن به سبد خرید
 										</Button>):
-										(<input value={basketNumber} type={'number'} onChange={(e) => handleChangeBasketNumber(e, item.quantity)} />)
+										(<input value={basketNumber} type={'number'} onChange={(e) => handleChangeBasketNumber(e, item)} />)
 										}
 									</Box>
 								</div>

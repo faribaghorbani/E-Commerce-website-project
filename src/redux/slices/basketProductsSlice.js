@@ -1,17 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, current } from '@reduxjs/toolkit'
 
 export const basketProductsSlice = createSlice({
     name: 'basketProducts',
-    initialState: [],
+    initialState: {},
     reducers: {
-        addBasketProducts: (state, action) => {
-            return action.payload
+        addBasketProducts: (state, action) => {        
+            state[action.payload.id] = {product: action.payload, quantity: 1, status: 'normal'}
+    
+            console.log(current(state))
         },
-        removeBasketProducts: (state, action) => {
-            
+
+        changeBasketProducts: (state, action) => {
+            if (action.payload.quantity === 0) {
+                delete state[action.payload.product.id]
+            } else {
+                state[action.payload.product.id] = {...state[action.payload.product.id], quantity: action.payload.quantity}
+            }
+            console.log(current(state))
         }
     }
 })
 
-export const { addBasketProducts } = basketProductsSlice.actions
+export const { addBasketProducts, changeBasketProducts } = basketProductsSlice.actions
 export default basketProductsSlice.reducer
