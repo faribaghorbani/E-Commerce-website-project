@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import LoadingPage from '../../pages/Loading/Loading.page';
 import { setCategoryData } from '../../redux/slices/categoryDataSlice';
 import { getDataUser } from '../../services/http.service';
-import Header from './Components/Header.component';
+import Header from './../../components/Header.component';
 import SidebarComponent from './Components/Sidebar.component';
 
 
