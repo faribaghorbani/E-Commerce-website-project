@@ -19,7 +19,7 @@ const Header = () => {
 				<li>درباره ما</li>
 			</ul>
 
-			<img className='logo' src={logo} />
+			<img className='logo' src={logo} onClick={() => navigate('/')} />
 		</div>
 	)
 }
