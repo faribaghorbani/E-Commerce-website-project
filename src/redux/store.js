@@ -6,28 +6,31 @@ import adminPanelSavedProductsReducer from './slices/adminPanelSavedProductsSlic
 import basketProductsReducer from './slices/basketProductsSlice';
 
 
-// const loadPreloadState = ()=>{
-//     try {
-//       const serializedState = localStorage.getItem('state');
-//       if (serializedState === null) {
-//         return undefined;
-//       }
-//       return JSON.parse(serializedState);
-//     } catch (err) {
-//       return undefined;
-//     }
-//   }
-//   const saveState = (state) =>{
-//     try {
-//       const serializedState = JSON.stringify(state);
-//       localStorage.setItem('state', serializedState);
-//     } catch {
-//       // ignore write errors
-//     }
-// };
+const loadPreloadState = ()=>{
+    try {
+      const serializedState = localStorage.getItem('state');
+      if (serializedState === null) {
+        return undefined;
+      }
+      return JSON.parse(serializedState);
+    } catch (err) {
+      return undefined;
+    }
+}
+
+
+const saveState = (state) =>{
+    try {
+      const serializedState = JSON.stringify(state);
+      localStorage.setItem('state', serializedState);
+    } catch {
+      // ignore write errors
+    }
+};
 
 export const store = configureStore({
     devTools: true,
+    preloadedState: loadPreloadState(),
     reducer: {
         user: userReducer,
         orderStatus: ordersStatusReducer,
@@ -37,9 +40,9 @@ export const store = configureStore({
     }
 })
 
-// store.subscribe(()=>{
-//     saveState({
-//       user: store.getState().user,
-//      })
-// })
+store.subscribe(()=>{
+    saveState({
+        basketProducts: store.getState().basketProducts,
+     })
+})
   
