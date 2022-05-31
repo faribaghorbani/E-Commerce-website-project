@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import Fab from '@mui/material/Fab';
 import { Markup } from 'interweave';
 import ColorsCheckGroup from './Components/ColorsCheckGroup.component';
-import { addBasketProducts, changeBasketProducts } from '../../redux/slices/basketProductsSlice'
+import { addBasketProducts, changeNumberBasketProducts } from '../../redux/slices/basketProductsSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -33,7 +33,7 @@ const ProductPage = () => {
 	const handleChangeBasketNumber = (e, product) => {
 		if (e.target.value <= product.quantity) {
 			setBasketBumber(e.target.value)
-			dispatch(changeBasketProducts({product: product, quantity: +e.target.value}))
+			dispatch(changeNumberBasketProducts({product: product, quantity: +e.target.value}))
 		}
 	}
 
