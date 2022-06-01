@@ -7,10 +7,6 @@ import { v4 as uuidv4 } from 'uuid';
 const BasketTable = ({data}) => {
 	
 	const basketProducts = useSelector(state => state.basketProducts)
-
-	useEffect(() => {
-		console.log(basketProducts)
-	}, [basketProducts])
 	
 	return (
 		<div className='basket-table'>
