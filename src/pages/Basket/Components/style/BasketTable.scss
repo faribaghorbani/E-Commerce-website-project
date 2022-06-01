@@ -1,5 +1,28 @@
 .basket-page {
     .basket-table {
         direction: rtl;
+        .basket-table-cell {
+            position: relative;
+            .info {
+
+                position: relative;
+                display: flex;
+                justify-content: flex-start;
+                .thumbnail {
+                    width: 100px;
+                    height: 100px;
+                    object-fit: cover;
+                }
+            }
+
+            .warning-msg {
+                position: absolute;
+                left: 20px;
+                top: 0;
+                box-sizing:border-box;
+                border: 1px solid black;
+                padding: 5px;
+            }
+        }
     }
 }

@@ -45,7 +45,7 @@ const BasketPage = () => {
 		return (
 			<div className='basket-page'>
 				hello
-				<BasketTable/>
+				<BasketTable data={data}/>
 			</div>
 		)
 	}
