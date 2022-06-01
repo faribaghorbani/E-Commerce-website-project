@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Fab from '@mui/material/Fab';
 import { Markup } from 'interweave';
 import ColorsCheckGroup from './Components/ColorsCheckGroup.component';
-import { addBasketProducts } from '../../redux/slices/basketProductsSlice'
+import { addBasketProducts, changeNumberBasketProducts, changeStatusBasketProducts } from '../../redux/slices/basketProductsSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import CounterComponent from './Components/Counter.component';
@@ -35,6 +35,11 @@ const ProductPage = () => {
 		getDataUser(`/products?id=${params.id}`,
 			(data) => {
 				setData(data)
+				if (basketProducts[data[0]?.id]?.quantity > data[0].quantity) {
+					const temp = basketProducts[data[0]?.id]?.quantity
+					dispatch(changeStatusBasketProducts({id : data[0].id, status: 'not-enough'}))
+					dispatch(changeNumberBasketProducts({product: data[0], quantity: data[0].quantity, formerQuantity: temp}))
+				}
 				setBasketNumber(basketProducts[data[0]?.id]?.quantity || 0)
 				setLoading(false)
 			},
@@ -129,7 +134,7 @@ const ProductPage = () => {
 										(<Button variant="contained" color="success" onClick={() => addToBasket(item)} disabled={item.quantity === 0}>
 											{item.quantity === 0? "اتمام موجودی": "افزودن به سبد خرید"}
 										</Button>):
-										(<CounterComponent product={item} handleAddButton={setBasketNumber}/>)
+										(<CounterComponent product={item} basketNumber={basketNumber} handleAddButton={setBasketNumber}/>)
 										}
 									</Box>
 								</div>

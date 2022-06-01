@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
-import { changeNumberBasketProducts } from '../../../redux/slices/basketProductsSlice'
+import { changeNumberBasketProducts, changeStatusBasketProducts } from '../../../redux/slices/basketProductsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 const CounterComponent = ({product, handleAddButton}) => {
     const dispatch = useDispatch()
     const basketProducts = useSelector(state => state.basketProducts)
-    const [value, setValue] = useState(() => {
-        return basketProducts[product.id].quantity
-    })
+    const [value, setValue] = useState(basketProducts[product.id]?.quantity)
 
     const handleIncreaseBasketNumber = (e) => {
         setValue(prev => prev + 1)
@@ -18,7 +16,11 @@ const CounterComponent = ({product, handleAddButton}) => {
 	}
     const handleDecreaseBasketNumber = (e) => {
         setValue(prev => prev - 1)
+        handleAddButton(value - 1)
 		dispatch(changeNumberBasketProducts({product: product, quantity: value - 1}))
+        if (basketProducts[product.id].status === 'not-enough') {
+            dispatch(changeStatusBasketProducts({id: product.id, status: 'normal'}))
+        }
 	}
 
     return (
@@ -42,10 +44,10 @@ const CounterComponent = ({product, handleAddButton}) => {
             }} /> : <AiOutlineMinus  onClick={handleDecreaseBasketNumber} />}</div>
         </div>
         <div>
-            {basketProducts[product.id].quantity > product.quantity? 
+            {basketProducts[product.id]?.status == 'not-enough'? 
             (<>
                 <label>موجودی تغییر کرده است</label>
-                <label>تعداد انتخابی شما:{basketProducts[product.id].quantity}</label>
+                <label>تعداد انتخابی شما:{basketProducts[product.id].formerQuantity}</label>
             </>) : null
             }
         </div>
