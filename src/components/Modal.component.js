@@ -56,10 +56,8 @@ export default function ModalComponent(props) {
          onClose={props.handleClose}>
           {props.title}
         </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Typography gutterBottom>
+        <DialogContent className={`${props.className}`} dividers>
             {props.children}
-          </Typography>
 
         </DialogContent>
         {/* <DialogActions>
