@@ -3,9 +3,12 @@
         direction: rtl;
         .basket-table-cell {
             position: relative;
+            display: flex;
+            justify-content: flex-start;
+            
             .info {
-
                 position: relative;
+                flex-basis: 50%;
                 display: flex;
                 justify-content: flex-start;
                 .thumbnail {
@@ -14,14 +17,21 @@
                     object-fit: cover;
                 }
             }
+            .price {
+                flex-basis: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
 
             .warning-msg {
                 position: absolute;
                 left: 20px;
                 top: 0;
-                box-sizing:border-box;
-                border: 1px solid black;
-                padding: 5px;
+                label {
+                    border: 1px solid black;
+                    padding: 5px;
+                }
             }
         }
     }
