@@ -124,11 +124,12 @@ const ProductPage = () => {
 									</Box>
 
 									<Box>
-										{basketNumber <= 0?
+										{
+										basketNumber == 0?
 										(<Button variant="contained" color="success" onClick={() => addToBasket(item)} disabled={item.quantity === 0}>
-											افزودن به سبد خرید
+											{item.quantity === 0? "اتمام موجودی": "افزودن به سبد خرید"}
 										</Button>):
-										(<CounterComponent product={item} handleAddButton={setBasketNumber} />)
+										(<CounterComponent product={item} handleAddButton={setBasketNumber}/>)
 										}
 									</Box>
 								</div>
