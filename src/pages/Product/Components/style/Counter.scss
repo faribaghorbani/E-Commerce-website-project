@@ -25,6 +25,10 @@
             font-size: 1.4rem;
             padding: 0 10px;
             color: rgb(255, 40, 94);
+            .most {
+                color: rgba(128, 128, 128, 0.555);
+                cursor: not-allowed;
+            }
         }
     }
 }

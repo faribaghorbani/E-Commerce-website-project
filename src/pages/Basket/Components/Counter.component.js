@@ -37,7 +37,7 @@ const CounterComponent = ({product, basketNumber}) => {
 
     return (
         <div className='counter-box'>
-            <div className='increase'>{value < product.quantity?<AiOutlinePlus onClick={handleIncreaseBasketNumber} />: <label>حداکثر</label>}</div>
+            <div className='increase'>{value < product.quantity?<AiOutlinePlus onClick={handleIncreaseBasketNumber} />: <label className='most'>حداکثر</label>}</div>
             <input 
             className='counter'
             value={value}
