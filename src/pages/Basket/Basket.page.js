@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import LoadingPage from '../Loading/Loading.page';
 import BasketTable from './Components/BasketTable.component';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeStatusBasketProducts } from './../../redux/slices/basketProductsSlice'
+import { changeNumberBasketProducts, changeStatusBasketProducts } from './../../redux/slices/basketProductsSlice'
 
 const BasketPage = () => {
 	const dispatch = useDispatch()
@@ -20,10 +20,11 @@ const BasketPage = () => {
 				const findSourceInData = res.data.find(product => product.id == item[0])
 				if (findSourceInData == undefined) {
 					dispatch(changeStatusBasketProducts({id : item[0], status: 'deleted'}))
-				} else if (findSourceInData && findSourceInData.quantity < item[1].quantity) {
-					dispatch(changeStatusBasketProducts({id : item[0], status: 'not-enough'}))
 				} else if (findSourceInData && findSourceInData.quantity == 0) {
 					dispatch(changeStatusBasketProducts({id : item[0], status: 'not-existed'}))
+				} else if (findSourceInData && findSourceInData.quantity < item[1].quantity) {
+					dispatch(changeStatusBasketProducts({id : item[0], status: 'not-enough'}))
+					// dispatch(changeNumberBasketProducts({product: findSourceInData, quantity: item[1].quantity}))
 				} else {
 					dispatch(changeStatusBasketProducts({id : item[0], status: 'normal'}))
 				}

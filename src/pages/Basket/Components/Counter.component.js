@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
-import { changeNumberBasketProducts } from '../../../redux/slices/basketProductsSlice'
+import { changeNumberBasketProducts, changeStatusBasketProducts } from '../../../redux/slices/basketProductsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import './style/Counter.scss'
 import ModalComponent from '../../../components/Modal.component'
@@ -12,8 +12,10 @@ const CounterComponent = ({product, status}) => {
     const basketProducts = useSelector(state => state.basketProducts)
     const [value, setValue] = useState(() => {
         if (status == 'normal') {
+            console.log(basketProducts[product.id].quantity)
             return basketProducts[product.id].quantity
         } else if (status == 'not-enough') {
+            console.log(product.quantity)
             return product.quantity
         }
     })
@@ -34,6 +36,9 @@ const CounterComponent = ({product, status}) => {
     const handleDecreaseBasketNumber = () => {
         setValue(prev => prev - 1)
 		dispatch(changeNumberBasketProducts({product: product, quantity: value - 1}))
+        if (status == 'not-enough') {
+            dispatch(changeStatusBasketProducts({id: product.id, status: 'normal'}))
+        }
 	}
 
     const handleRemovingProduct = () => {

@@ -15,18 +15,18 @@ const BasketTable = ({data}) => {
 	return (
 		<div className='basket-table'>
 			{Object.entries(basketProducts).map(item => {
-				if (item[1].status == 'normal') {
+				if (item[1].status == 'normal' || item[1].status == 'not-enough') {
 					const getDataFromSource = data.find(pro => pro.id == item[0])
 					return (
 						<BasketTableCell key={uuidv4()} product={getDataFromSource} status={item[1].status} />
 					)
 				}
 			})}
-			<h2>لیست کالاهای زیر به صورت اتومات از سبد خرید حذف می شوند</h2>
+			<h3>لیست کالاهای زیر به صورت اتومات از سبد خرید حذف می شوند</h3>
 			{Object.entries(basketProducts).map(item => {
 				if (item[1].status == 'not-existed' || item[1].status == 'deleted') {
 					return (
-						<BasketTableCell product={item[1].product} quantity={null} status={item[1].status} />
+						<BasketTableCell key={uuidv4()} product={item[1].product} quantity={null} status={item[1].status} />
 					)
 				}
 			})}
