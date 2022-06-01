@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { changeNumberBasketProducts } from '../../../redux/slices/basketProductsSlice'
 import CounterComponent from './Counter.component'
 
 const BasketTableCell = ({product, status}) => {
@@ -43,7 +44,7 @@ const BasketTableCell = ({product, status}) => {
                 </div>
                 <div className='warning-msg'>
                     <label>عدم موجودی کافی</label>
-                    <label>تعداد انتخابی شما: {basketProducts[product.id].quantity}</label>
+                    <label>تعداد انتخابی شما: {basketProducts[product.id].formerQuantity}</label>
                 </div>
             </div>
         )

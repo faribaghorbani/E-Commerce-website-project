@@ -7,7 +7,9 @@ import { useDispatch, useSelector } from 'react-redux'
 const CounterComponent = ({product, handleAddButton}) => {
     const dispatch = useDispatch()
     const basketProducts = useSelector(state => state.basketProducts)
-    const [value, setValue] = useState(basketProducts[product.id].quantity)
+    const [value, setValue] = useState(() => {
+        return basketProducts[product.id].quantity
+    })
 
     const handleIncreaseBasketNumber = (e) => {
         setValue(prev => prev + 1)
@@ -20,6 +22,7 @@ const CounterComponent = ({product, handleAddButton}) => {
 	}
 
     return (
+        <>
         <div className='counter-box'>
             <div className='increase'>{value < product.quantity?<AiOutlinePlus onClick={handleIncreaseBasketNumber} />: <label className='most'>حداکثر</label>}</div>
             <input 
@@ -38,6 +41,15 @@ const CounterComponent = ({product, handleAddButton}) => {
                 handleAddButton(0)
             }} /> : <AiOutlineMinus  onClick={handleDecreaseBasketNumber} />}</div>
         </div>
+        <div>
+            {basketProducts[product.id].quantity > product.quantity? 
+            (<>
+                <label>موجودی تغییر کرده است</label>
+                <label>تعداد انتخابی شما:{basketProducts[product.id].quantity}</label>
+            </>) : null
+            }
+        </div>
+        </>
     )
 }
 

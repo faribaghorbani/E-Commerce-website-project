@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { changeNumberBasketProducts, changeStatusBasketProducts } from '../../../redux/slices/basketProductsSlice'
@@ -11,14 +11,9 @@ const CounterComponent = ({product, status}) => {
     const dispatch = useDispatch()
     const basketProducts = useSelector(state => state.basketProducts)
     const [value, setValue] = useState(() => {
-        if (status == 'normal') {
-            console.log(basketProducts[product.id].quantity)
-            return basketProducts[product.id].quantity
-        } else if (status == 'not-enough') {
-            console.log(product.quantity)
-            return product.quantity
-        }
+        return basketProducts[product.id].quantity
     })
+
     const [open, setOpen] = useState(false)
 
     const handleOpenModal = () => {

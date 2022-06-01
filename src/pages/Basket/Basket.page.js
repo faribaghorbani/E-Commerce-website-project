@@ -24,7 +24,7 @@ const BasketPage = () => {
 					dispatch(changeStatusBasketProducts({id : item[0], status: 'not-existed'}))
 				} else if (findSourceInData && findSourceInData.quantity < item[1].quantity) {
 					dispatch(changeStatusBasketProducts({id : item[0], status: 'not-enough'}))
-					// dispatch(changeNumberBasketProducts({product: findSourceInData, quantity: item[1].quantity}))
+					dispatch(changeNumberBasketProducts({product: findSourceInData, quantity: findSourceInData.quantity, formerQuantity: item[1].product.quantity}))
 				} else {
 					dispatch(changeStatusBasketProducts({id : item[0], status: 'normal'}))
 				}
