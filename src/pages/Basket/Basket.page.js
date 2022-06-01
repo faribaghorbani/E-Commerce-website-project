@@ -1,9 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import LoadingPage from '../Loading/Loading.page';
 import BasketTable from './Components/BasketTable.component';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeNumberBasketProducts, changeStatusBasketProducts } from './../../redux/slices/basketProductsSlice'
+import PaymentBill from './Components/PaymentBill.component';
+
 
 const BasketPage = () => {
 	const dispatch = useDispatch()
@@ -45,8 +49,15 @@ const BasketPage = () => {
 	} else {
 		return (
 			<div className='basket-page'>
-				hello
-				<BasketTable data={data}/>
+			<Grid container spacing={2}>
+				<Grid item xs={2}>
+					<PaymentBill/>
+				</Grid>
+				<Grid item xs={10}>
+					<BasketTable data={data}/>
+				</Grid>
+			</Grid>
+				
 			</div>
 		)
 	}

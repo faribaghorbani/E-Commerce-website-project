@@ -61,7 +61,7 @@ function App() {
 					<BasketPage />
 				</RegularLayout>
 			}/>
-			<Route path="/basket/checkout" element={	
+			<Route path="/checkout" element={	
 				<ProtectedRoute>
 					<RegularLayout>
 						<CheckoutPage />
