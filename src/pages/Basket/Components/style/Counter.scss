@@ -1,0 +1,30 @@
+.basket-page {
+    .counter-box {
+        width: fit-content;
+        display: flex;
+        align-items: stretch;
+        border: 1px solid gray;
+        border-radius: 5px;
+
+        .counter {
+            font-size: 1.2rem;
+            width: 50px;
+            height: 40px;
+            border: none;
+            text-align: center;
+            color: rgb(255, 40, 94);
+        }
+
+        .increase, .decrease {
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: content-box;
+            color: white;
+            font-size: 1.2rem;
+            padding: 0 10px;
+            color: rgb(255, 40, 94);
+        }
+    }
+}
