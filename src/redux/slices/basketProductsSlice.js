@@ -10,14 +10,16 @@ export const basketProductsSlice = createSlice({
         },
 
         changeNumberBasketProducts: (state, action) => {
-            if (action.payload.quantity === 0) {
+            if (action.payload.quantity <= 0) {
                 delete state[action.payload.product.id]
             } else {
                 state[action.payload.product.id] = {...state[action.payload.product.id], quantity: action.payload.quantity}
             }
+            console.log(current(state))
         },
         changeStatusBasketProducts: (state, action) => {
             state[action.payload.id] = {...state[action.payload.id], status: action.payload.status}
+            console.log(current(state))
         }
     }
 })
