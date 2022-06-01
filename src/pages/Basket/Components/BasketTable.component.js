@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import BasketTableCell from './BasketTableCell.component';
 import './style/BasketTable.scss'
+import { v4 as uuidv4 } from 'uuid';
 
 const BasketTable = ({data}) => {
 	
@@ -9,15 +10,15 @@ const BasketTable = ({data}) => {
 
 	useEffect(() => {
 		console.log(basketProducts)
-	}, [])
+	}, [basketProducts])
 	
 	return (
 		<div className='basket-table'>
 			{Object.entries(basketProducts).map(item => {
-				if (item[1].status == 'normal' || item[1].status == 'not-enough') {
+				if (item[1].status == 'normal') {
 					const getDataFromSource = data.find(pro => pro.id == item[0])
 					return (
-						<BasketTableCell product={getDataFromSource} quantity={item[1].quantity} status={item[1].status} />
+						<BasketTableCell key={uuidv4()} product={getDataFromSource} status={item[1].status} />
 					)
 				}
 			})}

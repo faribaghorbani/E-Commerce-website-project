@@ -15,11 +15,11 @@ export const basketProductsSlice = createSlice({
             } else {
                 state[action.payload.product.id] = {...state[action.payload.product.id], quantity: action.payload.quantity}
             }
-            console.log(current(state))
+            // console.log(current(state))
         },
         changeStatusBasketProducts: (state, action) => {
             state[action.payload.id] = {...state[action.payload.id], status: action.payload.status}
-            console.log(current(state))
+            // console.log(current(state))
         }
     }
 })

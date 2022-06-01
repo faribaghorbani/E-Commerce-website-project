@@ -3,15 +3,7 @@ import { changeNumberBasketProducts } from '../../../redux/slices/basketProducts
 import { useDispatch } from 'react-redux'
 import CounterComponent from './Counter.component'
 
-const BasketTableCell = ({product, quantity, status}) => {
-    const dispatch = useDispatch()
-    const [basketNumber, setBasketNumber] = useState(() => {
-        if (status == 'normal') {
-            return quantity
-        } else if (status == 'not-enough') {
-            return product.quantity
-        }
-    })
+const BasketTableCell = ({product, status}) => {
 
     if (status == 'normal') {
         return (
@@ -23,7 +15,7 @@ const BasketTableCell = ({product, quantity, status}) => {
                     <div>
                         <h4>{product.name}</h4>
                         <h5>{product.price}</h5>
-                        <CounterComponent product={product} basketNumber={basketNumber} />
+                        <CounterComponent product={product} status={status} />
                     </div>
                 </div>
             </div>
@@ -39,7 +31,7 @@ const BasketTableCell = ({product, quantity, status}) => {
                     <div>
                         <h4>{product.name}</h4>
                         <h5>{product.price}</h5>
-                        <CounterComponent product={product} basketNumber={basketNumber} />
+                        <CounterComponent product={product} status={status} />
                     </div>
                 </div>
                 <div className='warning-msg'>عدم موجودی کافی</div>
@@ -65,7 +57,7 @@ const BasketTableCell = ({product, quantity, status}) => {
     if (status == 'deleted') {
         return (
             <div className='basket-table-cell'>
-                <div className='warning-msg'>این کالا حذف شده است</div>
+                <div className='warning-msg'>این کالا از سایت حذف شده است</div>
                 <div className='info'>
                     <div>
                         <img className='thumbnail' src={`http://localhost:3002/files/${product.thumbnail}`} />

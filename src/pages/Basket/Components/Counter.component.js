@@ -2,14 +2,21 @@ import React, { useState } from 'react'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { changeNumberBasketProducts } from '../../../redux/slices/basketProductsSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import './style/Counter.scss'
 import ModalComponent from '../../../components/Modal.component'
 import { Button } from '@mui/material'
 
-const CounterComponent = ({product, basketNumber}) => {
+const CounterComponent = ({product, status}) => {
     const dispatch = useDispatch()
-    const [value, setValue] = useState(basketNumber)
+    const basketProducts = useSelector(state => state.basketProducts)
+    const [value, setValue] = useState(() => {
+        if (status == 'normal') {
+            return basketProducts[product.id].quantity
+        } else if (status == 'not-enough') {
+            return product.quantity
+        }
+    })
     const [open, setOpen] = useState(false)
 
     const handleOpenModal = () => {
@@ -19,12 +26,11 @@ const CounterComponent = ({product, basketNumber}) => {
         setOpen(false)
     }
 
-
     const handleIncreaseBasketNumber = () => {
         setValue(prev => prev + 1)
         dispatch(changeNumberBasketProducts({product: product, quantity: value + 1}))
-		
 	}
+
     const handleDecreaseBasketNumber = () => {
         setValue(prev => prev - 1)
 		dispatch(changeNumberBasketProducts({product: product, quantity: value - 1}))
@@ -59,7 +65,7 @@ const CounterComponent = ({product, basketNumber}) => {
                 open={open}
             >
                 <h5>آیا از حذف کالا از سبد خرید اطمینان دارید؟</h5>
-                <div className='actions'>                    
+                <div className='actions' style={{display: 'flex', justifyContent: 'center', gap: '10px'}}>                    
                     <Button variant="outlined" onClick={() => handleRemovingProduct()}>حذف</Button>
                     <Button variant="outlined" onClick={() => handleCloseModal()}>برگشت</Button>
                 </div>
