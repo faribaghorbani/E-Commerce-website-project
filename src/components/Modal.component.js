@@ -58,15 +58,15 @@ export default function ModalComponent(props) {
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-            {props.description}
+            {props.children}
           </Typography>
 
         </DialogContent>
-        <DialogActions>
+        {/* <DialogActions>
           <Button autoFocus onClick={props.handleClose}>
             بستن
           </Button>
-        </DialogActions>
+        </DialogActions> */}
       </BootstrapDialog>
     </div>
   );
