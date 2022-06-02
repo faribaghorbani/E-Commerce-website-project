@@ -17,6 +17,7 @@ import AdminLayout from '../layouts/Admin/Admin.layout'
 import LoginLayout from '../layouts/Login/Login.layout'
 import SidebarLayout from "../layouts/Sidebar/Sidebar.layout";
 import PanelHomePage from "../pages/PanelHome/PanelHome.page";
+import ResultPage from "../pages/Result/Result.page";
 // import SidebarLayout from '../layouts/Sidebar/Sidebarlayout'
 
 function App() {
@@ -61,13 +62,22 @@ function App() {
 					<BasketPage />
 				</RegularLayout>
 			}/>
-			<Route path="/checkout" element={	
-				<ProtectedRoute>
+
+			<Route path="/checkout">
+
+				<Route index element={	
 					<RegularLayout>
 						<CheckoutPage />
 					</RegularLayout>
-				</ProtectedRoute>	
-			}/>
+				}/>
+
+				<Route path=":status" element={	
+					<RegularLayout>
+						<ResultPage />
+					</RegularLayout>
+				}/>
+			</Route>
+
 			<Route path="/login" element={	
 				<PrivateRoute>
 					<LoginLayout>
