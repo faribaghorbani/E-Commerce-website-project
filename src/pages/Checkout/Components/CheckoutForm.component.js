@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { PAYMENT_PATH } from '../../../utils/constants';
 import { useFormik, useField, useFormikContext } from 'formik';
 import * as yup from 'yup'
 import DateObject from "react-date-object";
@@ -47,13 +48,25 @@ const CheckoutForm = () => {
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
 			console.log(values)
+			window.open(PAYMENT_PATH)
 		},
 	});
 
 	useEffect(() => {
 		// console.log(dataRange)
+
+	}, [])
+
+
+	useEffect(() => {
+		// console.log(dataRange)
 		// console.log(new DateObject(JSON.parse(JSON.stringify(dataRange[0]))).format())
 	}, [dataRange])
+
+	
+	const goToBasket = () => {
+		
+	}
 
 	return (
 		<Paper elevation={5} className={'checkout-form-container'}>
@@ -155,7 +168,7 @@ const CheckoutForm = () => {
 					<Button variant="contained" color="success" type="submit">
 						درگاه پرداخت
 					</Button>
-					<Button variant="contained" className='go-basket-button'>
+					<Button variant="contained" className='go-basket-button' onClick={goToBasket}>
 						سبد خرید
 					</Button>
 				</div>
