@@ -14,7 +14,7 @@ const CustomInput = (props) => {
             type="text"
             value={props.value}
             onFocus={props.openCalendar}
-            error={props.touchError && props.error}
+            error={Boolean(props.touchError) && Boolean(props.error)}
             helperText={props.touchError && props.error}
             />
         </RTL>
