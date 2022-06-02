@@ -11,6 +11,7 @@ import "react-multi-date-picker/styles/colors/red.css"
 import RTL from '../../../components/RTL.component';
 import { TextField, Button, Paper } from '@mui/material';
 import './style/CheckoutForm.scss'
+import CustomInput from './CustomInput.component';
 
 const phoneRegex = RegExp(
 	/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{5})$/
@@ -50,7 +51,7 @@ const CheckoutForm = () => {
 	});
 
 	useEffect(() => {
-		console.log(dataRange)
+		// console.log(dataRange)
 		// console.log(new DateObject(JSON.parse(JSON.stringify(dataRange[0]))).format())
 	}, [dataRange])
 
@@ -121,33 +122,34 @@ const CheckoutForm = () => {
 							helperText={formik.touched.phone && formik.errors.phone}
 						/>
 					</RTL>
-					<div className='date-box'>
-						<DatePicker
-							onChange={(dateobject) => {
-								formik.setFieldValue("datepicker", dateobject);
-								setDateRange(dateobject)
-							}}
-							value={formik.values.datepicker}
-							className="red"
-							containerStyle={{
-								width: "100%"
-							}}
-							animations={[
-								opacity(),
-								transition({
-								from: 40,
-								transition: "all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)",
-								}),
-							]}
-							minDate={new DateObject({ calendar: persian })}
-							range 
-							calendar={persian}
-							locale={persian_fa}
-							calendarPosition="bottom-right"
-							name={"datapicker"}
-						/>
-						<span className='date-error'>{formik.touched.datepicker && formik.errors.datepicker}</span>
-					</div>
+					<DatePicker
+						onChange={(dateobject) => {
+							formik.setFieldValue("datepicker", dateobject);
+							setDateRange(dateobject)
+						}}
+						value={formik.values.datepicker}
+						className="red"
+						containerStyle={{
+							width: "100%"
+						}}
+						animations={[
+							opacity(),
+							transition({
+							from: 40,
+							transition: "all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)",
+							}),
+						]}
+						render={<CustomInput 
+							touchError={formik.touched.datepicker}
+							error={formik.errors.datepicker}
+						/>}
+						minDate={new DateObject({ calendar: persian })}
+						range 
+						calendar={persian}
+						locale={persian_fa}
+						calendarPosition="bottom-right"
+						name={"datapicker"}
+					/>
 				</div>
 				<div className='actions'>
 					<Button variant="contained" color="success" type="submit">
