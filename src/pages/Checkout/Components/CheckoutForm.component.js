@@ -88,7 +88,7 @@ const CheckoutForm = () => {
 				},
 				orderDate: Date.now(),
 				purchaseTotal: purchaseTotal,
-				orderStatus: 5,
+				orderStatusId: 5,
 				deliveryRange: [JSON.stringify(values.datepicker[0]), JSON.stringify(values.datepicker[1])],
 				orderItems: buyedProducts
 			}
