@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useFormik } from 'formik';
+import { useFormik, useField, useFormikContext } from 'formik';
 import * as yup from 'yup'
 import DateObject from "react-date-object";
 import transition from "react-element-popper/animations/transition"
@@ -20,8 +20,8 @@ const validationSchema = yup.object().shape({
 	address: yup.string()
 	.required('لطفا آدرس خود را وارد کنید'),
 	datepicker: yup.array()
+	.min(2, 'لطفا یک بازه تحویل کامل انتخاب کنید')
 	.required('لطفا بازه تحویل را وارد کنید'),
-	
 });
 
 
@@ -33,17 +33,17 @@ const CheckoutForm = () => {
 		  name: '',
 		  lastName: '',
 		  address: '',
-		  datepicker: [new DateObject({ calendar: persian }), new DateObject({ calendar: persian })]
+		  datepicker: []
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
-
+			console.log(values)
 		},
 	});
 
 	useEffect(() => {
 		console.log(dataRange)
-		console.log(new DateObject(JSON.parse(JSON.stringify(dataRange[0]))).format())
+		// console.log(new DateObject(JSON.parse(JSON.stringify(dataRange[0]))).format())
 	}, [dataRange])
 
 	return (
@@ -94,10 +94,11 @@ const CheckoutForm = () => {
 					/>
 				</RTL>
 				<DatePicker
-					onChange={(dateObject) => {
-						setDateRange(dateObject)
+					onChange={(dateobject) => {
+						formik.setFieldValue("datepicker", dateobject);
+						setDateRange(dateobject)
 					}}
-					value={dataRange}
+					value={formik.values.datepicker}
 					className="red"
 					animations={[
 						opacity(),
@@ -113,18 +114,7 @@ const CheckoutForm = () => {
 					calendarPosition="bottom-right"
 					name={"datapicker"}
 				/>
-				<DatePicker
-					// onChange={(dateObject) => {
-					// 	setDateRange(dateObject)
-					// }}
-					value={dataRange}
-					minDate={new DateObject({ calendar: persian })}
-					range 
-					calendar={persian}
-					locale={persian_fa}
-					calendarPosition="bottom-right"
-					// name={"datapicker"}
-				/>
+				
 				<label>{formik.touched.datepicker && formik.errors.datepicker}</label>
 
 				<Button color="primary" type="submit">
