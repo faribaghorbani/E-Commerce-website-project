@@ -4,6 +4,13 @@ export const basketProductsSlice = createSlice({
     name: 'basketProducts',
     initialState: {},
     reducers: {
+
+        emptyBasketProducts: (state, action) => {        
+           return {}
+        },
+        recoverWholeBasketProducts: (state, action) => {        
+           return action.payload
+        },
         addBasketProducts: (state, action) => {        
             state[action.payload.id] = {product: action.payload, quantity: 1, status: 'normal'}
     
@@ -26,5 +33,10 @@ export const basketProductsSlice = createSlice({
     }
 })
 
-export const { addBasketProducts, changeNumberBasketProducts, changeStatusBasketProducts } = basketProductsSlice.actions
+export const { addBasketProducts,
+            changeNumberBasketProducts,
+            changeStatusBasketProducts,
+            emptyBasketProducts,
+            recoverWholeBasketProducts
+        } = basketProductsSlice.actions
 export default basketProductsSlice.reducer
