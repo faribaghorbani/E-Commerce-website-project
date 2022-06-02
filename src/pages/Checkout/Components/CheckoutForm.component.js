@@ -13,6 +13,9 @@ import RTL from '../../../components/RTL.component';
 import { TextField, Button, Paper } from '@mui/material';
 import './style/CheckoutForm.scss'
 import CustomInput from './CustomInput.component';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const phoneRegex = RegExp(
 	/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{5})$/
@@ -35,7 +38,31 @@ const validationSchema = yup.object().shape({
 
 
 const CheckoutForm = () => {
-	const [dataRange, setDateRange] = useState([])
+	const navigate = useNavigate()
+	const basketProducts = useSelector(state => state.basketProducts)
+	// const [dataRange, setDateRange] = useState([])
+	const [buyedProducts, setBuyedProducts] = useState([])
+
+	useEffect(() => {
+		Object.entries(basketProducts).forEach(item => {
+			if (item[1].status == 'normal') {
+				setBuyedProducts(prev => [...prev, {
+					name: item[1].product.name,
+					price: item[1].product.price,
+					quantity: item[1].quantity,
+					id: +item[0]
+				}])
+			}
+		})
+	}, [])
+
+	useEffect(() => {
+		console.log(buyedProducts)
+	}, [buyedProducts])
+
+	const goToBasket = () => {
+		navigate('/basket')
+	}
 
 	const formik = useFormik({
 		initialValues: {
@@ -46,27 +73,36 @@ const CheckoutForm = () => {
 		  datepicker: []
 		},
 		validationSchema: validationSchema,
+
 		onSubmit: (values) => {
-			console.log(values)
+			let purchaseTotal = 0
+			buyedProducts.forEach((item) => {
+				purchaseTotal += Number(item.price)
+			})
+			const tempObj = {
+				customerDetail: {
+					name: values.name,
+					lastName: values.lastName,
+					phone : values.phone,
+					address: values.address,
+				},
+				orderDate: Date.now(),
+				purchaseTotal: purchaseTotal,
+				orderStatus: 5,
+				deliveryRange: [JSON.stringify(values.datepicker[0]), JSON.stringify(values.datepicker[1])],
+				orderItems: buyedProducts
+			}
+			axios.post('/orders', tempObj)
+				.then(res => {
+					localStorage.setItem('order', res.data.id)
+					console.log(res.data)
+				})
+				.catch(err => console.log(err.response))
+			console.log(tempObj)
 			window.open(PAYMENT_PATH)
 		},
 	});
 
-	useEffect(() => {
-		// console.log(dataRange)
-
-	}, [])
-
-
-	useEffect(() => {
-		// console.log(dataRange)
-		// console.log(new DateObject(JSON.parse(JSON.stringify(dataRange[0]))).format())
-	}, [dataRange])
-
-	
-	const goToBasket = () => {
-		
-	}
 
 	return (
 		<Paper elevation={5} className={'checkout-form-container'}>
@@ -138,7 +174,6 @@ const CheckoutForm = () => {
 					<DatePicker
 						onChange={(dateobject) => {
 							formik.setFieldValue("datepicker", dateobject);
-							setDateRange(dateobject)
 						}}
 						value={formik.values.datepicker}
 						className="red"
@@ -178,3 +213,7 @@ const CheckoutForm = () => {
 }
 
 export default CheckoutForm;
+
+	// useEffect(() => {
+		// console.log(new DateObject(JSON.parse(JSON.stringify(dataRange[0]))).format())
+	// }, [dataRange])
