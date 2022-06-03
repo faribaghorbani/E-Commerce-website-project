@@ -4,6 +4,7 @@ import ordersStatusReducer from './slices/ordersStatusSlice';
 import categoryDataReducer from './slices/categoryDataSlice';
 import adminPanelSavedProductsReducer from './slices/adminPanelSavedProductsSlice';
 import basketProductsReducer from './slices/basketProductsSlice';
+import allOrdersReducer from './slices/allOrdersSlice'
 
 
 const loadPreloadState = ()=>{
@@ -37,6 +38,7 @@ export const store = configureStore({
         categoryData: categoryDataReducer,
         adminPanelSavedProducts: adminPanelSavedProductsReducer,
         basketProducts: basketProductsReducer,
+        allOrders: allOrdersReducer,
     }
 })
 
