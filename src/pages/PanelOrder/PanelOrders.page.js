@@ -12,11 +12,15 @@ import SearchIcon from '@mui/icons-material/Search';
 import _ from 'lodash';
 import { filterOrders } from '../../utils/filterAdminPanel'
 import RadioButtonsGroup from './Components/Radiobuttons.component'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setOrders } from '../../redux/slices/allOrdersSlice'
+import { Container } from '@mui/material'
 
 const PanelOrdersPage = () => {
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
 	const orderStatus = useSelector(state => state.orderStatus)
+	const allOrders = useSelector(state => state.allOrders)
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState([])
     const [filteredData, setFilteredData] = useState([])
@@ -27,11 +31,16 @@ const PanelOrdersPage = () => {
 		getData('/orders',
 			(data) => {
 			setLoading(false)
+			dispatch(setOrders(data))
 			setData(data)
 			},
 			() => navigate("/login", {replace: true})
 		)
     }, [navigate])
+
+	useEffect(() => {
+		setData(allOrders)
+	}, [allOrders])
 	
 
 	const optimisedSearching = useCallback(_.throttle((value) => {
@@ -77,7 +86,7 @@ const PanelOrdersPage = () => {
 
     if (loading) return <LoadingPage />
     return (
-      	<>
+      	<Container maxWidth='xl' className='panelorders-page'>
 			<div>
 				<RTL>
 					<FormControl fullWidth sx={{ m: 1 }}>
@@ -99,7 +108,7 @@ const PanelOrdersPage = () => {
 			<div>
 				<TableComponent data={filteredData} />
 			</div>
-      	</>
+      	</Container>
     )
 }
 
