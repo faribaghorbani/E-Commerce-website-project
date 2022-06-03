@@ -11,6 +11,7 @@ import Link from '@mui/material/Link';
 import { v4 as uuidv4 } from 'uuid';
 import './style/OrdersTable.scss'
 import ModalComponent from './Modal.component';
+import OrderDetails from './OrderDetails.component';
 
 
 const columns = [
@@ -49,7 +50,7 @@ export default function TableComponent(props) {
 	};
 
 	const openOrderModal = (id) => {
-		const targetData = props.data.filter(item => item.id === id)
+		const targetData = props.data.filter(item => item.id == id)
 		setOrderInModal(targetData[0])
 		handleOpen()
 	}
@@ -64,7 +65,7 @@ export default function TableComponent(props) {
 	};
 
 	return (
-		<Paper sx={{ width: '100%', overflow: 'hidden' }}>
+		<Paper sx={{ width: '100%', overflow: 'hidden' }} className='orders-table-modal'>
 		<TableContainer sx={{ }} className='orders-table'>
 			<Table stickyHeader aria-label="sticky table">
 			<TableHead>
@@ -90,7 +91,7 @@ export default function TableComponent(props) {
 						const value = row[column.id];
 						if (value === 'viewOrders') {
 							return (
-							<TableCell key={column.id} align={column.align} className='view-orders-cell' onClick={() => openOrderModal()}>
+							<TableCell key={column.id} align={column.align} className='view-orders-cell' onClick={() => openOrderModal(row.id)}>
 								بررسی سفارش
 							</TableCell>
 							);
@@ -127,7 +128,7 @@ export default function TableComponent(props) {
 			handleClose={handleClose}
 			handleOpen={handleOpen}
 		>
-			
+			<OrderDetails orderInModal={orderInModal} closeModal={handleClose}/>	
 		</ModalComponent>
 		</Paper>
 	);

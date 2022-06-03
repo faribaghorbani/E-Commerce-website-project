@@ -1,4 +1,10 @@
 .panelorders-page {
+    .orders-table-modal {
+        .modal-order-details {
+            direction: rtl;
+            min-width: 700px;
+        }
+    }
     .orders-table {
         .view-orders-cell {
             cursor: pointer;
