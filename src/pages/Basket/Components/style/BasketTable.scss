@@ -1,6 +1,11 @@
 .basket-page {
     .basket-table {
+        min-height: 90vh;
+        padding: 20px;
         direction: rtl;
+        .deleted-products-msg {
+            margin: 0;
+        }
         .basket-table-cell {
             position: relative;
             display: flex;

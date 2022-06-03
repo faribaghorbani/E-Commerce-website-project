@@ -7,6 +7,8 @@ import BasketTable from './Components/BasketTable.component';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeNumberBasketProducts, changeStatusBasketProducts } from './../../redux/slices/basketProductsSlice'
 import PaymentBill from './Components/PaymentBill.component';
+import { Container } from '@mui/material';
+import './Basket.scss'
 
 
 const BasketPage = () => {
@@ -48,17 +50,16 @@ const BasketPage = () => {
 		return <div></div>
 	} else {
 		return (
-			<div className='basket-page'>
-			<Grid container spacing={2}>
-				<Grid item xs={2}>
-					<PaymentBill/>
+			<Container maxWidth='xl' className='basket-page'>
+				<Grid container spacing={2}>
+					<Grid item xs={2}>
+						<PaymentBill/>
+					</Grid>
+					<Grid item xs={10}>
+						<BasketTable data={data}/>
+					</Grid>
 				</Grid>
-				<Grid item xs={10}>
-					<BasketTable data={data}/>
-				</Grid>
-			</Grid>
-				
-			</div>
+			</Container>
 		)
 	}
 }

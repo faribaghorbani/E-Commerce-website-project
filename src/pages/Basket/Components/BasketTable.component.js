@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import BasketTableCell from './BasketTableCell.component';
 import './style/BasketTable.scss'
 import { v4 as uuidv4 } from 'uuid';
+import { Paper } from '@mui/material';
 
 const BasketTable = ({data}) => {
 	
 	const basketProducts = useSelector(state => state.basketProducts)
 	
 	return (
-		<div className='basket-table'>
+		<Paper elevation={5} className='basket-table'>
 			{Object.entries(basketProducts).map(item => {
 				if (item[1].status == 'normal' || item[1].status == 'not-enough') {
 					const getDataFromSource = data.find(pro => pro.id == item[0])
@@ -18,7 +19,13 @@ const BasketTable = ({data}) => {
 					)
 				}
 			})}
-			<h3>لیست کالاهای زیر به صورت اتومات از سبد خرید حذف می شوند</h3>
+			{Object.entries(basketProducts).some(item => {
+				if (item[1].status == 'not-existed' || item[1].status == 'deleted') {
+					return (
+						<h3 className='deleted-products-msg'>لیست کالاهای زیر به صورت اتومات از سبد خرید حذف می شوند</h3>
+					)
+				}
+			})}
 			{Object.entries(basketProducts).map(item => {
 				if (item[1].status == 'not-existed' || item[1].status == 'deleted') {
 					return (
@@ -26,7 +33,7 @@ const BasketTable = ({data}) => {
 					)
 				}
 			})}
-		</div>
+		</Paper>
 	)
 }
 
