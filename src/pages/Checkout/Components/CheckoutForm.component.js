@@ -22,7 +22,7 @@ const phoneRegex = RegExp(
 );
 
 const validationSchema = yup.object().shape({
-	name: yup.string()
+	firstName: yup.string()
 	.required('لطفا نام خود را وارد کنید'),
 	lastName: yup.string()
 	.required('لطفا نام خانوادگی خود را وارد کنید'),
@@ -66,7 +66,7 @@ const CheckoutForm = () => {
 
 	const formik = useFormik({
 		initialValues: {
-		  name: '',
+		  firstName: '',
 		  lastName: '',
 		  address: '',
 		  phone: '',
@@ -89,6 +89,7 @@ const CheckoutForm = () => {
 				orderDate: Date.now(),
 				purchaseTotal: purchaseTotal,
 				orderStatusId: 5,
+				deliveredAt: null,
 				deliveryRange: [JSON.stringify(values.datepicker[0]), JSON.stringify(values.datepicker[1])],
 				orderItems: buyedProducts
 			}
@@ -117,12 +118,12 @@ const CheckoutForm = () => {
 							sx={{mb: 3}}
 							label="نام"
 							id="name2"
-							name="name"
+							name="firstName"
 							type="text"
-							value={formik.values.name}
+							value={formik.values.firstName}
 							onChange={formik.handleChange}
-							error={formik.touched.name && Boolean(formik.errors.name)}
-							helperText={formik.touched.name && formik.errors.name}
+							error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+							helperText={formik.touched.firstName && formik.errors.firstName}
 						/>
 					</RTL>
 					<RTL>
