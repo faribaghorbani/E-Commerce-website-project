@@ -1,0 +1,47 @@
+.container  {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+}
+.mock-gateway-container {
+    width: 90%;
+    max-width: 500px;
+}
+
+.mock-gateway-container .mock-gateway-img{
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.container .actions {
+    width: 90%;
+    max-width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 20px;
+}
+#pay, #cancel {
+    display: block;
+    appearance: none;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+    height: 50px;
+}
+#pay {
+    background-color: rgb(114, 227, 114);
+    cursor: pointer;
+}
+#cancel {
+    color: white;
+    background-color: rgb(226, 72, 72);
+}
