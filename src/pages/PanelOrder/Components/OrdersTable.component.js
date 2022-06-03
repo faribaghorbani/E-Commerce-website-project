@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,32 +8,51 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Link from '@mui/material/Link';
+import { v4 as uuidv4 } from 'uuid';
+import './style/OrdersTable.scss'
+import ModalComponent from './Modal.component';
 
 
 const columns = [
-	{ id: 'viewTools', label: 'بررسی سفارش', minWidth: 90, align:'right'},
+	{ id: 'viewOrders', label: '', minWidth: 90, align:'right'},
 	{ id: 'orderDate', label: 'تاریخ خرید', minWidth: 90, align:'right'},
 	{ id: 'purchaseTotal', label: 'مجموع خرید', minWidth: 90, align:'right'},
 	{ id: 'name', label: 'نام کاربر', minWidth: 90, align:'right'},
 ];
 
-function createData(name, purchaseTotal, orderDate) {
-  	return {name, purchaseTotal, orderDate};
+function createData(id, name, purchaseTotal, orderDate, viewOrders) {
+  	return {id, name, purchaseTotal, orderDate, viewOrders};
 }
 
 
 export default function TableComponent(props) {
 	const rows = new Array(props.data.length).fill(null).map((item, index) => {
 		return createData(
+		props.data[index].id,
 		props.data[index].customerDetail.firstName + " " + props.data[index].customerDetail.lastName,
 		props.data[index].purchaseTotal,
 		props.data[index].orderDate,
-		"viewTools"
+		"viewOrders"
 		)
 	})
+	const [orderInModal, setOrderInModal] = useState({})
+	const [page, setPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(10);
+	const [open, setOpen] = useState(false);
 
-	const [page, setPage] = React.useState(0);
-	const [rowsPerPage, setRowsPerPage] = React.useState(10);
+	const handleOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+
+	const openOrderModal = (id) => {
+		const targetData = props.data.filter(item => item.id === id)
+		setOrderInModal(targetData[0])
+		handleOpen()
+	}
 
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
@@ -46,13 +65,13 @@ export default function TableComponent(props) {
 
 	return (
 		<Paper sx={{ width: '100%', overflow: 'hidden' }}>
-		<TableContainer sx={{ }}>
+		<TableContainer sx={{ }} className='orders-table'>
 			<Table stickyHeader aria-label="sticky table">
 			<TableHead>
 				<TableRow>
 				{columns.map((column) => (
 					<TableCell
-					key={column.id}
+					key={uuidv4()}
 					align={column.align}
 					style={{ minWidth: column.minWidth }}
 					>
@@ -66,12 +85,12 @@ export default function TableComponent(props) {
 				.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 				.map((row) => {
 					return (
-					<TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+					<TableRow hover role="checkbox" tabIndex={-1} key={uuidv4()}>
 						{columns.map((column) => {
 						const value = row[column.id];
-						if (value === 'viewTools') {
+						if (value === 'viewOrders') {
 							return (
-							<TableCell key={column.id} align={column.align}>
+							<TableCell key={column.id} align={column.align} className='view-orders-cell' onClick={() => openOrderModal()}>
 								بررسی سفارش
 							</TableCell>
 							);
@@ -102,6 +121,14 @@ export default function TableComponent(props) {
 			onPageChange={handleChangePage}
 			onRowsPerPageChange={handleChangeRowsPerPage}
 		/>
+		<ModalComponent 
+			title={"نمایش سفارش"}
+			open={open} 
+			handleClose={handleClose}
+			handleOpen={handleOpen}
+		>
+			
+		</ModalComponent>
 		</Paper>
 	);
 }
