@@ -30,8 +30,8 @@ export default function RadioButtonsGroup() {
           onChange={handleChange}
         >
           <FormControlLabel value="0" control={<Radio />} label="همه سفارش ها" />
-          <FormControlLabel value="1" control={<Radio />} label="سفارش های تحویل داده شده" />
-          <FormControlLabel value="2" control={<Radio />} label="سفارش های در حال ارسال " />
+          <FormControlLabel value="6" control={<Radio />} label="سفارش های تحویل داده شده" />
+          <FormControlLabel value="1" control={<Radio />} label="سفارش های در حال ارسال " />
           <FormControlLabel value="3" control={<Radio />} label="سفارش های لغو شده" />
         </RadioGroup>
         </RTL>

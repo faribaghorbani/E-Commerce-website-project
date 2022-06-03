@@ -73,7 +73,7 @@ const PanelOrdersPage = () => {
 		}
 		else {
 			setFilteredData(data.filter((item) => {
-				if (item.orderStatus == orderStatus) return item
+				if (item.orderStatusId == orderStatus) return item
 			}))
 		}
 	}, [orderStatus])
