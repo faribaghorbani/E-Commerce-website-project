@@ -12,6 +12,9 @@ import { v4 as uuidv4 } from 'uuid';
 import './style/OrdersTable.scss'
 import ModalComponent from './Modal.component';
 import OrderDetails from './OrderDetails.component';
+import persian from "react-date-object/calendars/persian"
+import persian_fa from "react-date-object/locales/persian_fa"
+import DateObject from "react-date-object";
 
 
 const columns = [
@@ -32,7 +35,7 @@ export default function TableComponent(props) {
 		props.data[index].id,
 		props.data[index].customerDetail.firstName + " " + props.data[index].customerDetail.lastName,
 		props.data[index].purchaseTotal,
-		props.data[index].orderDate,
+		new DateObject({calendar: persian, locale: persian_fa },props.data[index].orderDate).format(),
 		"viewOrders"
 		)
 	})
