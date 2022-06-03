@@ -81,7 +81,7 @@ const CheckoutForm = () => {
 			})
 			const tempObj = {
 				customerDetail: {
-					name: values.name,
+					firstName: values.name,
 					lastName: values.lastName,
 					phone : values.phone,
 					address: values.address,
