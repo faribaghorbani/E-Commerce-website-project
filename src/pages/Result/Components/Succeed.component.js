@@ -7,7 +7,7 @@ const SucceedComponent = () => {
     return (
         <Paper className='succed-component'>
             <div className='banner'>
-                <BsFillCheckCircleFill />
+                <BsFillCheckCircleFill className='banner-icon'/>
             </div>
             <RTL>
                 <Typography dir='rtl'>

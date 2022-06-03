@@ -5,4 +5,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    .banner-icon {
+        font-size: 10rem;
+    }
+    .failed-component {   
+        text-align: center;     
+        .banner-icon {
+            color: red;
+        }
+    }
+    .succed-component  {
+        text-align: center;
+        .banner-icon {
+            color: green;
+        }
+    }
 }
