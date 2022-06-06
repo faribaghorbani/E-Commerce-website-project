@@ -148,7 +148,7 @@ export default function MiniDrawer() {
 			"سفارش ها": {icon: <BsFillPeopleFill/> , link: '/panel/order'}
 			}).map(([text, {icon, link}]) => (
 				<ListItem key={text} sx={{ display: 'block' }} disablePadding>
-					{/* <Link to={link} style={{textDecoration: 'none', color: 'inherit'}}> */}
+					<Link to={link} style={{textDecoration: 'none', color: 'inherit'}}>
 						<ListItemButton
 							sx={{
 							minHeight: 48,
@@ -166,7 +166,7 @@ export default function MiniDrawer() {
 							</ListItemIcon>
 							<ListItemText primary={text} sx={{ opacity: { md: 1, xs: open? 1:0} }} />
 						</ListItemButton>
-					{/* </Link> */}
+					</Link>
 				</ListItem>
 			))}
 			{/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
