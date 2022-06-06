@@ -13,6 +13,8 @@ import { filterQuantity } from '../../utils/filterAdminPanel'
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setAdminPanelSavedProducts } from '../../redux/slices/adminPanelSavedProductsSlice';
+import { setAdminPanelTitle } from '../../redux/slices/adminPanelTitleSlice';
+
 
 const PanelQuantityPage = () => {
     const dispatch = useDispatch()
@@ -20,6 +22,10 @@ const PanelQuantityPage = () => {
     const [loading, setLoading] = useState(true)
     const [searchValue, setSearchValue] = useState("")
     const data = useSelector(state => state.adminPanelSavedProducts)
+
+    useEffect(() => {
+      	dispatch(setAdminPanelTitle('پنل مدیریت موجودی و قیمت'))
+    }, [])
 
     useEffect(() => {
       getData('/products',

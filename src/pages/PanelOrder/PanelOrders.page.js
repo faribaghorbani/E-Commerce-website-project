@@ -15,6 +15,8 @@ import RadioButtonsGroup from './Components/Radiobuttons.component'
 import { useDispatch, useSelector } from 'react-redux'
 import { setOrders } from '../../redux/slices/allOrdersSlice'
 import { Container } from '@mui/material'
+import { setAdminPanelTitle } from '../../redux/slices/adminPanelTitleSlice';
+
 
 const PanelOrdersPage = () => {
 	const navigate = useNavigate()
@@ -25,6 +27,10 @@ const PanelOrdersPage = () => {
     const [data, setData] = useState([])
     const [filteredData, setFilteredData] = useState([])
 	const [searchValue, setSearchValue] = useState("")
+
+	useEffect(() => {
+		dispatch(setAdminPanelTitle('پنل مدیریت سفارش ها'))
+	}, [])
 
     useEffect(() => {
 		console.log("check navigate depen")

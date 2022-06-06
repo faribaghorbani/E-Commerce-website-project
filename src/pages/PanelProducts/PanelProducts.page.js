@@ -16,7 +16,7 @@ import AddproductForm from './Components/AddproductForm.component'
 import ModalComponent from './Components/Modal.component'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAdminPanelSavedProducts } from '../../redux/slices/adminPanelSavedProductsSlice'
-
+import { setAdminPanelTitle } from '../../redux/slices/adminPanelTitleSlice';
 
 
 const PanelProductsPage = () => {
@@ -25,7 +25,6 @@ const PanelProductsPage = () => {
     const [loading, setLoading] = useState(true)
     const [searchValue, setSearchValue] = useState("")
     const data = useSelector(state => state.adminPanelSavedProducts)
-    // const [data, setData] = useState([])
 
     const [open, setOpen] = useState(false);
 
@@ -36,6 +35,10 @@ const PanelProductsPage = () => {
     const handleClose = () => {
       setOpen(false);
     };
+
+    useEffect(() => {
+      	dispatch(setAdminPanelTitle('پنل مدیریت کالاها'))
+    }, [])  
 
     useEffect(() => {
       getData('/products',

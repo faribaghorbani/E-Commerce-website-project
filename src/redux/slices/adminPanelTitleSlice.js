@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const adminPanelTitle = createSlice({
     name: 'adminPanelTitle',
-    initialState: [],
+    initialState: 'پنل مدیریت فروشگاه',
     reducers: {
         setAdminPanelTitle: (state, action) => {
             return action.payload
@@ -10,5 +10,5 @@ export const adminPanelTitle = createSlice({
     }
 })
 
-export const { setAdminPanelSavedProducts } = adminPanelTitle.actions
+export const { setAdminPanelTitle } = adminPanelTitle.actions
 export default adminPanelTitle.reducer

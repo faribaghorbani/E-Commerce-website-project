@@ -16,7 +16,8 @@ import { Outlet } from 'react-router-dom';
 import{ GrStorage, GrLogout } from 'react-icons/gr'
 import{ AiOutlineTable } from 'react-icons/ai'
 import{ BsFillPeopleFill } from 'react-icons/bs'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // import IconButton from '@mui/material/IconButton';
 // import MenuIcon from '@mui/icons-material/Menu';
 // import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -99,6 +100,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function MiniDrawer() {
 	const navigate = useNavigate()
+	const adminPanelTitle = useSelector(state => state.adminPanelTitle)
 	const theme = useTheme();
 	const [open, setOpen] = useState(false);
 
@@ -112,27 +114,18 @@ export default function MiniDrawer() {
 
 	const changePanel = (link) => {
 		navigate(link)
+		if (link == '/login') {
+			localStorage.removeItem("token")
+		}
 	}
 
 	return (
 		<Box sx={{ display: 'flex' }}>
 		<CssBaseline />
-		<AppBar position="fixed">
+		<AppBar dir='rtl' position="fixed">
 			<Toolbar>
-			{/* <IconButton
-				color="inherit"
-				aria-label="open drawer"
-				onClick={handleDrawerOpen}
-				edge="start"
-				sx={{
-				marginRight: 5,
-				...(open && { display: 'none' }),
-				}}
-			>
-				<MenuIcon />
-			</IconButton> */}
 			<Typography variant="h6" noWrap component="div">
-				Mini variant drawer
+				{adminPanelTitle}
 			</Typography>
 			</Toolbar>
 		</AppBar>
@@ -146,11 +139,7 @@ export default function MiniDrawer() {
 		}}
 		open={open}
 		>
-			<DrawerHeader>
-			{/* <IconButton onClick={handleDrawerClose}>
-				{theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-			</IconButton> */}
-			</DrawerHeader>
+			<DrawerHeader />
 			<Divider />
 			<List >
 			{Object.entries({
@@ -158,24 +147,26 @@ export default function MiniDrawer() {
 			"موجودی وقیمت": {icon: <GrStorage /> , link: '/panel/quantity'},
 			"سفارش ها": {icon: <BsFillPeopleFill/> , link: '/panel/order'}
 			}).map(([text, {icon, link}]) => (
-				<ListItem key={text} sx={{ display: 'block' }} disablePadding onClick={() => changePanel(link)}>
-				<ListItemButton
-					sx={{
-					minHeight: 48,
-					justifyContent: open ? 'initial' : 'center',
-					px: 2.5,
-					}}
-				>
-					<ListItemIcon sx={{
-						minWidth: 0,
-						ml: 2,
-						mr: 3,
-						justifyContent: 'center',
-					}}>
-					{icon}
-					</ListItemIcon>
-					<ListItemText primary={text} sx={{ opacity: { md: 1, xs: open? 1:0} }} />
-				</ListItemButton>
+				<ListItem key={text} sx={{ display: 'block' }} disablePadding>
+					{/* <Link to={link} style={{textDecoration: 'none', color: 'inherit'}}> */}
+						<ListItemButton
+							sx={{
+							minHeight: 48,
+							justifyContent: open ? 'initial' : 'center',
+							px: 2.5,
+							}}
+						>
+							<ListItemIcon sx={{
+								minWidth: 0,
+								ml: 2,
+								mr: 3,
+								justifyContent: 'center',
+							}}>
+							{icon}
+							</ListItemIcon>
+							<ListItemText primary={text} sx={{ opacity: { md: 1, xs: open? 1:0} }} />
+						</ListItemButton>
+					{/* </Link> */}
 				</ListItem>
 			))}
 			{/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
