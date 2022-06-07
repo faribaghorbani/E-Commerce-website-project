@@ -122,7 +122,7 @@ function App() {
 
 			<Route path="*" element={
 				<RegularLayout>
-					<NotfoundPage />
+					<NotfoundPage title={"صفحه مورد نظر یافت نشد"} />
 				</RegularLayout>
 			}/>
 		</Routes>
