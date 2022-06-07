@@ -9,6 +9,8 @@ import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useSelector } from 'react-redux';
+import ThemeSwitchComponent from './ThemeSwitch.component';
+import { useTheme } from '@mui/system';
 
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -24,6 +26,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 const Header = () => {
 	const basketProducts = useSelector(state => state.basketProducts)
 	const navigate = useNavigate()
+	const theme = useTheme()
 	const [basketBadge, setBasketBadge] = useState(0)
 
 	useEffect(() => {
@@ -43,7 +46,7 @@ const Header = () => {
 				
 				{basketBadge?
 				(<IconButton aria-label="cart" style={{color: 'white'}} onClick={() => {navigate('/basket')}}>
-					<StyledBadge badgeContent={basketBadge} color="secondary">
+					<StyledBadge badgeContent={basketBadge}>
 						<ShoppingCartIcon />
 					</StyledBadge>
 				</IconButton>) : 
@@ -55,7 +58,8 @@ const Header = () => {
 
 			<ul className='navbar-items'>
 				<li onClick={() => navigate('/products?page=1')}>صفحه محصولات</li>
-				<li>درباره ما</li>
+				<li style={{color: theme.palette.primary.contrastText}}>درباره ما</li>
+				<li><ThemeSwitchComponent /></li>
 			</ul>
 
 			<img className='logo' src={logo} onClick={() => navigate('/')} />
