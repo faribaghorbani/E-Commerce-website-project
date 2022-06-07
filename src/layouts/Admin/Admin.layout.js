@@ -13,17 +13,14 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Outlet } from 'react-router-dom';
-import{ GrStorage, GrLogout } from 'react-icons/gr'
-import{ AiOutlineTable } from 'react-icons/ai'
+import WarehouseIcon from '@mui/icons-material/Warehouse';
+import{ GrLogout } from 'react-icons/gr'
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import HomeIcon from '@mui/icons-material/Home';
 import{ BsFillPeopleFill } from 'react-icons/bs'
 import { useNavigate, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-// import IconButton from '@mui/material/IconButton';
-// import MenuIcon from '@mui/icons-material/Menu';
-// import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-// import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
-// import MailIcon from '@mui/icons-material/Mail';
+import ThemeSwitchComponent from '../../components/ThemeSwitch.component';
 
 const drawerWidth = 240;
 
@@ -148,8 +145,8 @@ export default function MiniDrawer() {
 			<Divider />
 			<List >
 			{Object.entries({
-			"کالاها": {icon: <AiOutlineTable /> , link: '/panel/products'},
-			"موجودی وقیمت": {icon: <GrStorage /> , link: '/panel/quantity'},
+			"کالاها": {icon: <ProductionQuantityLimitsIcon /> , link: '/panel/products'},
+			"موجودی وقیمت": {icon: <WarehouseIcon /> , link: '/panel/quantity'},
 			"سفارش ها": {icon: <BsFillPeopleFill/> , link: '/panel/order'}
 			}).map(([text, {icon, link}]) => (
 				<ListItem key={text} sx={{ display: 'block' }} disablePadding>
@@ -174,36 +171,13 @@ export default function MiniDrawer() {
 					</Link>
 				</ListItem>
 			))}
-			{/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-				<ListItem key={text} disablePadding sx={{ display: 'block' }}>
-				<ListItemButton
-					sx={{
-					minHeight: 48,
-					justifyContent: open ? 'initial' : 'center',
-					px: 2.5,
-					}}
-				>
-					<ListItemIcon
-					sx={{
-						minWidth: 0,
-						ml: 2,
-						mr: 3,
-						justifyContent: 'center',
-					}}
-					>
-					{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-					</ListItemIcon>
-					<ListItemText primary={text} sx={{ opacity: { md: 1, xs: open? 1:0} }} />
-				</ListItemButton>
-				</ListItem>
-			))} */}
 			</List>
 			<Divider />
 			<List>
 				{Object.entries({
-            	'خروج از پنل ادمین': {icon: <GrLogout />, link: '/login'}
+            	'خروج از پنل مدیریت': {icon: <GrLogout />, link: '/login'}
             	}).map(([text, {icon, link}]) => (
-					<ListItem key={text} sx={{ display: 'block' }} disablePadding onClick={logoutPanel}>
+				<ListItem key={text} sx={{ display: 'block' }} disablePadding onClick={logoutPanel}>
 					<ListItemButton
 						sx={{
 						minHeight: 48,
@@ -221,8 +195,49 @@ export default function MiniDrawer() {
 						</ListItemIcon>
 						<ListItemText primary={text} sx={{ opacity: { md: 1, xs: open? 1:0} }} />
 					</ListItemButton>
-					</ListItem>
+				</ListItem>
 				))}
+				<ListItem sx={{ display: 'block' }} disablePadding>
+					<Link to={'/'} style={{textDecoration: 'none', color: 'inherit'}}>
+						<ListItemButton
+							sx={{
+							minHeight: 48,
+							justifyContent: open ? 'initial' : 'center',
+							px: 2.5,
+							}}
+						>
+							<ListItemIcon sx={{
+								minWidth: 0,
+								ml:  2,
+								mr: 3,
+								justifyContent: 'center',
+							}}>
+							<HomeIcon />
+							</ListItemIcon>
+							<ListItemText primary={'صفحه اصلی'} sx={{ opacity: { md: 1, xs: open? 1:0} }} />
+						</ListItemButton>
+					</Link>
+				</ListItem>
+				<ListItem sx={{ display: 'block' }} disablePadding>
+					<ListItemButton
+						sx={{
+						minHeight: 48,
+						justifyContent: open ? 'initial' : 'center',
+						px: 2.5,
+						}}
+					>
+						<ListItemIcon sx={{
+							minWidth: 0,
+							ml: {xs: 2, md: 0},
+							mr: 3,
+							justifyContent: 'center',
+						}}>
+						<ThemeSwitchComponent />
+						</ListItemIcon>
+						<ListItemText primary={"تغییر تم"} sx={{ opacity: { md: 1, xs: open? 1:0} }} />
+					</ListItemButton>
+				</ListItem>
+
 			</List>
 		</Drawer>
 		<Box component="main" sx={{ flexGrow: 1, p: 3, marginLeft: {xs: `calc(${theme.spacing(10)} + 1px)`, md: 0 } }}>

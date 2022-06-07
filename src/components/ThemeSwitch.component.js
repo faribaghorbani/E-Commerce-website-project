@@ -6,7 +6,7 @@ import Switch from '@mui/material/Switch';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { setThemeMode } from '../redux/slices/themeModeSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -56,12 +56,11 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }));
 
 const ThemeSwitchComponent = () => {
+    const themeMode = useSelector(state => state.themeMode)
     const dispatch = useDispatch()
-    const [checked, setChecked] = useState(true)
 
     const handleChange = (e) => {
         const status = e.target.checked
-        setChecked(status);
         if (status == false) {
             dispatch(setThemeMode('light'))
         } else {
@@ -71,8 +70,7 @@ const ThemeSwitchComponent = () => {
 
     return (
         <MaterialUISwitch 
-        sx={{ m: 1 }}
-        checked={checked}
+        checked={themeMode == 'dark'? true:false}
         onChange={handleChange}
         />
     );
