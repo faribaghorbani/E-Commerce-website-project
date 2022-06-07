@@ -16,7 +16,6 @@ const SidebarComponent = () => {
 	const [openStatus, setOpenStatus] = useState({});
 
 	useEffect(() => {
-        console.log(params)
 		categoryData.map((category) => {
 			setOpenStatus(prevState => ({...prevState, [category.name]: false}))
 		})
