@@ -14,9 +14,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Outlet } from 'react-router-dom';
 import WarehouseIcon from '@mui/icons-material/Warehouse';
-import{ GrLogout } from 'react-icons/gr'
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import HomeIcon from '@mui/icons-material/Home';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import{ BsFillPeopleFill } from 'react-icons/bs'
 import { useNavigate, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -175,7 +175,7 @@ export default function MiniDrawer() {
 			<Divider />
 			<List>
 				{Object.entries({
-            	'خروج از پنل مدیریت': {icon: <GrLogout />, link: '/login'}
+            	'خروج از پنل مدیریت': {icon: <ExitToAppIcon />, link: '/login'}
             	}).map(([text, {icon, link}]) => (
 				<ListItem key={text} sx={{ display: 'block' }} disablePadding onClick={logoutPanel}>
 					<ListItemButton
