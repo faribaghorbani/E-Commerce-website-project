@@ -84,7 +84,7 @@ const ProductPage = () => {
 		)
 	} else if (error) {
 		return (
-			<NotfoundPage title={"دسترسی به سرور قطع می باشد"} />
+			<NotfoundPage title={"اتصال به سرور با خطا رو به رو شد"} />
 		)
 	} else if (notFound) {
 		return (
