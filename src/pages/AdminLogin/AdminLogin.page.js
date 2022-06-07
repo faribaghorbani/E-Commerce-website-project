@@ -85,10 +85,10 @@ const AdminLogin = () => {
 						error={formik.touched.password && Boolean(formik.errors.password)}
 						helperText={formik.touched.password && formik.errors.password}
 					/>
-					<Button color="primary" type="submit">
+					<Button type="submit">
 						ورود
 					</Button>
-					<Button color="primary" sx={{mt: 3}} onClick={() => navigate('/')}>
+					<Button sx={{mt: 3}} onClick={() => navigate('/')}>
 						برگشت به سایت
 					</Button>
 				</RTL>

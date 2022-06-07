@@ -78,7 +78,6 @@ const AppBar = styled(MuiAppBar, {
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
-	  
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
@@ -100,8 +99,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function MiniDrawer() {
 	const navigate = useNavigate()
-	const adminPanelTitle = useSelector(state => state.adminPanelTitle)
 	const theme = useTheme();
+	const adminPanelTitle = useSelector(state => state.adminPanelTitle)
 	const [open, setOpen] = useState(false);
 
 	const handleDrawerOpen = () => {
@@ -112,11 +111,9 @@ export default function MiniDrawer() {
 		setOpen(false);
 	};
 
-	const changePanel = (link) => {
-		navigate(link)
-		if (link == '/login') {
-			localStorage.removeItem("token")
-		}
+	const logoutPanel = () => {
+		navigate('/login')
+		localStorage.removeItem("token")
 	}
 
 	return (
@@ -124,7 +121,7 @@ export default function MiniDrawer() {
 		<CssBaseline />
 		<AppBar dir='rtl' position="fixed">
 			<Toolbar>
-			<Typography variant="h6" noWrap component="div">
+			<Typography variant="h6" noWrap component="div" >
 				{adminPanelTitle}
 			</Typography>
 			</Toolbar>
@@ -134,6 +131,14 @@ export default function MiniDrawer() {
 		<Drawer variant="permanent" 
 		onMouseEnter={handleDrawerOpen}
 		onMouseLeave={handleDrawerClose}
+		PaperProps={{
+			sx: {
+			//   backgroundColor: theme.palette.text.primary,
+			//   color: theme.palette.grey[900],
+			//   color: theme.palette.grey[50],
+			}
+		}}
+		
 		sx={{
 			position: {xs: 'absolute' ,md: 'static'}
 		}}
@@ -198,7 +203,7 @@ export default function MiniDrawer() {
 				{Object.entries({
             	'خروج از پنل ادمین': {icon: <GrLogout />, link: '/login'}
             	}).map(([text, {icon, link}]) => (
-					<ListItem key={text} sx={{ display: 'block' }} disablePadding onClick={() => changePanel(link)}>
+					<ListItem key={text} sx={{ display: 'block' }} disablePadding onClick={logoutPanel}>
 					<ListItemButton
 						sx={{
 						minHeight: 48,
