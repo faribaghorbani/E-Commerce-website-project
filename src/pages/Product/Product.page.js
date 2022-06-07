@@ -12,6 +12,7 @@ import { addBasketProducts, changeNumberBasketProducts, changeStatusBasketProduc
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import CounterComponent from './Components/Counter.component';
+import NotfoundPage from './../Notfound/Notfound.page'
 import './Components/style/Counter.scss'
 import './Product.scss'
 
@@ -23,6 +24,7 @@ const ProductPage = () => {
 	const [data, setData] = useState([])
 	const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
+    const [notFound, setNotFound] = useState(false)
 	const [images, setImages] = useState([])
 	const [checkColor, setCheckColor] = useState(0)
 	const [basketNumber, setBasketNumber] = useState(0)
@@ -35,17 +37,26 @@ const ProductPage = () => {
 	useEffect(() => {
 		getDataUser(`/products?id=${params.id}`,
 			(data) => {
-				setData(data)
-				if (basketProducts[data[0]?.id]?.quantity > data[0].quantity) {
-					const temp = basketProducts[data[0]?.id]?.quantity
-					dispatch(changeStatusBasketProducts({id : data[0].id, status: 'not-enough'}))
-					dispatch(changeNumberBasketProducts({product: data[0], quantity: data[0].quantity, formerQuantity: temp}))
-				}
-				setBasketNumber(basketProducts[data[0]?.id]?.quantity || 0)
 				setLoading(false)
+				if (data.length === 1) {
+					if (data[0].category.main == params.category && data[0].category.second == params.subcategory) {
+						setData(data)
+						if (basketProducts[data[0].id]?.quantity > data.quantity) {
+							const temp = basketProducts[data[0].id]?.quantity
+							dispatch(changeStatusBasketProducts({id : data[0].id, status: 'not-enough'}))
+							dispatch(changeNumberBasketProducts({product: data[0], quantity: data[0].quantity, formerQuantity: temp}))
+						}
+						setBasketNumber(basketProducts[data[0].id]?.quantity || 0)
+					} else {
+						setNotFound(true)
+					}
+				} else {
+					setNotFound(true)
+				}
 			},
 			() => {
 				setLoading(false)
+				setNotFound(false)
 				setError(true)
 			}
 		)
@@ -69,15 +80,15 @@ const ProductPage = () => {
 
 	if (loading) {
 		return (
-			<>
-				<LoadingPage/>
-			</>
+			<LoadingPage/>
 		)
 	} else if (error) {
 		return (
-			<>
-				<div dir='rtl'>اتصال به سرور با خطا رو به رو شد</div>
-			</>
+			<NotfoundPage title={"دسترسی به سرور قطع می باشد"} />
+		)
+	} else if (notFound) {
+		return (
+			<NotfoundPage title={"صفحه مورد نظر یافت نشد"} />
 		)
 	} else {
 		return (
