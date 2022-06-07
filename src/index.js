@@ -8,13 +8,13 @@ import { store }  from './redux/store'
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 
-// document.dir='rtl'
+
 const theme = createTheme({
 	direction: 'rtl',
 	prepend: true,
 	typography: {
 		fontFamily: 'shabnam, Arial',
-	},
+	}
 });
 
 

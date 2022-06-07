@@ -19,9 +19,23 @@ import SidebarLayout from "../layouts/Sidebar/Sidebar.layout";
 import PanelHomePage from "../pages/PanelHome/PanelHome.page";
 import ResultPage from "../pages/Result/Result.page";
 // import SidebarLayout from '../layouts/Sidebar/Sidebarlayout'
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { useSelector } from "react-redux";
+
+
 
 function App() {
+	const themeMode = useSelector(state => state.themeMode)
+
 	return (
+		<ThemeProvider theme={(theme) =>
+			createTheme({
+				...theme,
+				palette: {
+					mode: themeMode
+				},
+			})
+		}>
 		<Routes>
 			<Route path="/" element={		
 				<RegularLayout>
@@ -112,6 +126,7 @@ function App() {
 				</RegularLayout>
 			}/>
 		</Routes>
+		</ThemeProvider>
 	);
 }
 
