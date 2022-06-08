@@ -2,6 +2,7 @@ import { Grid, Paper } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import LoadingPage from '../../pages/Loading/Loading.page';
+import NotfoundPage from '../../pages/Notfound/Notfound.page';
 import { setCategoryData } from '../../redux/slices/categoryDataSlice';
 import { getDataUser } from '../../services/http.service';
 import Header from './../../components/Header.component';
@@ -38,7 +39,7 @@ const SidebarLayout = (props) => {
 		return (
 			<>
 				<Header />
-				<div>اتصال به سرور با خطا رو به رو شد</div>
+				<NotfoundPage title={"اتصال به سرور با خطا رو به رو شدgi"} />
 			</>
 		)
 	} else {
