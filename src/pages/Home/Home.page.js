@@ -5,7 +5,7 @@ import anime from 'animejs'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import GallerySlider from './Components/GallerySlider.component';
-import { Grid, Box} from '@mui/material';
+import { Grid, Box, Typography} from '@mui/material';
 const Spline = React.lazy(() => import('@splinetool/react-spline'));
 
 
@@ -53,8 +53,8 @@ const HomePage = () => {
 				</svg>
 
 				<Grid container spacing={2}>
-					<Grid item sm={12}  md={12} lg={7} display={{sm: 'block', xs: 'none'}}>
-						<Box className='spline-container'>
+					<Grid item sm={12}  md={12} lg={7} order={{xs: 2, sm: 2, md: 2, lg: 1}} display={{sm: 'block', xs: 'none'}}>
+						<Box className='spline-container' >
 							<Suspense fallback={<div style={{minWidth: '300px'}}></div>}>
 								<Spline
 								className='spline-macbook' 
@@ -64,9 +64,11 @@ const HomePage = () => {
 							</Suspense>
 						</Box>
 					</Grid>
-					<Grid item md={12} lg={5}>
-						<Box dir='rtl' sx={{color: "white", display: "flex", justifyContent: "center", alignItems: 'center'}}>
+					<Grid item sm={12} md={12} lg={5} order={{xs: 1, sm: 1, md: 1, lg: 2}}>
+						<Box dir='rtl' sx={{color: "white"}}>
+						<Typography align='center' variant="h3" component="h1">
 							به فروشگاه سیلیکان مال خوش آمدید
+						</Typography>
 						</Box>
 					</Grid>
 				</Grid>
