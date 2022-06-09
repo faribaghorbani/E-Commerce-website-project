@@ -15,6 +15,7 @@ import ProtectedRoute from './components/Protected.route'
 import RegularLayout from "../layouts/Regular/Regular.layout";
 import AdminLayout from '../layouts/Admin/Admin.layout'
 import LoginLayout from '../layouts/Login/Login.layout'
+import HomeLayout from '../layouts/Home/Home.layout'
 import SidebarLayout from "../layouts/Sidebar/Sidebar.layout";
 import PanelHomePage from "../pages/PanelHome/PanelHome.page";
 import ResultPage from "../pages/Result/Result.page";
@@ -38,9 +39,9 @@ function App() {
 		}>
 		<Routes>
 			<Route path="/" element={		
-				<RegularLayout>
+				<HomeLayout>
 					<HomePage/>
-				</RegularLayout>
+				</HomeLayout>
 			}/>
 
 			<Route path="/products">
