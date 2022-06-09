@@ -5,7 +5,7 @@ import LoadingPage from '../../pages/Loading/Loading.page';
 import NotfoundPage from '../../pages/Notfound/Notfound.page';
 import { setCategoryData } from '../../redux/slices/categoryDataSlice';
 import { getDataUser } from '../../services/http.service';
-import Header from './../../components/Header.component';
+import Header from './Components/Header.component';
 import SidebarComponent from './Components/Sidebar.component';
 import { styled, useTheme } from '@mui/material/styles';
 

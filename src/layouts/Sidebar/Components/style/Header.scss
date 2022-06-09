@@ -1,0 +1,40 @@
+.regular-layout-header {
+    padding: 0 40px;
+    background-color: rgb(0, 0, 0);
+    backdrop-filter: blur(100px);
+    color: white;
+    min-height: 100px;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .actions {
+        * {
+            margin-left: 10px;
+        }
+        .admin-entrance, .basket-entrance {
+            background-color: rgb(231, 38, 64);
+        }
+    }
+
+    .navbar-items {
+        direction: rtl;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        list-style-type: none;
+
+        li {
+            cursor: pointer;
+        }
+    }
+
+    .logo {
+        width: 200px;
+        cursor: pointer;
+    }
+}

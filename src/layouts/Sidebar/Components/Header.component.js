@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import logo from './../assets/images/logo.png'
-import './style/Header.scss'
+import logo from './../../../assets/images/logo.png'
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
@@ -9,8 +8,9 @@ import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useSelector } from 'react-redux';
-import ThemeSwitchComponent from './ThemeSwitch.component';
+import ThemeSwitchComponent from './../../../components/ThemeSwitch.component';
 import { useTheme } from '@mui/system';
+import './style/Header.scss'
 
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
