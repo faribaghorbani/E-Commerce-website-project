@@ -1,69 +1,69 @@
 import React, { useEffect, useState } from 'react'
 import logo from './../../../assets/images/logo.png'
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { useNavigate } from 'react-router-dom';
-import Badge from '@mui/material/Badge';
-import { styled } from '@mui/material/styles';
+import './style/Header.scss'
+import { useNavigate, Link } from 'react-router-dom';
+import { Box } from '@mui/system';
 import IconButton from '@mui/material/IconButton';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useSelector } from 'react-redux';
+import MenuIcon from '@mui/icons-material/Menu';
 import ThemeSwitchComponent from './../../../components/ThemeSwitch.component';
 import { useTheme } from '@mui/system';
-import './style/Header.scss'
-
-
-const StyledBadge = styled(Badge)(({ theme }) => ({
-	'& .MuiBadge-badge': {
-	  right: -3,
-	  top: 13,
-	  border: `2px solid ${theme.palette.background.paper}`,
-	  padding: '0 4px',
-	},
-}));
+import GotoBasket from '../../../components/GotoBasket.component';
+import GotoPanel from '../../../components/GotoPanel.component';
+import Searchbox from '../../../components/Searchbox.component';
+import HeaderDrawer from '../../../components/Sidebar.component';
 
 
 const Header = () => {
-	const basketProducts = useSelector(state => state.basketProducts)
 	const navigate = useNavigate()
 	const theme = useTheme()
-	const [basketBadge, setBasketBadge] = useState(0)
+	const [state, setState] = useState(false);
 
-	useEffect(() => {
-		let sum = 0
-        Object.entries(basketProducts).forEach(item => {
-            if (item[1].status == 'normal' ||  item[1].status == 'not-enough') {
-                sum += (item[1].quantity)
-            }
-        })
-        setBasketBadge(sum)
-	}, [basketProducts])
+    const toggleDrawer = (open) => (event) => {
+        if (
+        event &&
+        event.type === 'keydown' &&
+        (event.key === 'Tab' || event.key === 'Shift')
+        ) {
+        return;
+        }
+
+        setState(open);
+    };
+
 
 	return (
-		<div className='regular-layout-header'>
-			<div className='actions' style={{display: 'flex', justifyContent: 'center', alignItems: 'stretch'}}>
-				<Button className='admin-entrance' variant="contained" onClick={() => {navigate('/panel')}}>ورود ادمین</Button>
-				
-				{basketBadge?
-				(<IconButton aria-label="cart" style={{color: 'white'}} onClick={() => {navigate('/basket')}}>
-					<StyledBadge badgeContent={basketBadge}>
-						<ShoppingCartIcon />
-					</StyledBadge>
-				</IconButton>) : 
-				(<IconButton aria-label="cart" style={{color: 'white'}} onClick={() => {navigate('/basket')}}>
-					<ShoppingCartIcon />
-				</IconButton>) 
-				}
-			</div>
-
-			<ul className='navbar-items'>
-				<li onClick={() => navigate('/products?page=1')}>صفحه محصولات</li>
-				<li style={{color: theme.palette.primary.contrastText}}>درباره ما</li>
-				<li><ThemeSwitchComponent /></li>
-			</ul>
-
-			<img className='logo' src={logo} onClick={() => navigate('/')} />
+		<>
+		<div className='sidebar-layout-header'>
+			<Box className='actions' sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '20px'}}>
+				<IconButton
+				size="large"
+				edge="start"
+				color="inherit"
+				aria-label="open drawer"
+				sx={{display: { xs: 'block', lg: 'none' } }}
+				onClick={toggleDrawer(true)}
+				>
+					<MenuIcon />
+				</IconButton>
+				<Box sx={{display: {xs: 'none', lg: 'flex'}, justifyContent: 'space-between', alignItems: 'stretch', gap: '20px'}}>
+					<GotoPanel />
+					<GotoBasket />
+				</Box>
+				<Searchbox />
+			</Box>
+			<Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'stretch', gap: '20px'}}>
+				<Box className='navbar-items' component={'ul'} sx={{display: {xs: 'none', md: 'flex'}, justifyContent: 'space-between', alignItems: 'center', gap: '20px'}}>
+					<Link to='/' style={{textDecoration: 'none', color: 'inherit'}}><li>خانه</li></Link>
+					<Link to='/products?page=1' style={{textDecoration: 'none', color: 'inherit'}}><li>محصولات</li></Link>
+					<li><ThemeSwitchComponent /></li>
+				</Box>
+				<Box sx={{display: {xs: 'none', sm: 'block'}}}>
+					<Link to='/' style={{textDecoration: 'none', color: 'inherit'}}><img className='logo' src={logo}/></Link>
+				</Box>
+			</Box>
 		</div>
+		<HeaderDrawer state={state} toggleDrawer={toggleDrawer} />
+		</>
 	)
 }
 

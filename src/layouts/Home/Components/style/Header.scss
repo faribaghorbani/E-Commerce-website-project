@@ -12,18 +12,9 @@
     justify-content: space-between;
     align-items: center;
 
-    .actions {
-        .admin-entrance, .basket-entrance {
-            background-color: rgb(231, 38, 64);
-        }
-    }
 
     .navbar-items {
         direction: rtl;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
         list-style-type: none;
 
         li {

@@ -13,7 +13,7 @@ const GotoPanel = () => {
 					<AccountCircleIcon />
 				</IconButton>
 				<Typography variant='body' component="label" sx={{cursor: 'pointer'}}>
-					سبد خرید
+					پنل مدیریت
 				</Typography>
 			</Link>
 		</Box>
