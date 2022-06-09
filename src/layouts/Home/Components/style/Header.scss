@@ -13,9 +13,6 @@
     align-items: center;
 
     .actions {
-        * {
-            margin-left: 10px;
-        }
         .admin-entrance, .basket-entrance {
             background-color: rgb(231, 38, 64);
         }
@@ -25,6 +22,7 @@
         direction: rtl;
         display: flex;
         justify-content: center;
+        align-items: center;
         gap: 10px;
         list-style-type: none;
 
@@ -34,7 +32,9 @@
     }
 
     .logo {
-        width: 200px;
+        width: 180px;
+        height: 100%;
+        object-fit: contain;
         cursor: pointer;
     }
 }
