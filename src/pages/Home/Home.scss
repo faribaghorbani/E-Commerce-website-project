@@ -1,9 +1,17 @@
 .home-page {
 
   .landing-view {
-    position: relative;
     height: fit-content;
+    position: relative;
     min-height: 100vh;
+    animation-name: gradientAnimation;
+    animation-duration: 10s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
+    background: linear-gradient(226deg, #7d1eb0, #5fabf5, #e24586, #7cc3d3);
+    background-size: 1000% 1000%;
+    // animation-direction: alternate;
+
     // display: flex;
     // justify-content: center;
     // align-items: center;
@@ -46,4 +54,10 @@
   to {
     top: -15px;
   }
+}
+
+@keyframes gradientAnimation {
+  0%{background-position:0% 74%}
+  50%{background-position:100% 27%}
+  100%{background-position:0% 74%}
 }

@@ -47,12 +47,12 @@ const HomePage = () => {
 
     return (
         <div className='home-page'>
-			<div className='landing-view'>
+			<div className='landing-view' style={{paddingTop: '100px'}}>
 				<svg id='svg1' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 300">
 					<path fill="#FFFFFF" fillOpacity="1" d="M0,32L60,69.3C120,107,240,181,360,192C480,203,600,149,720,106.7C840,64,960,32,1080,53.3C1200,75,1320,149,1380,186.7L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
 				</svg>
 
-				<Grid container spacing={2}>
+				<Grid container alignItems={"center"} spacing={2}>
 					<Grid item sm={12}  md={12} lg={7} order={{xs: 2, sm: 2, md: 2, lg: 1}} display={{sm: 'block', xs: 'none'}}>
 						<Box className='spline-container' >
 							<Suspense fallback={<div style={{minWidth: '300px'}}></div>}>
@@ -65,7 +65,7 @@ const HomePage = () => {
 						</Box>
 					</Grid>
 					<Grid item sm={12} md={12} lg={5} order={{xs: 1, sm: 1, md: 1, lg: 2}}>
-						<Box dir='rtl' sx={{color: "white"}}>
+						<Box dir='rtl' sx={{height: '200px' ,color: "white", display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
 						<Typography align='center' variant="h3" component="h1">
 							به فروشگاه سیلیکان مال خوش آمدید
 						</Typography>
