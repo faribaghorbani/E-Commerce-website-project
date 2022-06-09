@@ -39,7 +39,7 @@ const Header = () => {
 	}, [basketProducts])
 
 	return (
-		<div className='regular-layout-header'>
+		<div className='home-layout-header'>
 			<div className='actions' style={{display: 'flex', justifyContent: 'center', alignItems: 'stretch'}}>
 				<Button className='admin-entrance' variant="contained" onClick={() => {navigate('/panel')}}>ورود ادمین</Button>
 				
