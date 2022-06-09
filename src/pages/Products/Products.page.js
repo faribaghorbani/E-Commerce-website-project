@@ -90,9 +90,8 @@ const ProductsPage = () => {
 						</Grid>
 					)
 				})}
-				<Grid item xs={12} sx={{display: 'flex', justifyContent: 'center', my: 3}}>
+				<Grid item xs={12} sx={{display: 'flex', justifyContent: 'center'}}>
 					<Pagination
-					sx={{backgroundColor: 'black'}}
 						dir='rtl'
 						variant="outlined"
 						defaultPage={1}

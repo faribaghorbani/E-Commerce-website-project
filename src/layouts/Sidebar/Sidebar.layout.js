@@ -1,4 +1,4 @@
-import { Container, Grid, Paper } from '@mui/material';
+import { Container, Grid, Paper, Box } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import LoadingPage from '../../pages/Loading/Loading.page';
@@ -7,6 +7,13 @@ import { setCategoryData } from '../../redux/slices/categoryDataSlice';
 import { getDataUser } from '../../services/http.service';
 import Header from './../../components/Header.component';
 import SidebarComponent from './Components/Sidebar.component';
+import { styled, useTheme } from '@mui/material/styles';
+
+
+const CustomPaper = styled(Paper)(({ theme }) => ({
+	padding: theme.spacing(2),
+	textAlign: 'center'
+}));
 
 
 const SidebarLayout = (props) => {
@@ -46,22 +53,27 @@ const SidebarLayout = (props) => {
 		return (
 			<>
 				<Header />
-					<Container>
-					<Grid container spacing={2} sx={{ flexGrow: 1 }}>
-						
-						<Grid item container xs={9} sx={{ flexGrow: 1 }} spacing={2} 
-						justifyContent="space-evenly"
-						alignItems="stretch"
-						component={Paper}
-						>
-							{props.children}
+					<Container >
+					<Box sx={{ flexGrow: 1 }}>
+						<Grid container spacing={2} justifyContent={"space-between"} sx={{ flexGrow: 1, padding: 0}}>
+							
+							<Grid item container 
+							xs={9} 
+							sx={{ flexGrow: 1 }} 
+							spacing={2} 
+							justifyContent="space-evenly"
+							alignItems="stretch"
+							component={CustomPaper}
+							>
+								{props.children}
+							</Grid>
+							<Grid item xs={3}>
+								<Paper elevation={3}>
+									<SidebarComponent />
+								</Paper>
+							</Grid>
 						</Grid>
-						<Grid item xs={3}>
-							<Paper elevation={3}>
-								<SidebarComponent />
-							</Paper>
-						</Grid>
-					</Grid>
+					</Box>
 				</Container>
 			</>
 		)
