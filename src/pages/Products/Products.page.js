@@ -85,7 +85,7 @@ const ProductsPage = () => {
 			<>
 				{data.data?.map((product) => {
 					return (
-						<Grid item xs={4} key={product.id}>
+						<Grid item xs={12} sm={6} md={6} lg={4}  key={product.id}>
 							<ProductCard product={product} height={'100%'} />
 						</Grid>
 					)
