@@ -6,11 +6,13 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import GallerySlider from './Components/GallerySlider.component';
 import { Grid, Box, Typography} from '@mui/material';
+import { useSelector } from 'react-redux';
 const Spline = React.lazy(() => import('@splinetool/react-spline'));
 
 
 const HomePage = () => {
 	const navigate = useNavigate()
+	const themeMode = useSelector(state => state.themeMode)
 	const [laptops, setLaptops] = useState([])
 	const [phones, setPhones] = useState([])
 
@@ -49,7 +51,7 @@ const HomePage = () => {
         <div className='home-page'>
 			<div className='landing-view' style={{paddingTop: '100px'}}>
 				<svg id='svg1' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 300">
-					<path fill="#FFFFFF" fillOpacity="1" d="M0,32L60,69.3C120,107,240,181,360,192C480,203,600,149,720,106.7C840,64,960,32,1080,53.3C1200,75,1320,149,1380,186.7L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+					<path fill={themeMode=='light'?"#FFFFFF": "#121212"} fillOpacity="1" d="M0,32L60,69.3C120,107,240,181,360,192C480,203,600,149,720,106.7C840,64,960,32,1080,53.3C1200,75,1320,149,1380,186.7L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
 				</svg>
 
 				<Grid container alignItems={"center"} spacing={2}>
