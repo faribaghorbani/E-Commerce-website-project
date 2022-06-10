@@ -1,6 +1,10 @@
 @import './../../../../assets/styles/mixins';
 
-.slider {
+.slider-container {
+
+    .slider {
+    padding-top: 20px;
+    padding-bottom: 20px;
     margin: auto;
     position: relative;
     width: 100%;
@@ -21,6 +25,9 @@
             width: 900%;
         }
         animation: scroll 15s linear infinite;
+        &:hover {
+            animation-play-state: paused;
+        }
 
         .slide {
             width: 20%;
@@ -54,7 +61,7 @@
         transform: translateX(-50%);
     }
 }
-
+}
 // .slider {
 //     &::after, &::before {
 //         background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
