@@ -8,6 +8,7 @@ import { getDataUser } from '../../services/http.service';
 import Header from './Components/Header.component';
 import SidebarComponent from './Components/Sidebar.component';
 import { styled, useTheme } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
 
 
 const CustomPaper = styled(Paper)(({ theme }) => ({
@@ -38,6 +39,7 @@ const SidebarLayout = (props) => {
 	if (loading) {
 		return (
 			<>
+			    <CssBaseline />
 				<Header />
 				<LoadingPage/>
 			</>
@@ -45,6 +47,7 @@ const SidebarLayout = (props) => {
 	} else if (error) {
 		return (
 			<>
+				<CssBaseline />
 				<Header />
 				<NotfoundPage title={"اتصال به سرور با خطا رو به رو شدgi"} />
 			</>
@@ -52,6 +55,7 @@ const SidebarLayout = (props) => {
 	} else {
 		return (
 			<>
+				<CssBaseline />
 				<Header />
 					<Container >
 					<Box sx={{ flexGrow: 1 }}>
