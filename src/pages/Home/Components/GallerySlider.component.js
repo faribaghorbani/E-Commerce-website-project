@@ -24,7 +24,7 @@ export default function GallerySlider() {
           rotate: 0,
           stretch: 0,
           depth: 150,
-          modifier: 4,
+          modifier: 5,
           slideShadows: true,
         }}
         loop={true}
