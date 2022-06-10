@@ -9,7 +9,7 @@ const GotoPanel = () => {
     return (
 		<Box sx={{display: 'flex', alignItems: 'center'}}>
 			<Link to='/panel' style={{textDecoration: 'none', color: 'inherit'}}>
-				<IconButton aria-label="cart">
+				<IconButton aria-label="cart" sx={{color: 'white'}}>
 					<AccountCircleIcon />
 				</IconButton>
 				<Typography variant='body' component="label" sx={{cursor: 'pointer'}}>

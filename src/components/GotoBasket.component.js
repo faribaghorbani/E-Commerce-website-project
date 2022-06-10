@@ -39,13 +39,13 @@ const GotoBasket = () => {
 		<Box sx={{display: 'flex', alignItems: 'center'}}>
 			<Link to="/basket" style={{textDecoration: 'none', color: 'inherit'}}>
 			{basketBadge?
-				(<IconButton aria-label="cart" sx={{ m: 0}}>
+				(<IconButton aria-label="cart" sx={{color: 'white', m: 0}}>
 					<StyledBadge badgeContent={basketBadge}>
 						<ShoppingCartIcon />
 					</StyledBadge>
 				</IconButton>
 				): 
-				(<IconButton aria-label="cart">
+				(<IconButton aria-label="cart" sx={{color: 'white', m:0}}>
 					<ShoppingCartIcon />
 				</IconButton>) 
 			}
