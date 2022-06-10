@@ -1,3 +1,5 @@
+@import './../../../../assets/styles/mixins';
+
 .slider {
     margin: auto;
     position: relative;
@@ -9,10 +11,28 @@
         justify-content: space-around;
         align-items: stretch;
         width: 300%;
+        @include respond('average') {
+            width: 400%;
+        }
+        @include respond('tablet') {
+            width: 500%;
+        }
+        @include respond('mobile') {
+            width: 900%;
+        }
         animation: scroll 15s linear infinite;
 
         .slide {
             width: 20%;
+            @include respond('average') {
+                width: 30%;
+            }
+            @include respond('tablet') {
+                width: 40%;
+            }
+            @include respond('mobile') {
+                width: 100%;
+            }
             display: flex;
             align-items: center;
             padding: 10px;
