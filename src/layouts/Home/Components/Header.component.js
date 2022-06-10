@@ -11,11 +11,13 @@ import GotoBasket from '../../../components/GotoBasket.component';
 import GotoPanel from '../../../components/GotoPanel.component';
 import Searchbox from '../../../components/Searchbox.component';
 import HeaderDrawer from '../../../components/Sidebar.component';
+import { useSelector } from 'react-redux';
 
 
 const Header = () => {
 	const navigate = useNavigate()
 	const theme = useTheme()
+	const themeMode = useSelector(state => state.themeMode)
 	const [state, setState] = useState(false);
 
     const toggleDrawer = (open) => (event) => {
@@ -33,7 +35,7 @@ const Header = () => {
 
 	return (
 		<>
-		<div className='home-layout-header'>
+		<div className='home-layout-header' style={{color: themeMode == 'light'? "#000000": "#FFFFFF"}}>
 			<Box className='actions' sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '20px'}}>
 				<IconButton
 				size="large"
