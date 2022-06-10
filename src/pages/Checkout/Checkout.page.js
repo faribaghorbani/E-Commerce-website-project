@@ -12,14 +12,7 @@ const CheckoutPage = () => {
 	return (
 		<Container maxWidth="xl" className='checkout-page'>
 			{Object.entries(basketProducts).length > 0?
-			(<Grid container spacing={2}>
-				<Grid item sm={12}>
-					<CheckoutForm />
-				</Grid>
-				{/* <Grid item md={3} sm={6}>
-					<h1>hello</h1>
-				</Grid> */}
-			</Grid>) : <EmptyBasketComponent />
+			(<CheckoutForm />):(<EmptyBasketComponent />)
 			}				
 		</Container>
 	)

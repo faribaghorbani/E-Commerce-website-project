@@ -1,3 +1,5 @@
+@import '../../../../assets/styles/mixins';
+
 .checkout-page {
     padding-top: 150px; padding-bottom: 150px;
     .checkout-form-container {
@@ -10,6 +12,7 @@
         max-width: 800px;
 
         .actions {
+            margin-top: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -21,10 +24,6 @@
     }
     .checkout-form {
         .name-lastname, .phone-date{
-            display: flex;
-            justify-content: center;
-            // align-items: center;
-            gap: 10px;
             * {
                 flex-basis: 50%;
             }

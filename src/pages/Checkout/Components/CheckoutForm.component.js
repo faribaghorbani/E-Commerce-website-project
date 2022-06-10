@@ -9,6 +9,7 @@ import DatePicker from "react-multi-date-picker"
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
 import "react-multi-date-picker/styles/colors/red.css"
+import { Box } from '@mui/system';
 import RTL from '../../../components/RTL.component';
 import { TextField, Button, Paper } from '@mui/material';
 import './style/CheckoutForm.scss'
@@ -111,7 +112,10 @@ const CheckoutForm = () => {
 				فرم تکمیل خرید
 			</div>
 			<form onSubmit={formik.handleSubmit} className={'checkout-form'}>
-				<div className='name-lastname'>
+				<Box 
+				className='name-lastname'
+				sx={{display: 'flex', justifyContent: 'center', gap: {xs: 0, md: '10px'}, flexDirection: {xs: 'column', md: 'row'}}}
+				>
 					<RTL>
 						<TextField
 							fullWidth
@@ -140,7 +144,7 @@ const CheckoutForm = () => {
 							helperText={formik.touched.lastName && formik.errors.lastName}
 						/>
 					</RTL>
-				</div>
+				</Box>
 
 				<RTL>
 					<TextField
@@ -157,7 +161,9 @@ const CheckoutForm = () => {
 						helperText={formik.touched.address && formik.errors.address}
 					/>
 				</RTL>
-				<div className='phone-date'>
+				<Box className='phone-date'
+				sx={{display: 'flex', justifyContent: 'center', gap: {xs: 0, md: '10px'}, flexDirection: {xs: 'column', md: 'row'}}}
+				>
 					<RTL>
 						<TextField
 							dir='rtl'
@@ -199,7 +205,7 @@ const CheckoutForm = () => {
 						calendarPosition="bottom-right"
 						name={"datapicker"}
 					/>
-				</div>
+				</Box>
 				<div className='actions'>
 					<Button variant="contained" color="success" type="submit">
 						درگاه پرداخت
