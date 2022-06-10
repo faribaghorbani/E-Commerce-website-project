@@ -1,11 +1,12 @@
+import { Box } from '@mui/material';
 import React from 'react'
 import './LoginLayout.scss'
 
 const LoginLayout = (props) => {
     return (
-        <div className='login-layout'>
+        <Box className='login-layout'>
             {props.children}
-        </div>
+        </Box>
     )
 }
 
