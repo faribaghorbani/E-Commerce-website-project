@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
@@ -64,6 +64,7 @@ const Searchbox = () => {
 	const [data, setData] = useState([])
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+	const inputReference = useRef(null);
 
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -111,15 +112,15 @@ const Searchbox = () => {
 				placeholder="جست و جو ..."
 				inputProps={{ 'aria-label': 'search' }}
 				value={value}
+				inputRef={inputReference}
 				onChange={(e) => {
 					handleChange(e)
 					handleMobileMenuOpen(e)
-
 				}}
 				/>
 			</Search>
 			<Menu
-			sx={{position: 'absolute', top: '50px', height: "400px", overflowY: "scroll"}}
+			sx={{position: 'absolute', top: '50px', height: "400px", overflowY: "scroll", overflowX: 'hidden'}}
 			anchorEl={mobileMoreAnchorEl}
 			anchorOrigin={{
 				vertical: 'top',
