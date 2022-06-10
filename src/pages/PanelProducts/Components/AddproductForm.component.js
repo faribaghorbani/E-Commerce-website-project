@@ -35,6 +35,13 @@ const AddproductForm = ({handleClose}) => {
 		color: []
 	})
 	const dispatch = useDispatch()
+	const [errorWarnings, setErrorWarnings] = useState({
+        name: {status: false, msg: "لطفا نام کالای مورد نظر را مشخص کنید"},
+        category: {status: false, msg: "لطفا سرگروه کالای مورد نظر را انتخاب کنید"},
+        subCategory: {status: false, msg: "لطفا زیرگروه کالای مورد نظر را انتخاب کنید"},
+        quantity: {status: false, msg: "لطفا موجودی کالای مورد نظر را مشخص کنید"},
+        price: {status: false, msg: "لطفا قیمت کالای مورد نظر را مشخص کنید"},
+    })
 
 
 	useEffect(() => {
@@ -53,6 +60,51 @@ const AddproductForm = ({handleClose}) => {
 			setLoading(false)
 		}
 	}, [])
+
+
+	const clickedOnSubmit = () => {
+		let shouldTheFunctionBeCalled = false
+		if (values.name == '') {
+    		setErrorWarnings(prev => ({...prev, name: {status: true, msg: "لطفا نام کالا را وارد کنید"}}))
+			shouldTheFunctionBeCalled = true
+		} else {
+			setErrorWarnings(prev => ({...prev, name: {status: false, msg: "لطفا نام کالا را وارد کنید"}}))
+		}
+		if (values.category.main == '') {
+    		setErrorWarnings(prev => ({...prev, category: {status: true, msg: "لطفا سرگروه کالا را انتخاب کنید"}}))
+			shouldTheFunctionBeCalled = true
+		} else {
+			setErrorWarnings(prev => ({...prev, category: {status: false, msg: "لطفا نام کالا را وارد کنید"}}))
+		}
+		if (values.category.second == '') {
+    		setErrorWarnings(prev => ({...prev, subCategory: {status: true, msg: "لطفا زیرگروه کالا را انتخاب کنید"}}))
+			shouldTheFunctionBeCalled = true
+		} else {
+			setErrorWarnings(prev => ({...prev, subCategory: {status: false, msg: "لطفا زیرگروه کالا را انتخاب کنید"}}))
+		}
+		if (values.price == '') {
+    		setErrorWarnings(prev => ({...prev, price: {status: true, msg: "لطفا قیمت کالا را وارد کنید"}}))
+			shouldTheFunctionBeCalled = true
+		}else if (values.price < 0) {
+    		setErrorWarnings(prev => ({...prev, price: {status: true, msg: "قیمت کالا نمی تواند منفی باشد"}}))
+			shouldTheFunctionBeCalled = true
+		} else {
+			setErrorWarnings(prev => ({...prev, price: {status: false, msg: "لطفا  قیمت کالا را مشخص کنید"}}))
+		}
+		if (values.quantity == '') {
+    		setErrorWarnings(prev => ({...prev, quantity: {status: true, msg: "لطفا موجودی کالا را وارد کنید"}}))
+			shouldTheFunctionBeCalled = true
+		}else if (values.quantity < 0) {
+    		setErrorWarnings(prev => ({...prev, quantity: {status: true, msg: "موجودی کالا نمی تواند منفی باشد"}}))
+			shouldTheFunctionBeCalled = true
+		} else {
+			setErrorWarnings(prev => ({...prev, quantity: {status: false, msg: "لطفا  قیمت کالا را مشخص کنید"}}))
+		}
+
+		if (shouldTheFunctionBeCalled == false) {
+			submitTheForm()
+		}
+	}
 
 	const submitTheForm = () => {
 		const thumbnailFormData = new FormData()
@@ -122,9 +174,11 @@ const AddproductForm = ({handleClose}) => {
 					thumbnail={thumbnail}
 					setFiles={setFiles}
 					setThumbnail={setThumbnail}
+					errorWarnings={errorWarnings}
+					setErrorWarnings={setErrorWarnings}
 				/> 
 		        <Box sx={{display: 'flex', justifyContent: 'center', my: 2}}>
-                	<Button  variant="outlined" onClick={submitTheForm}>افزودن</Button>
+                	<Button  variant="outlined" onClick={clickedOnSubmit}>افزودن</Button>
             	</Box>
 			</>
 		)

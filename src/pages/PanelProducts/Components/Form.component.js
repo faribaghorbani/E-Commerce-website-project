@@ -13,11 +13,13 @@ import { Box } from '@mui/system'
 import PreviewImages from './PreviewImages.component'
 import { v4 as uuidv4 } from 'uuid';
 import PreviewColors from './PreviewColors.component';
+import FormHelperText from '@mui/material/FormHelperText';
 
 
-const FormComponent = ({values, setValues, files, thumbnail, setFiles, setThumbnail}) => {
+const FormComponent = ({values, setValues, files, thumbnail, setFiles, setThumbnail, setErrorWarnings, errorWarnings}) => {
     const categoryData = useSelector(state => state.categoryData)
     const [tempColor, setTempColor] = useState("#000000")
+
 
 
     const handleChange = (e, editor) => {
@@ -60,6 +62,8 @@ const FormComponent = ({values, setValues, files, thumbnail, setFiles, setThumbn
                     variant="standard"
                     value={values.name}
                     onChange={e => handleChange(e)}
+                    error={errorWarnings.name.status}
+                    helperText={errorWarnings.name.status && errorWarnings.name.msg}
                 />
                 <TextField
                     fullWidth
@@ -68,10 +72,13 @@ const FormComponent = ({values, setValues, files, thumbnail, setFiles, setThumbn
                     id="standard-password-input2"
                     name="price"
                     label="قیمت"
+                    InputProps={{ inputProps: { min: 0 } }}
                     type="number"
                     variant="standard"
                     value={values.price}
                     onChange={e => handleChange(e)}
+                    error={errorWarnings.price.status}
+                    helperText={errorWarnings.price.status && errorWarnings.price.msg}
                 />
                 <TextField
                     fullWidth
@@ -96,7 +103,9 @@ const FormComponent = ({values, setValues, files, thumbnail, setFiles, setThumbn
                             onChange={e => handleChange(e)}
                             autoWidth
                             label="دسته بندی سرگروه"
+                            error={errorWarnings.category.status}
                             >
+                            
                             <MenuItem value="">
                                 <em>-</em>
                             </MenuItem>
@@ -106,6 +115,7 @@ const FormComponent = ({values, setValues, files, thumbnail, setFiles, setThumbn
                                 )
                             })}
                         </Select>
+                        <FormHelperText error>{errorWarnings.category.status && errorWarnings.category.msg}</FormHelperText>
                     </FormControl>
                 </div>
                 <div>
@@ -119,6 +129,7 @@ const FormComponent = ({values, setValues, files, thumbnail, setFiles, setThumbn
                             onChange={e => handleChange(e)}
                             autoWidth
                             label="دسته بندی زیرگروه"
+                            error={errorWarnings.subCategory.status}
                             >
                             <MenuItem value="">
                                 <em>-</em>
@@ -132,6 +143,7 @@ const FormComponent = ({values, setValues, files, thumbnail, setFiles, setThumbn
                                 })
                             }
                         </Select>
+                        {<FormHelperText error>{errorWarnings.subCategory.status && errorWarnings.subCategory.msg}</FormHelperText>}
                     </FormControl>
                 </div>
                 <TextField
@@ -141,10 +153,13 @@ const FormComponent = ({values, setValues, files, thumbnail, setFiles, setThumbn
                     id="standard-password-input4"
                     name="quantity"
                     label="موجودی"
+                    InputProps={{ inputProps: { min: 0 } }}
                     type="number"
                     variant="standard"
                     value={values.quantity}
                     onChange={e => handleChange(e)}
+                    error={errorWarnings.quantity.status}
+                    helperText={errorWarnings.quantity.status && errorWarnings.quantity.msg}
                 />
 
                 <CKEditor
