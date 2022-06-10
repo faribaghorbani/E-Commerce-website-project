@@ -33,7 +33,6 @@ const PanelOrdersPage = () => {
 	}, [])
 
     useEffect(() => {
-		console.log("check navigate depen")
 		getData('/orders',
 			(data) => {
 			setLoading(false)
@@ -50,7 +49,6 @@ const PanelOrdersPage = () => {
 	
 
 	const optimisedSearching = useCallback(_.throttle((value) => {
-		console.log(value)
 		getData('/orders',
 		(data) => {
 			data = filterOrders(data, value)
@@ -92,12 +90,12 @@ const PanelOrdersPage = () => {
 
     if (loading) return <LoadingPage />
     return (
-      	<Container maxWidth='xl' className='panelorders-page'>
+      	<Container className='panelorders-page'>
 			<div>
 				<RTL>
 					<FormControl fullWidth sx={{ m: 1 }}>
 						<OutlinedInput
-							sx={{textAlign: 'left'}}
+							sx={{textAlign: 'left', width: '100%'}}
 							id="outlined-adornment-amount"
 							value={searchValue}
 							onChange={handleChange}
@@ -111,9 +109,9 @@ const PanelOrdersPage = () => {
 			<div>
 				<RadioButtonsGroup />
 			</div>
-			<div>
+			{/* <div> */}
 				<TableComponent data={filteredData} />
-			</div>
+			{/* </div> */}
       	</Container>
     )
 }

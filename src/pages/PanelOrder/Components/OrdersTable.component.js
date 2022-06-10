@@ -35,7 +35,7 @@ export default function TableComponent(props) {
 		props.data[index].id,
 		props.data[index].customerDetail.firstName + " " + props.data[index].customerDetail.lastName,
 		props.data[index].purchaseTotal,
-		new DateObject({calendar: persian, locale: persian_fa },props.data[index].orderDate).format(),
+		new Date(props.data[index].orderDate).toLocaleDateString("fa-IR"),
 		"viewOrders"
 		)
 	})

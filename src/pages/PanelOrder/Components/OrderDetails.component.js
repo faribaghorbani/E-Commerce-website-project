@@ -16,9 +16,12 @@ const OrderDetails = ({orderInModal, closeModal}) => {
 	const navigate = useNavigate()
 	const [deliveredAt, setDeliveredAt] = useState(null)
 
-	const deliveryRangeBegin = new DateObject({calendar: persian, locale: persian_fa },JSON.parse(orderInModal.deliveryRange[0])).format()
-	const deliveryRangeEnd = new DateObject({calendar: persian, locale: persian_fa },JSON.parse(orderInModal.deliveryRange[1])).format()
-	const orderDate = new DateObject({calendar: persian, locale: persian_fa },JSON.parse(orderInModal.orderDate)).format()
+	// const deliveryRangeBegin = new DateObject({calendar: persian, locale: persian_fa },JSON.parse(orderInModal.deliveryRange[0])).format()
+	const deliveryRangeBegin = new Date(JSON.parse(orderInModal.deliveryRange[0])).toLocaleDateString("fa-IR")
+	// const deliveryRangeEnd = new DateObject({calendar: persian, locale: persian_fa },JSON.parse(orderInModal.deliveryRange[1])).format()
+	const deliveryRangeEnd = new Date(JSON.parse(orderInModal.deliveryRange[1])).toLocaleDateString("fa-IR")
+	// const orderDate = new DateObject({calendar: persian, locale: persian_fa },JSON.parse(orderInModal.orderDate)).format()
+	const orderDate =  new Date(JSON.parse(orderInModal.orderDate)).toLocaleDateString("fa-IR")
 
 
 	useEffect(() => {
@@ -26,7 +29,8 @@ const OrderDetails = ({orderInModal, closeModal}) => {
 			setDeliveredAt(null)
 		}
 		else {
-			setDeliveredAt(new DateObject({calendar: persian, locale: persian_fa },JSON.parse(orderInModal.deliveredAt)).format())
+			// setDeliveredAt(new DateObject({calendar: persian, locale: persian_fa },JSON.parse(orderInModal.deliveredAt)).format())
+			setDeliveredAt(new Date(JSON.parse(orderInModal.deliveredAt)).toLocaleDateString("fa-IR"))
 		}
 	}, [orderInModal])
 
