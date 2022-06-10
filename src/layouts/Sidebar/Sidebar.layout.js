@@ -57,13 +57,15 @@ const SidebarLayout = (props) => {
 			<>
 				<CssBaseline />
 				<Header />
-					<Container >
-					<Box sx={{ flexGrow: 1 }}>
+					{/* <Container maxWidth={'xl'} > */}
+					<Box sx={{ py: '150px', mx: 6}}>
 						<Grid container spacing={2} justifyContent={"space-between"} sx={{ flexGrow: 1, padding: 0}}>
 							
 							<Grid item container 
-							xs={9} 
+							xs={12} 
+							md={9}
 							sx={{ flexGrow: 1 }} 
+							order={{xs: 2, md: 1}}
 							spacing={2} 
 							justifyContent="space-evenly"
 							alignItems="stretch"
@@ -71,14 +73,14 @@ const SidebarLayout = (props) => {
 							>
 								{props.children}
 							</Grid>
-							<Grid item xs={3}>
-								<Paper elevation={3}>
+							<Grid item xs={12} md={3} order={{xs: 1, md: 2}}>
+								<Paper elevation={3} sx={{mb: 4}}>
 									<SidebarComponent />
 								</Paper>
 							</Grid>
 						</Grid>
 					</Box>
-				</Container>
+				{/* </Container> */}
 			</>
 		)
 	}
