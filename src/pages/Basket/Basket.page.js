@@ -51,11 +51,11 @@ const BasketPage = () => {
 	} else {
 		return (
 			<Container maxWidth='xl' className='basket-page'>
-				<Grid container spacing={2}>
-					<Grid item xs={2}>
+				<Grid container spacing={2} justifyContent={"center"}>
+					<Grid item xs={6} md={3}>
 						<PaymentBill/>
 					</Grid>
-					<Grid item xs={10}>
+					<Grid item xs={12} md={9}>
 						<BasketTable data={data}/>
 					</Grid>
 				</Grid>
