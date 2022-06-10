@@ -150,6 +150,7 @@ export default function TableComponent(props) {
 			</Table>
 		</TableContainer>
 		<TablePagination
+			dir='rtl'
 			rowsPerPageOptions={[10, 25, 100]}
 			component="div"
 			count={rows.length}
