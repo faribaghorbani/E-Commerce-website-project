@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './AdminLogin.scss'
 import * as yup from 'yup'
 import { useFormik } from 'formik';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, Paper } from '@mui/material';
 import RTL from '../../components/RTL.component';
 import {authentication} from '../../services/http.service'
 import Box from '@mui/material/Box';
@@ -57,7 +57,8 @@ const AdminLogin = () => {
 		width: '95%',
 		borderRadius: '5px'
 		}}>
-			<form onSubmit={formik.handleSubmit} className='form-container' style={{backgroundColor: 'white'}}>
+			<Paper>
+			<form onSubmit={formik.handleSubmit} className='form-container'>
 				<RTL>
 					<TextField
 					// fullWidth
@@ -98,6 +99,7 @@ const AdminLogin = () => {
 				handleClose={handleClose}
 				handleOpen={handleOpen}
 			 />
+			 </Paper>
 		</Box>
 	)
 }
