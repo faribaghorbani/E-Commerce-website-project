@@ -11,6 +11,11 @@ import "./style/Slider3D.scss";
 
 // import required modules
 import { EffectCoverflow, Pagination, Autoplay } from "swiper";
+import carousel1 from '../../../assets/images/carousel1.jpg'
+import carousel2 from '../../../assets/images/carousel2.jpg'
+import carousel3 from '../../../assets/images/carousel3.jpg'
+import carousel4 from '../../../assets/images/carousel4.jpg'
+import carousel5 from '../../../assets/images/carousel5.jpg'
 
 export default function GallerySlider() {
   return (
@@ -36,32 +41,23 @@ export default function GallerySlider() {
         className="mySwiper"
       >
         <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
+          <img src={carousel1} />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+          <img src={carousel2} />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+          <img src={carousel3} />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+          <img src={carousel4} />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
+          <img src={carousel5} />
         </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-        </SwiperSlide>
-        <SwiperSlide>
+        {/* <SwiperSlide>
           <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
-        </SwiperSlide>
+        </SwiperSlide> */}
       </Swiper>
     </>
   );
