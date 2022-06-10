@@ -49,6 +49,7 @@ export const store = configureStore({
 store.subscribe(()=>{
     saveState({
         basketProducts: store.getState().basketProducts,
+        themeMode: store.getState().themeMode,
      })
 })
   
