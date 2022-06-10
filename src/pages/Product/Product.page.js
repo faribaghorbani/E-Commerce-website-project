@@ -15,7 +15,7 @@ import CounterComponent from './Components/Counter.component';
 import NotfoundPage from './../Notfound/Notfound.page'
 import './Components/style/Counter.scss'
 import './Product.scss'
-
+import { Grid } from '@mui/material';
 
 const ProductPage = () => {
 	const params = useParams()
@@ -94,65 +94,79 @@ const ProductPage = () => {
 		return (
 			<Container className='product-page'>
 				<Paper elevation={2}>
-					<Box sx={{display: 'flex',flexDirection: {md: 'row'} ,
-					justifyContent: 'space-between', p: 3
-					}}>
-						<GallerySlider images={images} style={{width:'50%'}}/>
-						<Box sx={{p:5}}>
-							{data?.map(item => {
-								return (
-									<div key={uuidv4()} dir="rtl">
-										<Typography variant="h5" component="h2">
-											{item.name}
-										</Typography>
-
-										<Box sx={{mb: 2}}>
-											<Fab sx={{ml: 2}} variant="extended" size="medium" color="primary" aria-label="add">
-												{item.category.main}
-											</Fab>
-											<Fab variant="extended" size="medium" color="secondary" aria-label="add">
-												{item.category.second}
-											</Fab>
-										</Box>
-
-										<Box dir="rtl" sx={{display: 'flex'}}>
-											<Typography variant="h6" component="h2">
-												{"برند:  "}
+					<Box sx={{ p: 3}}>
+					<Grid container spacing={2}>
+						<Grid item xs={12} md={6}>
+							<GallerySlider images={images} style={{width:'100%'}}/>
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<Box sx={{p:5}}>
+								{data?.map(item => {
+									return (
+										<Box key={uuidv4()} dir="rtl">
+											<Typography variant="h5" component="h2">
+												{item.name}
 											</Typography>
-											<Typography variant="h6" component="h2" sx={{mx: 2}}>
-												{item.brand}
-											</Typography>
-										</Box>
 
-										<Box dir="rtl" sx={{display: 'flex'}}>
-											<Typography variant="h6" component="h2">
-												{"رنگ:  "}
-											</Typography>
-											<ColorsCheckGroup colors={item.color} selectColor={setCheckColor} selectedColor={checkColor} />
-										</Box>
+											<Box sx={{mb: 3}}>
+												<Fab sx={{ml: 2, zIndex: 1000}} variant="extended" size="medium" color="primary" aria-label="add">
+													{item.category.main}
+												</Fab>
+												<Fab variant="extended" size="medium" color="secondary" aria-label="add">
+													{item.category.second}
+												</Fab>
+											</Box>
 
-										<Box dir="rtl">
-											<Typography variant="h6" component="h2">
-												{"توضیحات:  "}
-											</Typography>
-											<div style={{display: 'flex', alignItems: 'center'}}>
-												<Markup content={item.description} />
-											</div>
-										</Box>
+											<Box dir="rtl" sx={{display: 'flex', mb: 3}}>
+												<Typography variant="h6" component="h2">
+													{"قیمت:  "}
+												</Typography>
+												<Typography variant="h6" component="h2" sx={{mx: 2}}>
+													{item.price} تومان
+												</Typography>
+											</Box>
 
-										<Box>
-											{
-											basketNumber == 0?
-											(<Button variant="contained" color="success" onClick={() => addToBasket(item)} disabled={item.quantity === 0}>
-												{item.quantity === 0? "اتمام موجودی": "افزودن به سبد خرید"}
-											</Button>):
-											(<CounterComponent product={item} basketNumber={basketNumber} handleAddButton={setBasketNumber}/>)
-											}
+											<Box dir="rtl" sx={{display: 'flex', mb: 3}}>
+												<Typography variant="h6" component="h2">
+													{"برند:  "}
+												</Typography>
+												<Typography variant="h6" component="h2" sx={{mx: 2}}>
+													{item.brand}
+												</Typography>
+											</Box>
+
+											<Box dir="rtl" sx={{display: 'flex', mb: 3}}>
+												<Typography variant="h6" component="h2">
+													{"رنگ:  "}
+												</Typography>
+												<ColorsCheckGroup colors={item.color} selectColor={setCheckColor} selectedColor={checkColor} />
+											</Box>
+
+											<Box>
+												{
+												basketNumber == 0?
+												(<Button variant="contained" color="success" onClick={() => addToBasket(item)} disabled={item.quantity === 0}>
+													{item.quantity === 0? "اتمام موجودی": "افزودن به سبد خرید"}
+												</Button>):
+												(<CounterComponent product={item} basketNumber={basketNumber} handleAddButton={setBasketNumber}/>)
+												}
+											</Box>
 										</Box>
-									</div>
-								)
-							})}
-						</Box>
+									)
+								})}
+							</Box>
+						</Grid>
+							<Grid item xs={12}>
+								<Box dir="rtl">
+									<Typography variant="h6" component="h2">
+										{"توضیحات:  "}
+									</Typography>
+									<Box sx={{display: 'flex', alignItems: 'center'}}>
+										<Markup content={data[0]?.description} />
+									</Box>
+								</Box>
+							</Grid>
+						</Grid>
 					</Box>
 				</Paper>
 			</Container>
