@@ -47,6 +47,9 @@
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-direction: alternate;
+    .spline-macbook {
+      cursor: grab;
+    }
   }
   
   .main-category {
