@@ -1,6 +1,7 @@
 import axios from "axios";
+import { SERVER_PATH } from './../utils/constants'
 
-axios.defaults.baseURL = "http://localhost:3002"
+axios.defaults.baseURL = SERVER_PATH
 axios.defaults.timeout = 4000
 
 axios.interceptors.request.use(function (config) {

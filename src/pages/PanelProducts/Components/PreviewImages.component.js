@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import './style/PreviewImages.scss'
 import { AiFillCloseCircle } from 'react-icons/ai'
+import { PICTURES_PATH } from '../../../utils/constants';
 
 
 const PreviewImages = ({images, updateImages}) => {
@@ -21,7 +22,7 @@ const PreviewImages = ({images, updateImages}) => {
                 const preview = URL.createObjectURL(item)
                 temp = [...temp, preview]
             } else {
-                temp = [...temp, 'http://localhost:3002/files/'+ item]
+                temp = [...temp, PICTURES_PATH + item]
             }
         })
         setPreviews(temp)
