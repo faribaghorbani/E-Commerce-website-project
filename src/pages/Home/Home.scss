@@ -1,9 +1,20 @@
+@import './../../assets/styles/mixins';
+
 .home-page {
 
   .landing-view {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     height: fit-content;
     position: relative;
     min-height: 100vh;
+    padding-top: 100px;
+    @include respond('tablet') {
+      min-height: 70vh;
+      padding: 0;
+    }
     animation-name: gradientAnimation;
     animation-duration: 10s;
     animation-timing-function: ease;
