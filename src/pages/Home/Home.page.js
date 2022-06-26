@@ -68,9 +68,10 @@ const HomePage = () => {
 					</Grid>
 					<Grid item sm={12} md={12} lg={5} order={{xs: 1, sm: 1, md: 1, lg: 2}}>
 						<Box dir='rtl' sx={{height: '200px' ,color: "white", display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-						<Typography align='center' variant="h3" component="h1">
-							به فروشگاه سیلیکان مال خوش آمدید
-						</Typography>
+							<Typography sx={{px: 3, pb: {xs: 8, sm: 0}, pt: 3}} align='center' variant="h3" component="h1">
+								به فروشگاه سیلیکان مال خوش آمدید
+							</Typography>
+
 						</Box>
 					</Grid>
 				</Grid>
