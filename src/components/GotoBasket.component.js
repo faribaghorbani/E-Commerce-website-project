@@ -36,24 +36,24 @@ const GotoBasket = () => {
 	}, [basketProducts])
 
 	return (
-		<Box sx={{display: 'flex', alignItems: 'center'}}>
-			<Link to="/basket" style={{textDecoration: 'none', color: 'inherit'}}>
-			{basketBadge?
-				(<IconButton aria-label="cart" sx={{color: 'white', m: 0}}>
-					<StyledBadge badgeContent={basketBadge}>
+		<Link to="/basket" style={{textDecoration: 'none', color: 'inherit'}}>
+			<Box sx={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+				{basketBadge?
+					(<IconButton aria-label="cart" sx={{color: 'white', m: 0}}>
+						<StyledBadge badgeContent={basketBadge}>
+							<ShoppingCartIcon />
+						</StyledBadge>
+					</IconButton>
+					): 
+					(<IconButton aria-label="cart" sx={{color: 'white', m:0}}>
 						<ShoppingCartIcon />
-					</StyledBadge>
-				</IconButton>
-				): 
-				(<IconButton aria-label="cart" sx={{color: 'white', m:0}}>
-					<ShoppingCartIcon />
-				</IconButton>) 
-			}
-			<Typography variant='body' component="label" sx={{cursor: 'pointer'}}>
-				سبد خرید
-			</Typography>
-			</Link>
-		</Box>
+					</IconButton>) 
+				}
+				<Typography variant='body' component="label" sx={{cursor: 'pointer'}}>
+					سبد خرید
+				</Typography>
+			</Box>
+		</Link>
 	)
 }
 

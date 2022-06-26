@@ -1,5 +1,5 @@
 import React from 'react'
-import Footer from './Components/Footer.component';
+import Footer from './../../components/Footer.component';
 import Header from './Components/Header.component';
 import { CssBaseline } from '@mui/material';
 import { Box } from '@mui/system';
