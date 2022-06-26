@@ -9,6 +9,7 @@ import Header from './Components/Header.component';
 import SidebarComponent from './Components/Sidebar.component';
 import { styled, useTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
+import Footer from '../../components/Footer.component';
 
 
 const CustomPaper = styled(Paper)(({ theme }) => ({
@@ -42,6 +43,7 @@ const SidebarLayout = (props) => {
 			    <CssBaseline />
 				<Header />
 				<LoadingPage/>
+				<Footer />
 			</>
 		)
 	} else if (error) {
@@ -49,7 +51,8 @@ const SidebarLayout = (props) => {
 			<>
 				<CssBaseline />
 				<Header />
-				<NotfoundPage title={"اتصال به سرور با خطا رو به رو شدgi"} />
+				<NotfoundPage title={"اتصال به سرور با خطا رو به رو شد"} />
+				<Footer />
 			</>
 		)
 	} else {
@@ -81,6 +84,7 @@ const SidebarLayout = (props) => {
 						</Grid>
 					</Box>
 				{/* </Container> */}
+				<Footer />
 			</>
 		)
 	}
