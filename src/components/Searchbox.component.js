@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
@@ -6,9 +6,11 @@ import _ from 'lodash';
 import { useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getData } from '../services/http.service';
-import { Menu } from '@mui/material';
-import { MenuItem } from '@mui/material';
+import { List, ListItem, ListItemButton, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import RTL from './RTL.component'
+import LoadingComponent from './Loading.component';
+import axios from 'axios';
 
 const Search = styled('div')(({ theme }) => ({
 	position: 'relative',
@@ -56,50 +58,45 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 	},
 }));
 
-const mobileMenuId = 'primary-search-account-menu-mobile';
 
 const Searchbox = () => {
 	const navigate = useNavigate()
 	const [value, setValue] = useState("")
 	const [data, setData] = useState([])
-	const [anchorEl, setAnchorEl] = useState(null);
-	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-	const inputReference = useRef(null);
-
-	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-	const handleProfileMenuOpen = (event) => {
-		setAnchorEl(event.currentTarget);
-	  };
-
-	const handleMobileMenuClose = () => {
-		setMobileMoreAnchorEl(null);
-	  };
-	
-	  const handleMenuClose = () => {
-		setAnchorEl(null);
-		handleMobileMenuClose();
-	  };
-	
-	  const handleMobileMenuOpen = (event) => {
-		setMobileMoreAnchorEl(event.currentTarget);
-	  };
+	const [showAutocomplete, setShowAutocomplete] = useState(false)
+	const [loading, setLoading] = useState(false)
+	const [error, setError] = useState(false)
 	
 
-	const optimisedSearching = useCallback(_.throttle((e) => {
-		getData(`/products?name_like=${e.target.value}`,
-		// getData(`/products`,
-		(data) => {
-			setData(data)
-			console.log(data)
-		},
-		() => navigate("/login", {replace: true})
-	)
+	const optimisedSearching = useCallback(_.debounce((e) => {
+		axios.get(`/products?name_like=${e.target.value}&_start=0&_end=5`)
+		.then(res => {
+			setData(res.data)
+			setLoading(false)
+			setError(false)
+		})
+		.catch(err => {
+			setLoading(false)
+			setError(true)
+		})
+		// getData(`/products?name_like=${e.target.value}&_start=0&_end=5`,
+		// // getData(`/products`,
+		// (data) => {
+		// 	setData(data)
+		// 	setLoading(false)
+		// 	setError(false)
+		// },
+		// () => {
+		// 	setLoading(false)
+		// 	setError(true)
+		// })
 	}, 1000), [navigate])
 
 	const handleChange = (e) => {
 		setValue(e.target.value)
 		optimisedSearching(e)
+		setShowAutocomplete(true)
+		setLoading(true)
 	}
 
 	return (
@@ -112,39 +109,55 @@ const Searchbox = () => {
 				placeholder="جست و جو ..."
 				inputProps={{ 'aria-label': 'search' }}
 				value={value}
-				inputRef={inputReference}
+				// inputRef={inputReference}
 				onChange={(e) => {
 					handleChange(e)
-					handleMobileMenuOpen(e)
+				}}
+				onBlur={(e) => {
+					setShowAutocomplete(false)
 				}}
 				/>
 			</Search>
-			<Menu
-			sx={{position: 'absolute', top: '50px', height: "400px", overflowY: "scroll", overflowX: 'hidden'}}
-			anchorEl={mobileMoreAnchorEl}
-			anchorOrigin={{
-				vertical: 'top',
-				horizontal: 'right',
-			}}
-			id={mobileMenuId}
-			keepMounted
-			transformOrigin={{
-				vertical: 'top',
-				horizontal: 'right',
-			}}
-			open={isMobileMenuOpen}
-			onClose={handleMobileMenuClose}
-			>
-				{data.map((item) => {
-					return (
-					<MenuItem dir='rtl'>
-						<Link to={`/products/${item.category.main}/${item.category.second}/${item.id}`} style={{textDecoration: 'none', color: 'inherit'}}>
-							{item.name}
-						</Link>
-					</MenuItem>
-					)
-				})}
-			</Menu>
+			{showAutocomplete?
+			<RTL>
+				<Box sx={{position: 'absolute', top: "100%", right: {xs: 0}, width: {xs: '100%', sm: '500px'}}}>
+					<Paper>
+						{loading? 
+						<LoadingComponent height={"150px"} />
+						:error? (<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '150px', textAlign: 'center' }}>
+							<Typography color={"secondary"}>
+							اتصال به سرور با خطا روبه رو شد
+							</Typography>		
+						</Box>)
+						:<List dir='rtl'>
+							{data.length === 0?
+							<Typography color={"secondary"}>
+								نتیجه ای یافت نشد
+							</Typography>
+							:
+							<>
+								{data.map((product) => {
+									return (
+										<ListItem>
+											<ListItemButton>
+												<Link 
+												style={{textDecoration: 'none', color: 'inherit'}}
+												to={`/products/${product?.category?.main}/${product?.category?.second}/${product?.id}`}>
+												{product?.name}
+												</Link>
+											</ListItemButton>
+										</ListItem>
+									)
+								})}
+							</>
+							}
+						</List>
+						}
+					</Paper>
+				</Box>
+			</RTL>
+			: null
+			}
 		</Box>
 	)
 }
